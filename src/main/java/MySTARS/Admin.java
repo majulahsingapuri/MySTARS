@@ -1,13 +1,14 @@
 package MySTARS;
 
 public class Admin extends User {
-    private String defaultPasswrd = "OODP1sth3B3ST!";
+
+    private static final long serialVersionUID = 26L;
 
     public Admin(String username){
-        super(username,defaultPasswrd);
+        super(username, AccessLevel.ADMIN);
     }
 
     public Admin(String username, String password){
-        super(username, password);
+        super(username, password, AccessLevel.ADMIN);
     }
 }

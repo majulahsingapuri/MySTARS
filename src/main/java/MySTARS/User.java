@@ -2,35 +2,48 @@ package MySTARS;
 
 import java.io.Serializable;
 
-public class User implements Serializable{
-    private String username;
-    protected AccessLevel accessLevel;
-    protected String password;
+public class User implements Serializable {
 
-    protected User(String username, String password){
+    private String username;
+    private AccessLevel accessLevel;
+    private String password;
+    private static final long serialVersionUID = 29L;
+
+    protected User(String username, String password, AccessLevel accessLevel) {
         this.username = username;
         this.password = password;
+        this.accessLevel = accessLevel;
     }
 
-    protected boolean changePassword(String newPasswrd){
+    protected User(String username, AccessLevel accessLevel) {
+        this.username = username;
+        this.accessLevel = accessLevel;
+        this.password = "OODP1s7heB3st";
+    }
+
+    protected boolean changePassword(String newPassword) {
         //reinput password to ensure correct person changing password
-        password = newPasswrd;
+        password = newPassword;
         return true;
         //if wrong password, return false
     }
 
-    protected boolean checkPasswrd(String input){
+    protected boolean checkPassword(String input) {
         return input.equals(password);
     }
 
-    protected boolean changeAccessLevel(AccessLevel al){
+    protected boolean changeAccessLevel(AccessLevel accessLevel) {
         //reinput password
-        accessLevel = al;
+        this.accessLevel = accessLevel;
         return true;
         //else return false
     }
 
-    protected String getUsername(){
+    protected String getUsername() {
         return username;
+    }
+
+    protected AccessLevel getAccessLevel() {
+        return accessLevel;
     }
 }
