@@ -1,6 +1,8 @@
 package MySTARS;
 
-public abstract class User {
+import java.io.Serializable;
+
+public class User implements Serializable{
     private String username;
     protected AccessLevel accessLevel;
     protected String password;
