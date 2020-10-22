@@ -11,10 +11,9 @@ class Lesson implements Serializable {
     private Date time;
     private String location;
     private String remarks;
+    private static final long serialVersionUID = 12L;
 
-    public Lesson() {}
-
-    public Lesson(ClassType type, Date time, String location) {
+    protected Lesson(ClassType type, Date time, String location) {
         this.type = type;
         this.time = time;
         this.location = location;
@@ -24,20 +23,20 @@ class Lesson implements Serializable {
         return this.type;
     }
 
-    protected Date getTime() {
-        return this.time;
-    }
-
-    protected String getLocation() {
-        return this.location;
-    }
-
     protected void setType(ClassType type) {
         this.type = type;
     }
 
+    protected Date getTime() {
+        return this.time;
+    }
+
     protected void setTime(Date time) {
         this.time = time;
+    }
+
+    protected String getLocation() {
+        return this.location;
     }
 
     protected void setLocation(String location) {
@@ -46,5 +45,9 @@ class Lesson implements Serializable {
 
     protected void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    protected String getRemarks() {
+        return this.remarks;
     }
 }
