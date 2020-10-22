@@ -8,7 +8,7 @@ import java.util.Date;
 class Lesson implements Serializable {
 
     private ClassType type;
-    private Date time;
+    private Date time;  // TODO use jodatime to sort out timetable stuff
     private String location;
     private String remarks;
     private static final long serialVersionUID = 12L;

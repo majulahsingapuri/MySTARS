@@ -40,12 +40,6 @@ public class CourseIndex implements Serializable{
         System.out.println(matricNo + " added to waitlist");
     }
 
-    // method to remove first from waitlist, usually wouldn't need to be used
-    protected void removeFromWaitlist() {
-
-        waitlist.removeFirst();
-    }
-
     protected void removeFromWaitlist(String matricNo) {
 
         if(waitlist.remove(matricNo)) {
@@ -85,7 +79,6 @@ public class CourseIndex implements Serializable{
             System.out.println("removed first student in waitlist");
 
             //TODO use database users hashmap to look up Student object by matricNo
-            
         } else {
             System.out.println("error, no vacancies");
         }

@@ -54,7 +54,14 @@ public class Course implements Serializable{
 
     protected CourseIndex getIndex(String index) {
 
-        return courseIndices.get(index);
+        //TODO add console log for null courseIndex
+        CourseIndex courseIndex = courseIndices.get(index);
+        if (courseIndex != null) {
+            return courseIndex;
+        } else {
+            System.out.println("error, index not found?");
+            return null;
+        }
     }
 
     protected void addIndices(int numIndices) {
@@ -71,5 +78,11 @@ public class Course implements Serializable{
             courseIndices.put(courseIndex, index);
             System.out.println(courseIndex + " added to courseIndices");
         }
+    }
+
+    // method to return an array of all the index numbers
+    // TODO check that the output of this is correct
+    protected String[] getIndices() {
+        return courseIndices.keySet().toArray(new String[courseIndices.size()]);
     }
 }
