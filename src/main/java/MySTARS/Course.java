@@ -1,3 +1,5 @@
+package MySTARS;
+
 import java.util.HashMap;
 import java.io.*;
 
@@ -5,7 +7,7 @@ public class Course {
     private String courseCode;
     private HashMap<String, CourseIndex> courseIndices = new HashMap<>();
     private String description;
-    private CourseStatus status = NONE;
+    private CourseStatus status = CourseStatus.NONE;
 
     protected Course(String courseCode) {
         this.courseCode = courseCode;

@@ -1,3 +1,5 @@
+package MySTARS;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -69,6 +71,7 @@ public class CourseIndex implements Serializable{
             String matricNo = waitlist.removeFirst();
             System.out.println("removed first student in waitlist");
             // how to look up student object by matric number??
+            // use database users hashmap
         } else {
             System.out.println("error, no vacancies");
         }
