@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
+    private static final long serialVersionUID = 29L;
     private String username;
     private AccessLevel accessLevel;
     private String password;
-    private static final long serialVersionUID = 29L;
 
     protected User(String username, String password, AccessLevel accessLevel) {
         this.username = username;
