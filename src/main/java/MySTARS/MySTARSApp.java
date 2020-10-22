@@ -6,6 +6,7 @@ package MySTARS;
  */
 
 //TODO Set Classes as final
+//TODO Deserialise files on ititiation step
 public class MySTARSApp {
     public static void main( String[] args ) {
         System.out.println( "Hello World!" );

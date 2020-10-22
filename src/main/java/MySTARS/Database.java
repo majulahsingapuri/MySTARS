@@ -17,7 +17,7 @@ public class Database {
         deserialise(FileType.USERS);
     }
 
-    protected static boolean serialise(FileType fileType) {
+    protected static boolean deserialise(FileType fileType) {
 
         String fileName;
 
@@ -58,7 +58,7 @@ public class Database {
         return true;
     }
 
-    protected static boolean deserialise(FileType fileType) {
+    protected static boolean serialise(FileType fileType) {
 
         String fileName;
 
