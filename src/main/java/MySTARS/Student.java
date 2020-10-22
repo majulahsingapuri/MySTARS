@@ -2,68 +2,74 @@ package MySTARS;
 
 import java.util.HashMap;
 
-public class Student extends User{
+public class Student extends User {
 
     private static final long serialVersionUID = 77L;
-    private String matricNo;
-    private HashMap<String, Course> courses; //<username, course> where course only contains the student's course index
+    private String matricNumber;
+    //TODO possibly rename this to something that doesn't clash with Database.COURSES?
+    private HashMap<String, Course> courses = new HashMap<String, Course>(); //<username, course> where course only contains the student's course index
     private Gender gender = Gender.PREFER_NOT_TO_SAY;
     private String nationality = "";
 
-    public Student(String name, String matricNo){
+    public Student(String name, String matricNumber) {
+
         super(name, AccessLevel.STUDENT);
-        this.matricNo = matricNo;
-        courses = new HashMap<String, Course>();
+        this.matricNumber = matricNumber;
     }
 
-    public Student(String name, String matricNo, String password, Gender gender, String nationality){
+    public Student(String name, String matricNumber, String password, Gender gender, String nationality) {
+
         super(name, password, AccessLevel.STUDENT);
         this.gender = gender;
         this.nationality = nationality;
     }
 
-    protected String getMatricNo(){
-        return matricNo;
+    protected String getMatricNumber() {
+
+        return matricNumber;
     }
 
     //FIXME This needs to be tested after the Course class is implemented!!!
-    protected String[] getCourses(CourseStatus status){
-        if (status == CourseStatus.ALL){
+    protected String[] getCourses(CourseStatus courseStatus) {
+
+        if (courseStatus == CourseStatus.NONE){
             return courses.keySet().toArray(new String[courses.size()]);
         }
 
         int count = 0;
         for (Course course : courses.values()){
-            if (course.getStatus() == status)
+            if (course.getStatus() == courseStatus)
                 count++;
         }
-        String[] courseIds = new String[count];
-        int i = 0
+        
+        String[] courseIDs = new String[count];
+        int i = 0;
         for (Course course : courses.values()){
-            if (course.getStatus() == status)
-                courseIds[i++] = course.getCourseCode();
+            if (course.getStatus() == courseStatus)
+                courseIDs[i++] = course.getCourseCode();
         }
 
-        return courseIds;
+        return courseIDs;
     }
 
     //FIXME This needs to be tested after the Course class is implemented!!!
-    protected String[] getIndices(CourseStatus status){
+    protected String[] getIndices(CourseStatus courseStatus){
         int count = 0;
         for (Course course : courses.values()){
-            if (course.getStatus() == status)
+            if (course.getStatus() == courseStatus)
                 count++;
         }
 
         String[] courseInds = new String[courses.size()];
         int i = 0;
         for (Course course : courses.values()){
-            if (course.getStatus() == status)
+            if (course.getStatus() == courseStatus)
                 courseInds[i++] = course.getIndices()[0];
         }
         return courseInds;
     }
 
+    //TODO is there a better way to do this? return the CourseStatus rather than a boolean to make it more useable?
     /*
     returning true means the course has been added successfully
     returning false means the student has been added to the waitlist
@@ -83,12 +89,14 @@ public class Student extends User{
         }
         if (courseInd.getVacancies()<=0){
             //put on waitlist
+            //TODO Need to modify this to pass in CourseIndex rather than just the string of the Index. That is more versatile
             courses.put(code, new Course(code, ind, CourseStatus.WAITLIST));
-            courseInd.addToWaitlist(this.matricNo);
+            courseInd.addToWaitlist(this.matricNumber);
             return false;
         }
         else{
             //add course successfully
+            //TODO Need to modify this to pass in CourseIndex rather than just the string of the Index. That is more versatile
             courses.put(code, new Course(code, ind, CourseStatus.REGISTERED));
             courseInd.enrollStudent(this);
             return true;
@@ -102,21 +110,24 @@ public class Student extends User{
             throw new Exception("Course " + code + " has not been added by Student!");
         Course course = COURSES.get(code);
         CourseIndex courseInd = course.getIndex(this.courses.get(code).getIndices()[0]);
-        CourseStatus status = this.courses.get(code).getStatus();
+        CourseStatus courseStatus = this.courses.get(code).getStatus();
         
-        if (status == CourseStatus.REGISTERED){
+        if (courseStatus == CourseStatus.REGISTERED){
             courseInd.unenrollStudent(this);
             this.courses.remove(code);
         }
-        else if (status == CourseStatus.WAITLIST){
-            courseInd.removeFromWaitlist(this.matricNo);
+        else if (courseStatus == CourseStatus.WAITLIST){
+            courseInd.removeFromWaitlist(this.matricNumber);
             this.courses.remove(code);
         }
         else{
-            throw new Exception("Invalid course status!");
+            throw new Exception("Invalid course courseStatus!");
         }
     }
 
+
+    //TODO can this be changed to if-elses rather than a bunch of ifs?
+    //FIXME calling parameters rather than methods. Check for such errors
     //can only change index of registered courses
     protected void changeIndex(String code, String currentInd, String newInd) throws Exception{
         if (!COURSES.containsKey(code))

@@ -3,12 +3,12 @@ package MySTARS;
 import java.util.HashMap;
 import java.io.*;
 
-public class Course implements Serializable{
+public class Course implements Serializable {
 
-    private String courseCode;
+    private String courseCode = "";
     private HashMap<String, CourseIndex> courseIndices = new HashMap<>();
-    private String description;
-    private CourseStatus status = CourseStatus.NONE;
+    private String description = "";
+    private CourseStatus courseStatus = CourseStatus.NONE;
     private static final long serialVersionUID = 10L;
 
     protected Course(String courseCode) {
@@ -20,6 +20,19 @@ public class Course implements Serializable{
 
         this.courseCode = courseCode;
         this.description = description;
+    }
+
+    protected Course(String courseCode, CourseStatus courseStatus) {
+
+        this.courseCode = courseCode;
+        this.courseStatus = courseStatus;
+    }
+
+    protected Course(String courseCode, CourseIndex courseIndex, CourseStatus courseStatus) {
+
+        //TODO add shortcut to add in course index to course. (useful for adding to student class so you can just copy over the CourseIndex and remove any extra bits)
+        this.courseCode = courseCode;
+        this.courseStatus = courseStatus;
     }
 
     protected void setDescription(String description) {
@@ -42,14 +55,14 @@ public class Course implements Serializable{
         return this.courseCode;
     }
 
-    protected void setStatus(CourseStatus status) {
+    protected void setStatus(CourseStatus courseStatus) {
 
-        this.status = status;
+        this.courseStatus = courseStatus;
     }
 
     protected CourseStatus getStatus() {
 
-        return this.status;
+        return this.courseStatus;
     }
 
     protected CourseIndex getIndex(String index) {
@@ -74,6 +87,7 @@ public class Course implements Serializable{
             int vacancies = Helper.sc.nextInt();            
 
             // create new CourseIndex object and add to hashmap courseIndices
+            //TODO check that the course index doesnt already exist in the course to prevent duplicate entries
             CourseIndex index = new CourseIndex(vacancies, courseIndex);
             courseIndices.put(courseIndex, index);
             System.out.println(courseIndex + " added to courseIndices");

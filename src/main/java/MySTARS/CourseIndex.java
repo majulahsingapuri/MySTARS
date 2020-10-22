@@ -4,18 +4,18 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class CourseIndex implements Serializable{
+public class CourseIndex implements Serializable {
     
     private int vacancies;
     private LinkedList<String> waitlist = new LinkedList<>();
-    private String indexNo;
+    private String indexNumber;
     private HashMap<String, Student> enrolledStudents = new HashMap<>();
     private static final long serialVersionUID = 11L;
 
-    protected CourseIndex(int vacancies, String indexNo) {
+    protected CourseIndex(int vacancies, String indexNumber) {
 
         this.vacancies = vacancies; 
-        this.indexNo = indexNo;
+        this.indexNumber = indexNumber;
     }
 
     protected void setVacancies(int vacancies) {
@@ -33,17 +33,17 @@ public class CourseIndex implements Serializable{
         return waitlist.size();
     }
 
-    // making waitlist a list of matric numbers instead of names 
-    protected void addToWaitlist(String matricNo) {
+    protected void addToWaitlist(String matricNumber) {
 
-        waitlist.add(matricNo);
-        System.out.println(matricNo + " added to waitlist");
+        waitlist.add(matricNumber);
+        System.out.println(matricNumber + " added to waitlist");
     }
 
-    protected void removeFromWaitlist(String matricNo) {
+    protected void removeFromWaitlist(String matricNumber) {
 
-        if(waitlist.remove(matricNo)) {
-            continue;
+        //TODO have a better implementation for this. Leave this first for testing purposes but change in final version.
+        if(waitlist.remove(matricNumber)) {
+            System.out.println("Successfully removed student");
         } else {
             System.out.println("Name not found");
         }
@@ -51,23 +51,23 @@ public class CourseIndex implements Serializable{
 
     protected void enrollStudent(Student student) {
 
-        String matricNo = student.matricNo;
+        String matricNumber = student.getMatricNumber();
         if(this.vacancies != 0) {
-            enrolledStudents.put(matricNo, student);
+            enrolledStudents.put(matricNumber, student);
         } else {
             System.out.print("error, no vacancies ");
-            addToWaitlist(matricNo);
+            addToWaitlist(matricNumber);
         }
     }
 
     protected void unenrollStudent(Student student) {
 
-        String matricNo = student.matricNo;
+        String matricNumber = student.getMatricNumber();
 
-        if(enrolledStudents.remove(matricNo) == null) {
+        if(enrolledStudents.remove(matricNumber) == null) {
             System.out.println("student not found in course register");
         } else {
-            System.out.println(matricNo + " removed from course register");
+            System.out.println(matricNumber + " removed from course register");
         }
     }
 
@@ -75,10 +75,10 @@ public class CourseIndex implements Serializable{
     protected void enrollNextInWaitlist() {
 
         if(this.vacancies != 0) {
-            String matricNo = waitlist.removeFirst();
+            String matricNumber = waitlist.removeFirst();
             System.out.println("removed first student in waitlist");
 
-            //TODO use database users hashmap to look up Student object by matricNo
+            //TODO use database users hashmap to look up Student object by matricNumber
         } else {
             System.out.println("error, no vacancies");
         }
