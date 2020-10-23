@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class CourseIndex implements Serializable {
+public final class CourseIndex implements Serializable {
     
     private int vacancies;
     private LinkedList<String> waitlist = new LinkedList<>();

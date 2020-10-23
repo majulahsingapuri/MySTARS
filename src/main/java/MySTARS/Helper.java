@@ -2,7 +2,7 @@ package MySTARS;
 
 import java.util.Scanner;
 
-public class Helper {
+public final class Helper {
     
     protected static Scanner sc = new Scanner(System.in);
 

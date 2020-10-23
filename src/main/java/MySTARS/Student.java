@@ -2,7 +2,7 @@ package MySTARS;
 
 import java.util.HashMap;
 
-public class Student extends User {
+public final class Student extends User {
 
     private static final long serialVersionUID = 77L;
     private String matricNumber;
@@ -170,5 +170,7 @@ public class Student extends User {
     protected boolean clashes(String code, String index){
         //TODO complete time table clash check
     }
+
+    //TODO add method that returns Student but the stripped down version to be stored in Courses.
 
 }

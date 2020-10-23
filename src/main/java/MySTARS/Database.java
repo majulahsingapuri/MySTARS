@@ -3,7 +3,7 @@ package MySTARS;
 import java.util.HashMap;
 import java.io.*;
 
-public class Database {
+public final class Database {
     
     protected static HashMap<String, Course> COURSES = new HashMap<String, Course>();
     protected static HashMap<String, User> USERS = new HashMap<String, User>();

@@ -1,6 +1,6 @@
 package MySTARS;
 
-public class Admin extends User {
+public final class Admin extends User {
 
     private static final long serialVersionUID = 26L;
 

@@ -5,7 +5,7 @@ import java.util.Date;
 
 // This class contains information specific to lesson types
 
-class Lesson implements Serializable {
+public final class Lesson implements Serializable {
 
     private ClassType type;
     private Date time;  // TODO use jodatime to sort out timetable stuff

@@ -3,7 +3,7 @@ package MySTARS;
 import java.util.HashMap;
 import java.io.*;
 
-public class Course implements Serializable {
+public final class Course implements Serializable {
 
     private String courseCode = "";
     private HashMap<String, CourseIndex> courseIndices = new HashMap<>();
@@ -30,7 +30,9 @@ public class Course implements Serializable {
 
     protected Course(String courseCode, CourseIndex courseIndex, CourseStatus courseStatus) {
 
-        //TODO add shortcut to add in course index to course. (useful for adding to student class so you can just copy over the CourseIndex and remove any extra bits)
+        //TODO add shortcut to add in course index to course. 
+        // - useful for adding to student class so you can just copy over the CourseIndex and remove any extra bits
+        // - Can create a method to replicate this functionality too
         this.courseCode = courseCode;
         this.courseStatus = courseStatus;
     }
