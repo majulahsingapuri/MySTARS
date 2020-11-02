@@ -31,7 +31,7 @@ public abstract class View {
         System.out.println("║      ██╔████╔██║ ╚████╔╝ ███████╗   ██║   ███████║██████╔╝███████╗     ║");
         System.out.println("║      ██║╚██╔╝██║  ╚██╔╝  ╚════██║   ██║   ██╔══██║██╔══██╗╚════██║     ║");
         System.out.println("║      ██║ ╚═╝ ██║   ██║   ███████║   ██║   ██║  ██║██║  ██║███████║     ║");
-        System.out.println("║      ╚═╝     ╚═╝   ╚═╝   ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝     ║");                                ║                                                                        ║
+        System.out.println("║      ╚═╝     ╚═╝   ╚═╝   ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝     ║");
         System.out.println("║                                                                        ║");
         System.out.println("║                    Nanyang Technological University                    ║");            
         System.out.println("║                                                                        ║");
