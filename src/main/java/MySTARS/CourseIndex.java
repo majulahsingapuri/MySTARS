@@ -33,6 +33,11 @@ public final class CourseIndex implements Serializable {
         return waitlist.size();
     }
 
+    protected String getCourseIndex() {
+
+        return indexNumber;
+    }
+
     protected void addToWaitlist(String matricNumber) {
 
         waitlist.add(matricNumber);

@@ -79,6 +79,18 @@ public final class Course implements Serializable {
         }
     }
 
+    protected boolean containsIndex(String index) {
+
+        //TODO add console log for null courseIndex
+        CourseIndex courseIndex = courseIndices.get(index);
+        if (courseIndex != null) {
+            return true;
+        } else {
+            System.out.println("error, index not found?");
+            return false;
+        }
+    }
+
     protected void addIndices(int numIndices) {
 
         for(int i = 0; i < numIndices; i++) {

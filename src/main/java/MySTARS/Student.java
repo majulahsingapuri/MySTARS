@@ -6,7 +6,7 @@ public final class Student extends User {
 
     private static final long serialVersionUID = 77L;
     private String matricNumber;
-    //TODO possibly rename this to something that doesn't clash with Database.COURSES?
+    //TODO possibly rename this to something that doesn't clash with Database.Database.COURSES?
     private HashMap<String, Course> courses = new HashMap<String, Course>(); //<username, course> where course only contains the student's course index
     private Gender gender = Gender.PREFER_NOT_TO_SAY;
     private String nationality = "";
@@ -77,9 +77,9 @@ public final class Student extends User {
     protected boolean addCourse(String code, String ind) throws Exception{
         if (clashes(code))
             throw new Exception("Timetable clash!");
-        if (!COURSES.containsKey(code))
+        if (!Database.COURSES.containsKey(code))
             throw new Exception("Course " + code + " does not exist!");
-        Course course = COURSES.get(code);
+        Course course = Database.COURSES.get(code);
         CourseIndex courseInd;
         try{
             courseInd = course.getIndex(ind);
@@ -90,25 +90,25 @@ public final class Student extends User {
         if (courseInd.getVacancies()<=0){
             //put on waitlist
             //TODO Need to modify this to pass in CourseIndex rather than just the string of the Index. That is more versatile
-            courses.put(code, new Course(code, ind, CourseStatus.WAITLIST));
+            courses.put(code, new Course(code, courseInd, CourseStatus.WAITLIST));
             courseInd.addToWaitlist(this.matricNumber);
             return false;
         }
         else{
             //add course successfully
             //TODO Need to modify this to pass in CourseIndex rather than just the string of the Index. That is more versatile
-            courses.put(code, new Course(code, ind, CourseStatus.REGISTERED));
+            courses.put(code, new Course(code, courseInd, CourseStatus.REGISTERED));
             courseInd.enrollStudent(this);
             return true;
         }
     }
 
     protected void dropCourse(String code) throws Exception{
-        if (!COURSES.containsKey(code))
+        if (!Database.COURSES.containsKey(code))
             throw new Exception("Course " + code + " does not exist!");
         if (!courses.containsKey(code))
             throw new Exception("Course " + code + " has not been added by Student!");
-        Course course = COURSES.get(code);
+        Course course = Database.COURSES.get(code);
         CourseIndex courseInd = course.getIndex(this.courses.get(code).getIndices()[0]);
         CourseStatus courseStatus = this.courses.get(code).getStatus();
         
@@ -130,23 +130,23 @@ public final class Student extends User {
     //FIXME calling parameters rather than methods. Check for such errors
     //can only change index of registered courses
     protected void changeIndex(String code, String currentInd, String newInd) throws Exception{
-        if (!COURSES.containsKey(code))
+        if (!Database.COURSES.containsKey(code))
             throw new Exception("Course " + code + " does not exist!");
         if (!courses.containsKey(code))
             throw new Exception("Course " + code + " has not been added by Student!");
-        if (!COURSES.get(code).containsIndex(currentInd))
+        if (!Database.COURSES.get(code).containsIndex(currentInd))
             throw new Exception("Course " + currentInd + " does not contain index " + currentInd + "!");
-        if (!COURSES.get(code).containsIndex(newInd))
+        if (!Database.COURSES.get(code).containsIndex(newInd))
             throw new Exception("Course " + newInd + " does not contain index " + newInd + "!");
-        if (courses.get(code).getIndices[0] != currentInd)
+        if (courses.get(code).getIndices()[0] != currentInd)
             throw new Exception("Student is not in index " + currentInd + "!");
         if (clashes(code,newInd))
             throw new Exception("New index clashes with current timetable!");
         if (this.courses.get(code).getStatus() != CourseStatus.REGISTERED)
             throw new Exception("Student not resgistered in course " + code + ", index " + currentInd + "!");
         
-        CourseIndex newCourseInd = course.getIndex(newInd);
-        if (newCourseInd.getVacancies<=0)
+        CourseIndex newCourseInd = courses.get(code).getIndex(newInd);
+        if (newCourseInd.getVacancies()<=0)
             throw new Exception("New index " + newInd + " has no vacancies!");
         dropCourse(code);
         addCourse(code, newInd);
@@ -159,6 +159,7 @@ public final class Student extends User {
     */
     protected boolean clashes(String code){
         //TODO complete time table clash check
+        return false;
     }
 
     /*
@@ -169,6 +170,7 @@ public final class Student extends User {
     */
     protected boolean clashes(String code, String index){
         //TODO complete time table clash check
+        return false;
     }
 
     //TODO add method that returns Student but the stripped down version to be stored in Courses.
