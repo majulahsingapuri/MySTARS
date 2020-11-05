@@ -23,6 +23,7 @@ public final class Student extends User {
 
     public Student(String userName, String matricNumber, String firstName, String lastName, String password, Gender gender, String nationality) {
         super(userName, password, AccessLevel.STUDENT);
+        this.matricNumber = matricNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -166,7 +167,7 @@ public final class Student extends User {
         else{
             //add course successfully
             //TODO Need to modify this to pass in CourseIndex rather than just the string of the Index. That is more versatile
-            Course newCourse = new Course(code, courseInd, CourseStatus.REGISTERED)
+            Course newCourse = new Course(code, courseInd, CourseStatus.REGISTERED);
             courses.put(code, newCourse);
             courseInd.enrollStudent(this);
             addAU(newCourse.getAU());
@@ -261,9 +262,7 @@ public final class Student extends User {
         return false;
     }
 
-    //TODO add method that returns Student but the stripped down version to be stored in Courses.
     protected Student simpleCopy(){
-        //what needs to be in the stripped down version?? other than matric number
         return new Student(this.getUsername(), this.matricNumber, this.firstName, this.lastName);
     }
 }
