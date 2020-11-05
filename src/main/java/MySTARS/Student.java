@@ -6,21 +6,25 @@ public final class Student extends User {
 
     private static final long serialVersionUID = 77L;
     private String matricNumber;
+    private String firstName;
+    private String lastName;
     //TODO possibly rename this to something that doesn't clash with Database.COURSES?
     private HashMap<String, Course> courses = new HashMap<String, Course>(); //<courseCode, course> where course only contains the student's course index
     private Gender gender = Gender.PREFER_NOT_TO_SAY;
     private String nationality = "";
     private int registeredAUs = 0;
 
-    public Student(String name, String matricNumber) {
-
-        super(name, AccessLevel.STUDENT);
+    public Student(String userName, String matricNumber, String firstName, String lastName) {
+        super(userName, AccessLevel.STUDENT);
         this.matricNumber = matricNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    public Student(String name, String matricNumber, String password, Gender gender, String nationality) {
-
-        super(name, password, AccessLevel.STUDENT);
+    public Student(String userName, String matricNumber, String firstName, String lastName, String password, Gender gender, String nationality) {
+        super(userName, password, AccessLevel.STUDENT);
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.gender = gender;
         this.nationality = nationality;
     }
@@ -50,9 +54,12 @@ public final class Student extends User {
         if (!isValidMatricNo(matricNo)){return false;}
 
         //check that the matric number hasn't been used yet.
-        for (String usedMatricNo : Database.USERS.keySet()) {
-            if (matricNo.equals(usedMatricNo)){
-                return false;
+        for (User u : Database.USERS.values()) {
+            if (u.getAccessLevel() == AccessLevel.STUDENT){
+                Student s = (Student) u;
+                if (s.getMatricNumber().equals(matricNo)){
+                    return false;
+                }
             }
         }
 
@@ -63,6 +70,14 @@ public final class Student extends User {
     protected String getMatricNumber() {
 
         return matricNumber;
+    }
+
+    protected String getFirstName(){
+        return firstName;
+    }
+
+    protected String getLastName(){
+        return lastName;
     }
 
     //FIXME This needs to be tested after the Course class is implemented!!!
@@ -127,7 +142,7 @@ public final class Student extends User {
     returns the course's new CourseStatus
     throws exceptions when a timetable clash is found or the course code does not exist
     */
-    protected boolean addCourse(String code, String ind) throws Exception{
+    protected CourseStatus addCourse(String code, String ind) throws Exception{
         //TODO make sure calling class checks that course is not yet registered nor on the waitlist
         if (clashes(code))
             throw new Exception("Timetable clash!");
@@ -249,6 +264,6 @@ public final class Student extends User {
     //TODO add method that returns Student but the stripped down version to be stored in Courses.
     protected Student simpleCopy(){
         //what needs to be in the stripped down version?? other than matric number
-        return new Student(this.getUsername(), this.matricNumber);
+        return new Student(this.getUsername(), this.matricNumber, this.firstName, this.lastName);
     }
 }
