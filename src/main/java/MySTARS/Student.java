@@ -60,7 +60,7 @@ public final class Student extends User {
                 count++;
         }
 
-        String[] courseInds = new String[courses.size()];
+        String[] courseInds = new String[count];
         int i = 0;
         for (Course course : courses.values()){
             if (course.getStatus() == courseStatus)
@@ -138,7 +138,7 @@ public final class Student extends User {
             throw new Exception("Course " + currentInd + " does not contain index " + currentInd + "!");
         if (!Database.COURSES.get(code).containsIndex(newInd))
             throw new Exception("Course " + newInd + " does not contain index " + newInd + "!");
-        if (courses.get(code).getIndices()[0] != currentInd)
+        if (!courses.get(code).getIndices()[0].equals(currentInd))
             throw new Exception("Student is not in index " + currentInd + "!");
         if (clashes(code,newInd))
             throw new Exception("New index clashes with current timetable!");
