@@ -25,6 +25,41 @@ public final class Student extends User {
         this.nationality = nationality;
     }
 
+    public static boolean isValidMatricNo(String matricNo){
+        //has to have 9 characters
+        if (matricNo.length() != 9){return false;}
+
+        //the first character has to be an uppercase letter
+        if (matricNo.charAt(0) < 'A' || matricNo.charAt(0) > 'Z'){return false;}
+
+        //the next 7 characters have to be digits
+        for (int i = 1; i < 8; i++){
+            if (matricNo.charAt(i) < '0' || matricNo.charAt(i) > '9'){
+                return false;
+            }
+        }
+
+        //the last character has to be an uppercase letter
+        if (matricNo.charAt(0) < 'A' || matricNo.charAt(0) > 'Z'){return false;}
+
+        //all conditions have been passed
+        return true;
+    }
+
+    public static boolean isValidNewMatricNo(String matricNo) {
+        if (!isValidMatricNo(matricNo)){return false;}
+
+        //check that the matric number hasn't been used yet.
+        for (String usedMatricNo : Database.USERS.keySet()) {
+            if (matricNo.equals(usedMatricNo)){
+                return false;
+            }
+        }
+
+        //all conditions have been passed
+        return true;
+    }
+
     protected String getMatricNumber() {
 
         return matricNumber;
