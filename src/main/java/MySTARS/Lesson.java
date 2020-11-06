@@ -1,14 +1,17 @@
 package MySTARS;
 
 import java.io.Serializable;
-import java.util.Date;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 // This class contains information specific to lesson types
 
 public final class Lesson implements Serializable {
 
     private ClassType type;
-    private Date time;  // TODO use jodatime to sort out timetable stuff
+    private Interval time;  // TODO use jodatime to sort out timetable stuff
+    private DateTime startTime;
+    private DateTime endTime;
     private String location;
     private String remarks;
     private static final long serialVersionUID = 12L;
