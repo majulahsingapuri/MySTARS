@@ -1,6 +1,9 @@
 package MySTARS;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 public final class Student extends User {
 
@@ -8,7 +11,6 @@ public final class Student extends User {
     private String matricNumber;
     private String firstName;
     private String lastName;
-    //TODO possibly rename this to something that doesn't clash with Database.COURSES?
     private HashMap<String, Course> courses = new HashMap<String, Course>(); //<courseCode, course> where course only contains the student's course index
     private Gender gender = Gender.PREFER_NOT_TO_SAY;
     private String nationality = "";
@@ -70,15 +72,23 @@ public final class Student extends User {
 
     protected String getMatricNumber() {
 
-        return matricNumber;
+        return this.matricNumber;
     }
 
     protected String getFirstName(){
-        return firstName;
+        return this.firstName;
     }
 
     protected String getLastName(){
-        return lastName;
+        return this.lastName;
+    }
+
+    protected Gender getGender(){
+        return this.gender;
+    }
+
+    protected String getNationality(){
+        return this.nationality;
     }
 
     //FIXME This needs to be tested after the Course class is implemented!!!
@@ -125,10 +135,12 @@ public final class Student extends User {
         return this.registeredAUs;
     }
 
+    //TODO serialize/deserialize
     protected void addAU(int au){
         this.registeredAUs += au;
     }
 
+    //TODO serialize/deserialize
     protected void removeAU(int au){
         this.registeredAUs -= au;
         //TODO is this needed...? should this method throw an exception instead?
@@ -138,7 +150,7 @@ public final class Student extends User {
         }
     }
 
-    //TODO is there a better way to do this? return the CourseStatus rather than a boolean to make it more usable?
+    //TODO serialize/deserialize
     /*
     returns the course's new CourseStatus
     throws exceptions when a timetable clash is found or the course code does not exist
@@ -175,6 +187,7 @@ public final class Student extends User {
         }
     }
 
+    //TODO serialize and deserialize
     protected void dropCourse(String code) throws Exception{
         if (!Database.COURSES.containsKey(code))
             throw new Exception("Course " + code + " does not exist!");
@@ -199,7 +212,7 @@ public final class Student extends User {
     }
 
 
-    //TODO can this be changed to if-elses rather than a bunch of ifs?
+    //TODO serialize/deserialize
     //FIXME calling parameters rather than methods. Check for such errors
     //can only change index of registered courses
     protected void changeIndex(String code, String currentInd, String newInd) throws Exception{
@@ -232,18 +245,45 @@ public final class Student extends User {
     Assumes that the code passed in will correspond to
     a course that has not yet been registered nor waitlisted.
     */
+    //FIXME check that this works properly with dependent classes
     protected boolean clashes(String code){
-        //TODO complete time table clash check
+        ArrayList<Interval> currentIntervals = new ArrayList<Interval>();
+        for (Course c : this.courses.values()){
+            CourseIndex ind = c.getIndex(c.getIndices()[0]);
+            Lesson[] lessons = ind.getLessons();
+            for (Lesson l : lessons){
+                currentIntervals.add(l.getTimeInterval());
+            }
+        }
+
         boolean doesClash = false;
         Course c = Database.COURSES.get(code);
         String[] indices = c.getIndices();
+        
+
         //loop through all indices
         for (String ind : indices){
             CourseIndex courseIndex = c.getIndex(ind);
             doesClash = false;
+            Lesson[] lessons = courseIndex.getLessons();
             //loop through all lessons in courseIndex
-                //TODO check the timings
-            if (!doesClash){ //there is an index that does not clash!
+            boolean lessonClashes = false;
+            for (Lesson l : lessons){
+                Interval interval = l.getTimeInterval();
+                for (Interval busy : currentIntervals){
+                    if (busy.overlaps(interval)){
+                        doesClash = true;
+                        lessonClashes = true;
+                        break;
+                    }
+                }
+                if (lessonClashes){
+                    break;
+                }
+            }
+
+            if (!doesClash){ 
+                //there is an index that does not clash!
                 return doesClash;
             }
         }

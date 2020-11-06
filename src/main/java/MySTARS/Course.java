@@ -10,6 +10,7 @@ public final class Course implements Serializable {
     private String description = "";
     private CourseStatus courseStatus = CourseStatus.NONE;
     private static final long serialVersionUID = 10L;
+    //TODO add AUs
 
     protected Course(String courseCode) {
 
@@ -104,6 +105,8 @@ public final class Course implements Serializable {
             //TODO check that the course index doesnt already exist in the course to prevent duplicate entries
             CourseIndex index = new CourseIndex(vacancies, courseIndex);
             courseIndices.put(courseIndex, index);
+            //TODO add necessary course index info eg. lessons
+            //TODO serialize
             System.out.println(courseIndex + " added to courseIndices");
         }
     }
