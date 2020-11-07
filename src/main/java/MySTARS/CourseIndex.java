@@ -8,21 +8,24 @@ import java.util.LinkedList;
 public final class CourseIndex implements Serializable {
     
     private int vacancies = 0;
+    private String courseCode;
     private String indexNumber;
     private ArrayList<Lesson> lessons = new ArrayList<Lesson>();
     private LinkedList<String> waitlist = new LinkedList<String>();
     private HashMap<String, Student> enrolledStudents = new HashMap<String, Student>();
     private static final long serialVersionUID = 11L;
 
-    protected CourseIndex(int vacancies, String indexNumber, Lesson lesson) {
+    protected CourseIndex(int vacancies, String courseCode, String indexNumber, Lesson lesson) {
 
         this.vacancies = vacancies; 
+        this.courseCode = courseCode;
         this.indexNumber = indexNumber;
         this.lessons.add(lesson);
     }
-    protected CourseIndex(int vacancies, String indexNumber, ArrayList<Lesson> lessons) {
+    protected CourseIndex(int vacancies, String courseCode, String indexNumber, ArrayList<Lesson> lessons) {
 
         this.vacancies = vacancies; 
+        this.courseCode = courseCode;
         this.indexNumber = indexNumber;
         this.lessons = lessons;
     }
@@ -35,6 +38,11 @@ public final class CourseIndex implements Serializable {
     protected int getVacancies() {
 
         return this.vacancies;
+    }
+
+    protected String getCourseCode() {
+
+        return this.courseCode;
     }
 
     protected String getCourseIndex() {
@@ -88,6 +96,7 @@ public final class CourseIndex implements Serializable {
         String username = student.getUsername();
         if(this.vacancies != 0) {
             enrolledStudents.put(username, student);
+            this.vacancies -= 1;
         } else {
             String answer;
             do {
@@ -109,6 +118,7 @@ public final class CourseIndex implements Serializable {
             System.out.println("student not found in course register");
         } else {
             System.out.println(username + " removed from course register");
+            this.vacancies += 1;
             enrollNextInWaitlist();
         }
     }
@@ -122,10 +132,27 @@ public final class CourseIndex implements Serializable {
             
             Student student = (Student) Database.USERS.get(username);
             if (student != null) {
-                enrolledStudents.put(username, student);
+                try {
+                    if (student.addCourseFromWaitlist(this)){
+                        enrolledStudents.put(username, student.simpleCopy());
+                        this.vacancies -= 1;
+                    }
+                    else{
+                        enrollNextInWaitlist();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                enrollNextInWaitlist();
             }
         } else {
             System.out.println("error, no vacancies");
         }
+    }
+
+    protected CourseIndex simpleCopy() {
+        return new CourseIndex(0, this.courseCode, this.indexNumber, this.lessons);
     }
 }

@@ -2,8 +2,6 @@ package MySTARS;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.joda.time.DateTime;
-import org.joda.time.Interval;
 
 public final class Student extends User {
 
@@ -11,19 +9,23 @@ public final class Student extends User {
     private String matricNumber;
     private String firstName;
     private String lastName;
-    private HashMap<String, Course> courses = new HashMap<String, Course>(); //<courseCode, course> where course only contains the student's course index
+    private HashMap<String, Course> courses = new HashMap<String, Course>();
     private Gender gender = Gender.PREFER_NOT_TO_SAY;
     private String nationality = "";
     private int registeredAUs = 0;
 
-    public Student(String userName, String matricNumber, String firstName, String lastName) {
+    protected Student(String userName, String matricNumber, String firstName, String lastName, Gender gender, String nationality) {
+
         super(userName, AccessLevel.STUDENT);
         this.matricNumber = matricNumber;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.gender = gender;
+        this.nationality = nationality;
     }
 
-    public Student(String userName, String matricNumber, String firstName, String lastName, String password, Gender gender, String nationality) {
+    protected Student(String userName, String matricNumber, String firstName, String lastName, String password, Gender gender, String nationality) {
+
         super(userName, password, AccessLevel.STUDENT);
         this.matricNumber = matricNumber;
         this.firstName = firstName;
@@ -32,12 +34,13 @@ public final class Student extends User {
         this.nationality = nationality;
     }
 
-    public static boolean isValidMatricNo(String matricNo){
+    protected static boolean isValidMatricNo(String matricNo) {
+
         //has to have 9 characters
-        if (matricNo.length() != 9){return false;}
+        if (matricNo.length() != 9) {return false;}
 
         //the first character has to be an uppercase letter
-        if (matricNo.charAt(0) < 'A' || matricNo.charAt(0) > 'Z'){return false;}
+        if (matricNo.charAt(0) < 'A' || matricNo.charAt(0) > 'Z') {return false;}
 
         //the next 7 characters have to be digits
         for (int i = 1; i < 8; i++){
@@ -47,20 +50,21 @@ public final class Student extends User {
         }
 
         //the last character has to be an uppercase letter
-        if (matricNo.charAt(0) < 'A' || matricNo.charAt(0) > 'Z'){return false;}
+        if (matricNo.charAt(0) < 'A' || matricNo.charAt(0) > 'Z') {return false;}
 
         //all conditions have been passed
         return true;
     }
 
-    public static boolean isValidNewMatricNo(String matricNo) {
-        if (!isValidMatricNo(matricNo)){return false;}
+    protected static boolean isValidNewMatricNo(String matricNo) {
+
+        if (!isValidMatricNo(matricNo)) {return false;}
 
         //check that the matric number hasn't been used yet.
         for (User u : Database.USERS.values()) {
-            if (u.getAccessLevel() == AccessLevel.STUDENT){
+            if (u.getAccessLevel() == AccessLevel.STUDENT) {
                 Student s = (Student) u;
-                if (s.getMatricNumber().equals(matricNo)){
+                if (s.getMatricNumber().equals(matricNo)) {
                     return false;
                 }
             }
@@ -75,38 +79,42 @@ public final class Student extends User {
         return this.matricNumber;
     }
 
-    protected String getFirstName(){
+    protected String getFirstName() {
         return this.firstName;
     }
 
-    protected String getLastName(){
+    protected String getLastName() {
+
         return this.lastName;
     }
 
-    protected Gender getGender(){
+    protected Gender getGender() {
+
         return this.gender;
     }
 
-    protected String getNationality(){
+    protected String getNationality() {
+
         return this.nationality;
     }
 
     protected Course[] getCourses(CourseStatus courseStatus) {
 
-        if (courseStatus == CourseStatus.NONE){
+        if (courseStatus == CourseStatus.NONE) {
             return courses.keySet().toArray(new Course[courses.size()]);
         }
         
         ArrayList<Course> courseIDs = new ArrayList<Course>();
-        for (Course course : courses.values()){
-            if (course.getStatus() == courseStatus)
+        for (Course course : courses.values()) {
+            if (course.getStatus() == courseStatus) {
                 courseIDs.add(course);
+            }
         }
 
         return courseIDs.toArray(new Course[courseIDs.size()]);
     }
 
-    protected CourseIndex[] getIndices(CourseStatus courseStatus){
+    protected CourseIndex[] getIndices(CourseStatus courseStatus) {
 
         ArrayList<CourseIndex> courseInds = new ArrayList<CourseIndex>();
         for (Course course : courses.values()) {
@@ -119,177 +127,184 @@ public final class Student extends User {
         return courseInds.toArray(new CourseIndex[courseInds.size()]);
     }
 
-    protected int getAU(){
+    protected int getAU() {
+
         return this.registeredAUs;
     }
 
-    //TODO serialize/deserialize
-    protected void addAU(AU au){
-        this.registeredAUs += au.value;
+    protected void addAU(AU acadUnits) {
+
+        this.registeredAUs += acadUnits.value;
+        Database.serialise(FileType.USERS);
     }
 
-    //TODO serialize/deserialize
-    protected void removeAU(AU au){
-        this.registeredAUs -= au.value;
-        //TODO is this needed...? should this method throw an exception instead?
-        //ensure logic is not broken
+    protected void removeAU(AU acadUnits) {
+
+        this.registeredAUs -= acadUnits.value;
+        //ensures logic is not broken
         if (this.registeredAUs < 0){
             this.registeredAUs = 0;
         }
+        Database.serialise(FileType.USERS);
     }
 
-    //TODO serialize/deserialize
-    /*
-    returns the course's new CourseStatus
-    throws exceptions when a timetable clash is found or the course code does not exist
-    */
-    protected CourseStatus addCourse(String code, String ind) throws Exception{
+    protected CourseStatus addCourse(String courseCode, String courseIndex) throws Exception {
+        
         //TODO make sure calling class checks that course is not yet registered nor on the waitlist
-        if (clashes(code))
+        Database.deserialise(FileType.COURSES);
+        if (!Database.COURSES.containsKey(courseCode)) {
+            throw new Exception("Course " + courseCode + " does not exist!");
+        } else if (clashes(courseCode, courseIndex)) {
             throw new Exception("Timetable clash!");
-        if (!Database.COURSES.containsKey(code))
-            throw new Exception("Course " + code + " does not exist!");
-        Course course = Database.COURSES.get(code);
-        CourseIndex courseInd;
-        try{
-            courseInd = course.getIndex(ind);
         }
-        catch (Exception e){
-            throw new Exception(e.getMessage());
-        }
-        if (courseInd.getVacancies()<=0){
+        
+        Course course = Database.COURSES.get(courseCode);
+        CourseIndex courseInd = course.getIndex(courseIndex);
+        
+        if (courseInd.getVacancies() > 0) {
+            //add course successfully
+            this.courses.put(courseCode, course.simpleCopy(CourseStatus.REGISTERED, courseInd.simpleCopy()));
+            courseInd.enrollStudent(this);
+            addAU(course.getCourseAU());
+            Database.serialise(FileType.USERS);
+            Database.serialise(FileType.COURSES);
+            return CourseStatus.REGISTERED;
+        } else {
             //put on waitlist
-            //TODO Need to modify this to pass in CourseIndex rather than just the string of the Index. That is more versatile
-            courses.put(code, new Course(code, courseInd, CourseStatus.WAITLIST));
+            this.courses.put(courseCode, course.simpleCopy(CourseStatus.WAITLIST, courseInd.simpleCopy()));
             courseInd.addToWaitlist(this.matricNumber);
+            Database.serialise(FileType.USERS);
+            Database.serialise(FileType.COURSES);
             return CourseStatus.WAITLIST;
         }
-        else{
-            //add course successfully
-            //TODO Need to modify this to pass in CourseIndex rather than just the string of the Index. That is more versatile
-            Course newCourse = new Course(code, courseInd, CourseStatus.REGISTERED);
-            courses.put(code, newCourse);
-            courseInd.enrollStudent(this);
-            addAU(newCourse.getCourseAU());
-            return CourseStatus.REGISTERED;
-        }
     }
 
-    //TODO serialize and deserialize
-    protected void dropCourse(String code) throws Exception{
-        if (!Database.COURSES.containsKey(code))
-            throw new Exception("Course " + code + " does not exist!");
-        if (!courses.containsKey(code))
-            throw new Exception("Course " + code + " has not been added by Student!");
-        Course course = Database.COURSES.get(code);
-        CourseIndex courseInd = course.getIndex(this.courses.get(code).getIndices()[0].getCourseIndex());
-        CourseStatus courseStatus = this.courses.get(code).getStatus();
+    protected void dropCourse(String courseCode) throws Exception {
+
+        Database.deserialise(FileType.COURSES);
+
+        if (!Database.COURSES.containsKey(courseCode)) {
+            throw new Exception("Course " + courseCode + " does not exist!");
+        } else if (!this.courses.containsKey(courseCode)) {
+            throw new Exception("Course " + courseCode + " has not been added by Student!");
+        }
+
+        Course course = Database.COURSES.get(courseCode);
+        CourseIndex courseInd = course.getIndex(this.courses.get(courseCode).getIndices()[0].getCourseIndex());
+        CourseStatus courseStatus = this.courses.get(courseCode).getStatus();
         
-        if (courseStatus == CourseStatus.REGISTERED){
+        if (courseStatus == CourseStatus.REGISTERED) {
             courseInd.unenrollStudent(this);
             removeAU(course.getCourseAU());
-            this.courses.remove(code);
-        }
-        else if (courseStatus == CourseStatus.WAITLIST){
+            this.courses.remove(courseCode);
+            Database.serialise(FileType.COURSES);
+            Database.serialise(FileType.USERS);
+        } else if (courseStatus == CourseStatus.WAITLIST) {
             courseInd.removeFromWaitlist(this.matricNumber);
-            this.courses.remove(code);
-        }
-        else{
+            this.courses.remove(courseCode);
+            Database.serialise(FileType.COURSES);
+            Database.serialise(FileType.USERS);
+        } else {
             throw new Exception("Invalid course courseStatus!");
         }
     }
 
+    protected void changeIndex(String code, String currentInd, String newInd) throws Exception {
 
-    //TODO serialize/deserialize
-    //FIXME calling parameters rather than methods. Check for such errors
-    //can only change index of registered courses
-    protected void changeIndex(String code, String currentInd, String newInd) throws Exception{
-        if (!Database.COURSES.containsKey(code))
+        Database.deserialise(FileType.COURSES);
+
+        if (!Database.COURSES.containsKey(code)) {
             throw new Exception("Course " + code + " does not exist!");
-        if (!courses.containsKey(code))
+        } else if (this.courses.containsKey(code)) {
             throw new Exception("Course " + code + " has not been added by Student!");
-        if (!Database.COURSES.get(code).containsIndex(currentInd))
+        } else if (!Database.COURSES.get(code).containsIndex(currentInd)) {
             throw new Exception("Course " + currentInd + " does not contain index " + currentInd + "!");
-        if (!Database.COURSES.get(code).containsIndex(newInd))
+        } else if (!Database.COURSES.get(code).containsIndex(newInd)) {
             throw new Exception("Course " + newInd + " does not contain index " + newInd + "!");
-        if (!courses.get(code).getIndices()[0].getCourseIndex().equals(currentInd))
+        } else if (!this.courses.get(code).getIndices()[0].getCourseIndex().equals(currentInd)) {
             throw new Exception("Student is not in index " + currentInd + "!");
-        if (clashes(code,newInd))
+        } else if (this.courses.get(code).getStatus() != CourseStatus.REGISTERED) {
+            throw new Exception("Student not registered in course " + code + ", index " + currentInd + "!");
+        } else if (clashes(code,newInd)) {
             throw new Exception("New index clashes with current timetable!");
-        if (this.courses.get(code).getStatus() != CourseStatus.REGISTERED)
-            throw new Exception("Student not resgistered in course " + code + ", index " + currentInd + "!");
-        
-        CourseIndex newCourseInd = courses.get(code).getIndex(newInd);
-        if (newCourseInd.getVacancies()<=0)
+        }
+
+        CourseIndex newCourseInd = Database.COURSES.get(code).getIndex(newInd);
+        if (newCourseInd.getVacancies()<=0) {
             throw new Exception("New index " + newInd + " has no vacancies!");
+        }
+
         dropCourse(code);
         addCourse(code, newInd);
+
+        Database.serialise(FileType.USERS);
+        Database.serialise(FileType.COURSES);
     }
 
-    /*
-    checks potential clash with REGISTERED courses
-    return true if found a clash
-    otherwise, return false
-    Assumes that the code passed in will correspond to
-    a course that has not yet been registered nor waitlisted.
-    */
-    //FIXME check that this works properly with dependent classes
-    protected boolean clashes(String code){
-        ArrayList<Interval> currentIntervals = new ArrayList<Interval>();
-        for (Course c : this.courses.values()){
-            CourseIndex ind = c.getIndex(c.getIndices()[0].getCourseIndex());
-            ArrayList<Lesson> lessons = ind.getLessons();
-            for (Lesson l : lessons){
-                currentIntervals.add(l.getTime());
-            }
-        }
+    protected boolean clashes(String courseCode){
+        CourseIndex[] addCourseIndices = Database.COURSES.get(courseCode).getIndices();
 
-        boolean doesClash = false;
-        Course c = Database.COURSES.get(code);
-        CourseIndex[] indices = c.getIndices();
-        
-
-        //loop through all indices
-        for (CourseIndex courseIndex : indices){
-            doesClash = false;
-            ArrayList<Lesson> lessons = courseIndex.getLessons();
-            //loop through all lessons in courseIndex
-            boolean lessonClashes = false;
-            for (Lesson l : lessons){
-                Interval interval = l.getTime();
-                for (Interval busy : currentIntervals){
-                    if (busy.overlaps(interval)){
-                        doesClash = true;
-                        lessonClashes = true;
-                        break;
+        for (Course studentCourse : this.courses.values()) {
+            if (!studentCourse.getCourseCode().equals(courseCode) && studentCourse.getStatus() == CourseStatus.REGISTERED) {
+                CourseIndex studentCourseIndex = studentCourse.getIndices()[0];
+                for (Lesson registeredLesson : studentCourseIndex.getLessons()) {
+                    for (CourseIndex addCourseIndex : addCourseIndices) {
+                        for (Lesson addCourseLesson : addCourseIndex.getLessons()) {
+                            if (registeredLesson.getTime().overlaps(addCourseLesson.getTime())) {
+                                return true;
+                            }
+                        }   
                     }
                 }
-                if (lessonClashes){
-                    break;
-                }
-            }
-
-            if (!doesClash){ 
-                //there is an index that does not clash!
-                return doesClash;
             }
         }
-        return doesClash;
-    }
-
-    /*
-    checks potential clash with REGISTERED courses
-    if code is an already registered course, don't check with the registered index of the course
-    return true if found a clash
-    otherwise, return false
-    */
-    protected boolean clashes(String code, String index){
-        //TODO complete time table clash check
 
         return false;
     }
 
+    protected boolean clashes(String courseCode, String index) {
+
+        CourseIndex addCourseIndex = Database.COURSES.get(courseCode).getIndex(index);
+
+        for (Course studentCourse : this.courses.values()) {
+            if (!studentCourse.getCourseCode().equals(courseCode) && studentCourse.getStatus() == CourseStatus.REGISTERED) {
+                CourseIndex studentCourseIndex = studentCourse.getIndices()[0];
+                for (Lesson registeredLesson : studentCourseIndex.getLessons()) {
+                    for (Lesson addCourseLesson : addCourseIndex.getLessons()) {
+                        if (registeredLesson.getTime().overlaps(addCourseLesson.getTime())) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+	protected boolean addCourseFromWaitlist(CourseIndex courseIndex) throws Exception {
+        String courseCode = courseIndex.getCourseCode();
+        Course myCourse = this.courses.get(courseCode);
+
+        if (myCourse == null || myCourse.getStatus() != CourseStatus.WAITLIST) {
+            return false;
+        }
+
+        CourseIndex myIndex = myCourse.getIndex(courseIndex.getCourseIndex());
+        if (myIndex == null) {
+            return false;
+        }
+    
+        if (!clashes(courseCode, myIndex.getCourseIndex())) {
+            dropCourse(courseCode);
+            addCourse(courseCode, myIndex.getCourseIndex());
+            return true;
+        } else{
+            return false;
+        }
+    }
+    
     protected Student simpleCopy(){
-        return new Student(this.getUsername(), this.matricNumber, this.firstName, this.lastName);
+        return new Student(this.getUsername(), this.matricNumber, this.firstName, this.lastName, this.gender, this.nationality);
     }
 }

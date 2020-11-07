@@ -191,7 +191,7 @@ public final class Course implements Serializable {
                     Lesson lesson = new Lesson(classType, dayOfWeek, startTime, endTime, location);
                     lessons.add(lesson);
                 }
-                CourseIndex index = new CourseIndex(vacancies, courseIndex, lessons);  // add new indices to course list
+                CourseIndex index = new CourseIndex(vacancies, this.courseCode, courseIndex, lessons);
                 courseIndices.put(courseIndex, index);
             }
             System.out.println(courseIndex + " added to courseIndices!");
@@ -204,5 +204,9 @@ public final class Course implements Serializable {
 
     protected CourseIndex[] getIndices() {
         return courseIndices.values().toArray(new CourseIndex[courseIndices.size()]);
+    }
+
+    protected Course simpleCopy(CourseStatus status, CourseIndex courseIndex){
+        return new Course(this.courseCode, this.courseName, this.acadUnits, this.description, status, courseIndex);
     }
 }
