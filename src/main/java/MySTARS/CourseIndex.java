@@ -1,21 +1,30 @@
 package MySTARS;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 public final class CourseIndex implements Serializable {
     
-    private int vacancies;
-    private LinkedList<String> waitlist = new LinkedList<>();
+    private int vacancies = 0;
     private String indexNumber;
-    private HashMap<String, Student> enrolledStudents = new HashMap<>();
+    private ArrayList<Lesson> lessons = new ArrayList<Lesson>();
+    private LinkedList<String> waitlist = new LinkedList<String>();
+    private HashMap<String, Student> enrolledStudents = new HashMap<String, Student>();
     private static final long serialVersionUID = 11L;
 
-    protected CourseIndex(int vacancies, String indexNumber) {
+    protected CourseIndex(int vacancies, String indexNumber, Lesson lesson) {
 
         this.vacancies = vacancies; 
         this.indexNumber = indexNumber;
+        this.lessons.add(lesson);
+    }
+    protected CourseIndex(int vacancies, String indexNumber, ArrayList<Lesson> lessons) {
+
+        this.vacancies = vacancies; 
+        this.indexNumber = indexNumber;
+        this.lessons = lessons;
     }
 
     protected void setVacancies(int vacancies) {
@@ -28,14 +37,29 @@ public final class CourseIndex implements Serializable {
         return this.vacancies;
     }
 
-    protected int getWaitlistLength() {
-
-        return waitlist.size();
-    }
-
     protected String getCourseIndex() {
 
-        return indexNumber;
+        return this.indexNumber;
+    }
+
+    protected void addLesson(Lesson lesson) {
+
+        this.lessons.add(lesson);
+    }
+
+    protected void addLessons(ArrayList<Lesson> lessons) {
+
+        this.lessons.addAll(lessons);
+    }
+
+    protected ArrayList<Lesson> getLessons() {
+        
+        return this.lessons;
+    }
+
+    protected int getWaitlistLength() {
+
+        return this.waitlist.size();
     }
 
     protected void addToWaitlist(String matricNumber) {
@@ -60,8 +84,15 @@ public final class CourseIndex implements Serializable {
         if(this.vacancies != 0) {
             enrolledStudents.put(matricNumber, student);
         } else {
-            System.out.print("error, no vacancies ");
-            addToWaitlist(matricNumber);
+            String answer;
+            do {
+                System.out.print("Error: no more vacancies! do you want to be added to waitlist? y/n: ");
+                answer = Helper.sc.nextLine();
+            } while (answer.equals("y") || answer.equals("n"));
+
+            if (answer.equals("y")) {
+                addToWaitlist(matricNumber);
+            }
         }
     }
 

@@ -17,6 +17,7 @@ public final class Database {
         deserialise(FileType.USERS);
     }
 
+    @SuppressWarnings("unchecked")
     protected static boolean deserialise(FileType fileType) {
 
         String fileName;
