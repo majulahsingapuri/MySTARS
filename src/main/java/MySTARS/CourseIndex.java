@@ -132,12 +132,16 @@ public final class CourseIndex implements Serializable {
             
             Student student = (Student) Database.USERS.get(username);
             if (student != null) {
-                if (student.addCourseFromWaitlist(this)){
-                    enrolledStudents.put(username, student.simpleCopy());
-                    this.vacancies -= 1;
-                }
-                else{
-                    enrollNextInWaitlist();
+                try {
+                    if (student.addCourseFromWaitlist(this)){
+                        enrolledStudents.put(username, student.simpleCopy());
+                        this.vacancies -= 1;
+                    }
+                    else{
+                        enrollNextInWaitlist();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
             else{
@@ -146,5 +150,9 @@ public final class CourseIndex implements Serializable {
         } else {
             System.out.println("error, no vacancies");
         }
+    }
+
+    protected CourseIndex simpleCopy() {
+        return new CourseIndex(0, this.courseCode, this.indexNumber, this.lessons);
     }
 }

@@ -141,7 +141,7 @@ public final class Course implements Serializable {
                     // TODO Add new lesson that is correctly formatted with appropriate constructor
                     // lessons.add(new Lesson(type, time, location));
                 }
-                CourseIndex index = new CourseIndex(vacancies, courseIndex, lessons);
+                CourseIndex index = new CourseIndex(vacancies, this.courseCode, courseIndex, lessons);
                 courseIndices.put(courseIndex, index);
             }
             System.out.println(courseIndex + " added to courseIndices!");
@@ -156,7 +156,7 @@ public final class Course implements Serializable {
         return courseIndices.values().toArray(new CourseIndex[courseIndices.size()]);
     }
 
-    protected Course simpleCopy(CourseIndex courseIndex, CourseStatus status){
+    protected Course simpleCopy(CourseStatus status, CourseIndex courseIndex){
         return new Course(this.courseCode, this.courseName, this.acadUnits, this.description, status, courseIndex);
     }
 }
