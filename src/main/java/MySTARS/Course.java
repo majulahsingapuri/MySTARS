@@ -109,12 +109,13 @@ public final class Course implements Serializable {
     }
 
     protected ClassType chooseClassType() {
-        System.out.print("Enter the lesson type for this lesson:");
+        
         System.out.println("1. Lecture");
         System.out.println("2. Lab");
         System.out.println("3. Tutorial");
         System.out.println("4. Seminar");
         System.out.println("5. Online");
+        System.out.println("Enter the lesson type for this lesson:");
 
         int classTypeChoice; 
 
