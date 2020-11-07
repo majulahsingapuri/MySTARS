@@ -91,44 +91,32 @@ public final class Student extends User {
         return this.nationality;
     }
 
-    //FIXME This needs to be tested after the Course class is implemented!!!
-    protected String[] getCourses(CourseStatus courseStatus) {
+    protected Course[] getCourses(CourseStatus courseStatus) {
 
         if (courseStatus == CourseStatus.NONE){
-            return courses.keySet().toArray(new String[courses.size()]);
-        }
-
-        int count = 0;
-        for (Course course : courses.values()){
-            if (course.getStatus() == courseStatus)
-                count++;
+            return courses.keySet().toArray(new Course[courses.size()]);
         }
         
-        String[] courseIDs = new String[count];
-        int i = 0;
+        ArrayList<Course> courseIDs = new ArrayList<Course>();
         for (Course course : courses.values()){
             if (course.getStatus() == courseStatus)
-                courseIDs[i++] = course.getCourseCode();
+                courseIDs.add(course);
         }
 
-        return courseIDs;
+        return courseIDs.toArray(new Course[courseIDs.size()]);
     }
 
-    //FIXME This needs to be tested after the Course class is implemented!!!
-    protected String[] getIndices(CourseStatus courseStatus){
-        int count = 0;
-        for (Course course : courses.values()){
-            if (course.getStatus() == courseStatus)
-                count++;
-        }
+    protected CourseIndex[] getIndices(CourseStatus courseStatus){
 
-        String[] courseInds = new String[count];
-        int i = 0;
-        for (Course course : courses.values()){
-            if (course.getStatus() == courseStatus)
-                courseInds[i++] = course.getIndices()[0];
+        ArrayList<CourseIndex> courseInds = new ArrayList<CourseIndex>();
+        for (Course course : courses.values()) {
+            if (course.getStatus() == courseStatus) {
+                for (CourseIndex courseIndex : course.getIndices()) {
+                    courseInds.add(courseIndex);
+                }
+            }
         }
-        return courseInds;
+        return courseInds.toArray(new CourseIndex[courseInds.size()]);
     }
 
     protected int getAU(){
@@ -136,13 +124,13 @@ public final class Student extends User {
     }
 
     //TODO serialize/deserialize
-    protected void addAU(int au){
-        this.registeredAUs += au;
+    protected void addAU(AU au){
+        this.registeredAUs += au.value;
     }
 
     //TODO serialize/deserialize
-    protected void removeAU(int au){
-        this.registeredAUs -= au;
+    protected void removeAU(AU au){
+        this.registeredAUs -= au.value;
         //TODO is this needed...? should this method throw an exception instead?
         //ensure logic is not broken
         if (this.registeredAUs < 0){
@@ -182,7 +170,7 @@ public final class Student extends User {
             Course newCourse = new Course(code, courseInd, CourseStatus.REGISTERED);
             courses.put(code, newCourse);
             courseInd.enrollStudent(this);
-            addAU(newCourse.getAU());
+            addAU(newCourse.getCourseAU());
             return CourseStatus.REGISTERED;
         }
     }
@@ -194,12 +182,12 @@ public final class Student extends User {
         if (!courses.containsKey(code))
             throw new Exception("Course " + code + " has not been added by Student!");
         Course course = Database.COURSES.get(code);
-        CourseIndex courseInd = course.getIndex(this.courses.get(code).getIndices()[0]);
+        CourseIndex courseInd = course.getIndex(this.courses.get(code).getIndices()[0].getCourseIndex());
         CourseStatus courseStatus = this.courses.get(code).getStatus();
         
         if (courseStatus == CourseStatus.REGISTERED){
             courseInd.unenrollStudent(this);
-            removeAU(course.getAU());
+            removeAU(course.getCourseAU());
             this.courses.remove(code);
         }
         else if (courseStatus == CourseStatus.WAITLIST){
@@ -224,7 +212,7 @@ public final class Student extends User {
             throw new Exception("Course " + currentInd + " does not contain index " + currentInd + "!");
         if (!Database.COURSES.get(code).containsIndex(newInd))
             throw new Exception("Course " + newInd + " does not contain index " + newInd + "!");
-        if (!courses.get(code).getIndices()[0].equals(currentInd))
+        if (!courses.get(code).getIndices()[0].getCourseIndex().equals(currentInd))
             throw new Exception("Student is not in index " + currentInd + "!");
         if (clashes(code,newInd))
             throw new Exception("New index clashes with current timetable!");
@@ -249,27 +237,26 @@ public final class Student extends User {
     protected boolean clashes(String code){
         ArrayList<Interval> currentIntervals = new ArrayList<Interval>();
         for (Course c : this.courses.values()){
-            CourseIndex ind = c.getIndex(c.getIndices()[0]);
-            Lesson[] lessons = ind.getLessons();
+            CourseIndex ind = c.getIndex(c.getIndices()[0].getCourseIndex());
+            ArrayList<Lesson> lessons = ind.getLessons();
             for (Lesson l : lessons){
-                currentIntervals.add(l.getTimeInterval());
+                currentIntervals.add(l.getTime());
             }
         }
 
         boolean doesClash = false;
         Course c = Database.COURSES.get(code);
-        String[] indices = c.getIndices();
+        CourseIndex[] indices = c.getIndices();
         
 
         //loop through all indices
-        for (String ind : indices){
-            CourseIndex courseIndex = c.getIndex(ind);
+        for (CourseIndex courseIndex : indices){
             doesClash = false;
-            Lesson[] lessons = courseIndex.getLessons();
+            ArrayList<Lesson> lessons = courseIndex.getLessons();
             //loop through all lessons in courseIndex
             boolean lessonClashes = false;
             for (Lesson l : lessons){
-                Interval interval = l.getTimeInterval();
+                Interval interval = l.getTime();
                 for (Interval busy : currentIntervals){
                     if (busy.overlaps(interval)){
                         doesClash = true;

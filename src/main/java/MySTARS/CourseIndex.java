@@ -77,6 +77,11 @@ public final class CourseIndex implements Serializable {
             System.out.println("Name not found");
         }
     }
+    
+    protected Student[] getStudents() {
+        
+        return this.enrolledStudents.values().toArray(new Student[enrolledStudents.size()]);
+    }
 
     protected void enrollStudent(Student student) {
 

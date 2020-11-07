@@ -30,7 +30,7 @@ public final class Lesson implements Serializable {
         this.type = type;
     }
 
-    protected Date getTime() {
+    protected Interval getTime() {
         return this.time;
     }
 
