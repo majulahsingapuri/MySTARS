@@ -12,9 +12,11 @@ public final class Database {
 
     protected Database() {
 
-        //TODO Reset database if unable to read from files?
+        
         deserialise(FileType.COURSES);
-        deserialise(FileType.USERS);
+        if (!deserialise(FileType.USERS)) {
+            resetUsers();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -97,5 +99,14 @@ public final class Database {
             return false;
         }
         return true;
+    }
+
+    private void resetUsers() {
+        USERS.put("Admin", new Admin("Admin", "AdminPassword"));
+        USERS.put("Bhargav", new Admin("Bhargav", "OODPisgood"));
+        USERS.put("Timothy", new Admin("Timothy", "IloveOODP"));
+        USERS.put("Esther", new Admin("Esther", "JavaForLife"));
+        USERS.put("Nicolette", new Admin("Nicolette", "this.isBest"));
+        USERS.put("JiaHui", new Admin("JiaHui", "return"));
     }
 }

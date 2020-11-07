@@ -1,7 +1,6 @@
 package MySTARS;
 
 import java.io.Console;
-import java.util.Date;
 import org.joda.time.DateTime;
 
 public class LoginView extends View {

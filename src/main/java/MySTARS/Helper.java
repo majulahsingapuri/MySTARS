@@ -15,10 +15,8 @@ public final class Helper {
     
     protected static Scanner sc = new Scanner(System.in);
 
-    //TODO should this be a static method?
-    protected void load() {
+    protected static void load() {
 
-        //TODO Change to our loading bars
         System.out.printf("║║║║║║║║║║║║");
         try {
             Thread.sleep(500);

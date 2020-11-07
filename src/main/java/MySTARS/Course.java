@@ -134,9 +134,8 @@ public final class Course implements Serializable {
                     return ClassType.ONLINE;
                 default:
                     System.out.println("Error, invalid input");
-                    return ClassType.LECTURE;  // TODO: Check if this is right?
             }
-        } while(classTypeChoice < 0 || classTypeChoice > 5);
+        } while(true);
     }
 
 

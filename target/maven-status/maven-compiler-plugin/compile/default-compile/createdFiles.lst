@@ -1,7 +1,14 @@
+MySTARS/CourseIndex.class
+MySTARS/AU.class
 MySTARS/ClassType.class
+MySTARS/Course.class
+MySTARS/Helper$1.class
 MySTARS/AccessLevel.class
 MySTARS/FileType.class
+MySTARS/DayOfWeek.class
 MySTARS/Admin.class
+MySTARS/Database.class
+MySTARS/Student.class
 MySTARS/CourseStatus.class
 MySTARS/Lesson.class
 MySTARS/Gender.class
@@ -9,3 +16,4 @@ MySTARS/MySTARSApp.class
 MySTARS/Helper.class
 MySTARS/View.class
 MySTARS/User.class
+MySTARS/CourseManager.class

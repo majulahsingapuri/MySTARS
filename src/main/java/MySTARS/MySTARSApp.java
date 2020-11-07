@@ -5,7 +5,6 @@ package MySTARS;
  * @author Bhargav, Esther, Jia Hui, Nicolette, Timothy
  */
 
-//TODO Deserialise files on ititiation step
 public final class MySTARSApp {
     public static void main( String[] args ) {
         System.out.println( "Hello World!" );
