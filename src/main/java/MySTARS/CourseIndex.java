@@ -62,16 +62,16 @@ public final class CourseIndex implements Serializable {
         return this.waitlist.size();
     }
 
-    protected void addToWaitlist(String matricNumber) {
+    protected void addToWaitlist(String username) {
 
-        waitlist.add(matricNumber);
-        System.out.println(matricNumber + " added to waitlist");
+        waitlist.add(username);
+        System.out.println(username + " added to waitlist");
     }
 
-    protected void removeFromWaitlist(String matricNumber) {
+    protected void removeFromWaitlist(String username) {
 
         //TODO have a better implementation for this. Leave this first for testing purposes but change in final version.
-        if(waitlist.remove(matricNumber)) {
+        if(waitlist.remove(username)) {
             System.out.println("Successfully removed student");
         } else {
             System.out.println("Name not found");
@@ -80,9 +80,9 @@ public final class CourseIndex implements Serializable {
 
     protected void enrollStudent(Student student) {
 
-        String matricNumber = student.getMatricNumber();
+        String username = student.getUsername();
         if(this.vacancies != 0) {
-            enrolledStudents.put(matricNumber, student);
+            enrolledStudents.put(username, student);
         } else {
             String answer;
             do {
@@ -91,19 +91,20 @@ public final class CourseIndex implements Serializable {
             } while (answer.equals("y") || answer.equals("n"));
 
             if (answer.equals("y")) {
-                addToWaitlist(matricNumber);
+                addToWaitlist(username);
             }
         }
     }
 
     protected void unenrollStudent(Student student) {
 
-        String matricNumber = student.getMatricNumber();
+        String username = student.getUsername();
 
-        if(enrolledStudents.remove(matricNumber) == null) {
+        if(enrolledStudents.remove(username) == null) {
             System.out.println("student not found in course register");
         } else {
-            System.out.println(matricNumber + " removed from course register");
+            System.out.println(username + " removed from course register");
+            enrollNextInWaitlist();
         }
     }
 
@@ -111,10 +112,13 @@ public final class CourseIndex implements Serializable {
     protected void enrollNextInWaitlist() {
 
         if(this.vacancies != 0) {
-            String matricNumber = waitlist.removeFirst();
+            String username = waitlist.removeFirst();
             System.out.println("removed first student in waitlist");
-
-            //TODO use database users hashmap to look up Student object by matricNumber
+            
+            Student student = (Student) Database.USERS.get(username);
+            if (student != null) {
+                enrolledStudents.put(username, student);
+            }
         } else {
             System.out.println("error, no vacancies");
         }
