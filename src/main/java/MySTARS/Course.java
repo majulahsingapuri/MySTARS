@@ -155,4 +155,8 @@ public final class Course implements Serializable {
     protected CourseIndex[] getIndices() {
         return courseIndices.values().toArray(new CourseIndex[courseIndices.size()]);
     }
+
+    protected Course simpleCopy(CourseIndex courseIndex, CourseStatus status){
+        return new Course(this.courseCode, this.courseName, this.acadUnits, this.description, status, courseIndex);
+    }
 }

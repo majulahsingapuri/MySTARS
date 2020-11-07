@@ -2,7 +2,6 @@ package MySTARS;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 public final class Student extends User {
@@ -123,28 +122,27 @@ public final class Student extends User {
         return this.registeredAUs;
     }
 
-    //TODO serialize/deserialize
     protected void addAU(AU au){
         this.registeredAUs += au.value;
+        Database.serialise(FileType.USERS);
     }
 
-    //TODO serialize/deserialize
     protected void removeAU(AU au){
         this.registeredAUs -= au.value;
-        //TODO is this needed...? should this method throw an exception instead?
-        //ensure logic is not broken
+        //ensures logic is not broken
         if (this.registeredAUs < 0){
             this.registeredAUs = 0;
         }
+        Database.serialise(FileType.USERS);
     }
 
-    //TODO serialize/deserialize
     /*
     returns the course's new CourseStatus
     throws exceptions when a timetable clash is found or the course code does not exist
     */
     protected CourseStatus addCourse(String code, String ind) throws Exception{
         //TODO make sure calling class checks that course is not yet registered nor on the waitlist
+        Database.deserialise(FileType.COURSES);
         if (clashes(code))
             throw new Exception("Timetable clash!");
         if (!Database.COURSES.containsKey(code))
@@ -159,27 +157,28 @@ public final class Student extends User {
         }
         if (courseInd.getVacancies()<=0){
             //put on waitlist
-            //TODO Need to modify this to pass in CourseIndex rather than just the string of the Index. That is more versatile
-            courses.put(code, new Course(code, courseInd, CourseStatus.WAITLIST));
+            this.courses.put(code, course.simpleCopy(courseInd, CourseStatus.WAITLIST));
             courseInd.addToWaitlist(this.matricNumber);
+            Database.serialise(FileType.USERS);
+            Database.serialise(FileType.COURSES);
             return CourseStatus.WAITLIST;
         }
         else{
             //add course successfully
-            //TODO Need to modify this to pass in CourseIndex rather than just the string of the Index. That is more versatile
-            Course newCourse = new Course(code, courseInd, CourseStatus.REGISTERED);
-            courses.put(code, newCourse);
+            this.courses.put(code, course.simpleCopy(courseInd, CourseStatus.REGISTERED));
             courseInd.enrollStudent(this);
-            addAU(newCourse.getCourseAU());
+            addAU(course.getCourseAU());
+            Database.serialise(FileType.USERS);
+            Database.serialise(FileType.COURSES);
             return CourseStatus.REGISTERED;
         }
     }
 
-    //TODO serialize and deserialize
     protected void dropCourse(String code) throws Exception{
+        Database.deserialise(FileType.COURSES);
         if (!Database.COURSES.containsKey(code))
             throw new Exception("Course " + code + " does not exist!");
-        if (!courses.containsKey(code))
+        if (!this.courses.containsKey(code))
             throw new Exception("Course " + code + " has not been added by Student!");
         Course course = Database.COURSES.get(code);
         CourseIndex courseInd = course.getIndex(this.courses.get(code).getIndices()[0].getCourseIndex());
@@ -189,10 +188,14 @@ public final class Student extends User {
             courseInd.unenrollStudent(this);
             removeAU(course.getCourseAU());
             this.courses.remove(code);
+            Database.serialise(FileType.COURSES);
+            Database.serialise(FileType.USERS);
         }
         else if (courseStatus == CourseStatus.WAITLIST){
             courseInd.removeFromWaitlist(this.matricNumber);
             this.courses.remove(code);
+            Database.serialise(FileType.COURSES);
+            Database.serialise(FileType.USERS);
         }
         else{
             throw new Exception("Invalid course courseStatus!");
@@ -200,30 +203,33 @@ public final class Student extends User {
     }
 
 
-    //TODO serialize/deserialize
-    //FIXME calling parameters rather than methods. Check for such errors
     //can only change index of registered courses
     protected void changeIndex(String code, String currentInd, String newInd) throws Exception{
+        Database.deserialise(FileType.COURSES);
+
         if (!Database.COURSES.containsKey(code))
             throw new Exception("Course " + code + " does not exist!");
-        if (!courses.containsKey(code))
+        if (this.courses.containsKey(code))
             throw new Exception("Course " + code + " has not been added by Student!");
         if (!Database.COURSES.get(code).containsIndex(currentInd))
             throw new Exception("Course " + currentInd + " does not contain index " + currentInd + "!");
         if (!Database.COURSES.get(code).containsIndex(newInd))
             throw new Exception("Course " + newInd + " does not contain index " + newInd + "!");
-        if (!courses.get(code).getIndices()[0].getCourseIndex().equals(currentInd))
+        if (!this.courses.get(code).getIndices()[0].getCourseIndex().equals(currentInd))
             throw new Exception("Student is not in index " + currentInd + "!");
+        if (this.courses.get(code).getStatus() != CourseStatus.REGISTERED)
+            throw new Exception("Student not registered in course " + code + ", index " + currentInd + "!");
         if (clashes(code,newInd))
             throw new Exception("New index clashes with current timetable!");
-        if (this.courses.get(code).getStatus() != CourseStatus.REGISTERED)
-            throw new Exception("Student not resgistered in course " + code + ", index " + currentInd + "!");
         
-        CourseIndex newCourseInd = courses.get(code).getIndex(newInd);
+        CourseIndex newCourseInd = Database.COURSES.get(code).getIndex(newInd);
         if (newCourseInd.getVacancies()<=0)
             throw new Exception("New index " + newInd + " has no vacancies!");
         dropCourse(code);
         addCourse(code, newInd);
+
+        Database.serialise(FileType.USERS);
+        Database.serialise(FileType.COURSES);
     }
 
     /*
@@ -231,16 +237,24 @@ public final class Student extends User {
     return true if found a clash
     otherwise, return false
     Assumes that the code passed in will correspond to
-    a course that has not yet been registered nor waitlisted.
+    a course that has not yet been registered.
     */
-    //FIXME check that this works properly with dependent classes
     protected boolean clashes(String code){
         ArrayList<Interval> currentIntervals = new ArrayList<Interval>();
         for (Course c : this.courses.values()){
-            CourseIndex ind = c.getIndex(c.getIndices()[0].getCourseIndex());
-            ArrayList<Lesson> lessons = ind.getLessons();
-            for (Lesson l : lessons){
-                currentIntervals.add(l.getTime());
+            //only check with registered courses, don't check with same courseCode
+            if (c.getStatus()==CourseStatus.REGISTERED){
+                if (c.getCourseCode().equals(code)){
+                    //FIXME this shouldn't happen! check the logic of calling method, delete this if block after testing is done
+                    System.out.println("Debuging: Tried to check is an already registered course clashes with current timetable.");
+                    System.out.println(new Throwable().getStackTrace());
+                    return true;
+                }
+                CourseIndex ind = c.getIndex(c.getIndices()[0].getCourseIndex());
+                ArrayList<Lesson> lessons = ind.getLessons();
+                for (Lesson l : lessons){
+                    currentIntervals.add(l.getTime());
+                }
             }
         }
 
@@ -284,12 +298,66 @@ public final class Student extends User {
     otherwise, return false
     */
     protected boolean clashes(String code, String index){
-        //TODO complete time table clash check
+        ArrayList<Interval> currentIntervals = new ArrayList<Interval>();
+        for (Course c : this.courses.values()){
+            //only check with registered courses, don't check with same courseCode
+            if (!c.getCourseCode().equals(code) && c.getStatus()==CourseStatus.REGISTERED){
+                CourseIndex ind = c.getIndex(c.getIndices()[0].getCourseIndex());
+                ArrayList<Lesson> lessons = ind.getLessons();
+                for (Lesson l : lessons){
+                    currentIntervals.add(l.getTime());
+                }
+            }
+        }
+        
+        Course c = Database.COURSES.get(code);
+        CourseIndex courseIndex = c.getIndex(index);
+        
 
-        return false;
+        ArrayList<Lesson> lessons = courseIndex.getLessons();
+        boolean doesClash = false;
+        boolean lessonClashes = false;
+        for (Lesson l : lessons){
+            Interval interval = l.getTime();
+            for (Interval busy : currentIntervals){
+                if (busy.overlaps(interval)){
+                    doesClash = true;
+                    lessonClashes = true;
+                    break;
+                }
+            }
+            if (lessonClashes){
+                break;
+            }
+        }
+
+        return doesClash;
     }
 
     protected Student simpleCopy(){
         return new Student(this.getUsername(), this.matricNumber, this.firstName, this.lastName);
     }
+
+	public boolean addCourseFromWaitlist(CourseIndex courseIndex) {
+        String courseCode = courseIndex.getCourseCode();
+        Course myCourse = this.courses.get(courseCode);
+        if (myCourse == null || myCourse.getStatus() != CourseStatus.WAITLIST){
+            return false;
+        }
+        CourseIndex myIndex = myCourse.getIndex(courseIndex.getCourseIndex());
+        if (myIndex == null){
+            return false;
+        }
+        //all logic requirements met!
+
+        //check if there is a timetable clash (may arise due to new courses being added after this course was put on waitlist)
+        if (!clashes(courseCode, myIndex.getCourseIndex())){
+            dropCourse(courseCode);
+            addCourse(courseCode, myIndex.getCourseIndex());
+            return true;
+        }
+        else{
+            return false;
+        }
+	}
 }
