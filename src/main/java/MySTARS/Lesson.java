@@ -10,19 +10,24 @@ public final class Lesson implements Serializable {
     private Interval time;
     private DateTime startTime;
     private DateTime endTime;
-    private int dayOfWeek;
+    private DayOfWeek dayOfWeek;
     private String location;
     private String remarks;
     private static final long serialVersionUID = 12L;
 
-    protected Lesson(ClassType classType, int dayOfWeek, int startTime, int endTime, String location) {
+    protected Lesson(ClassType classType, DayOfWeek dayOfWeek, int startTime, int endTime, String location) {
 
         this.classType = classType;
-        this.startTime = new DateTime(2020, 1, dayOfWeek, startTime/100, startTime%100);
-        this.endTime = new DateTime(2020, 1, dayOfWeek, endTime/100, endTime%100);
+        this.startTime = new DateTime(2020, 1, dayOfWeek.value, startTime/100, startTime%100);
+        this.endTime = new DateTime(2020, 1, dayOfWeek.value, endTime/100, endTime%100);
         this.time = new Interval(this.startTime, this.endTime);
         this.dayOfWeek = dayOfWeek;
         this.location = location;
+    }
+
+    protected ClassType getType() {
+
+        return this.classType;
     }
 
     protected Interval getTime() {
@@ -42,8 +47,8 @@ public final class Lesson implements Serializable {
 
     protected void setTime(int startTime, int endTime) {
 
-        this.startTime = new DateTime(2020, 1, this.dayOfWeek, startTime/100, startTime%100);
-        this.endTime = new DateTime(2020, 1, this.dayOfWeek, endTime/100, endTime%100);
+        this.startTime = new DateTime(2020, 1, this.dayOfWeek.value, startTime/100, startTime%100);
+        this.endTime = new DateTime(2020, 1, this.dayOfWeek.value, endTime/100, endTime%100);
         this.time = new Interval(this.startTime, this.endTime);
     }
 

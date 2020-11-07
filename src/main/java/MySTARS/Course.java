@@ -169,7 +169,7 @@ public final class Course implements Serializable {
 
                     
                     String location;
-                    int dayOfWeek;
+                    DayOfWeek dayOfWeek;
                     int startTime;
                     int endTime;
                 
@@ -177,7 +177,7 @@ public final class Course implements Serializable {
                     ClassType classType = chooseClassType();
 
                     System.out.print("Enter day of week for lesson (1: Monday, 2: Tuesday, etc.): ");
-                    dayOfWeek = Helper.sc.nextInt();
+                    dayOfWeek = DayOfWeek.getDayOfWeek(Helper.sc.nextInt());
 
                     System.out.print("Enter the class start time in 24h format (eg. 1430): ");
                     startTime = Helper.sc.nextInt();
