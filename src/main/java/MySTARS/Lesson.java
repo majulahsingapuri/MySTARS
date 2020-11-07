@@ -8,49 +8,47 @@ import org.joda.time.Interval;
 
 public final class Lesson implements Serializable {
 
-    private ClassType type;
+    private ClassType classType;
     private Interval time;  // TODO use jodatime to sort out timetable stuff
     private DateTime startTime;
     private DateTime endTime;
+    private int dayOfWeek;
     private String location;
     private String remarks;
     private static final long serialVersionUID = 12L;
 
-    protected Lesson(ClassType type, Date time, String location) {
-        this.type = type;
-        this.time = time;
+    protected Lesson(ClassType classType, int dayOfWeek, int startTime, int endTime, String location) {
+
+        this.classType = classType;
+        this.startTime = new DateTime(2020, 1, dayOfWeek, startTime/100, startTime%100);
+        this.endTime = new DateTime(2020, 1, dayOfWeek, endTime/100, endTime%100);
+        this.dayOfWeek = dayOfWeek;
         this.location = location;
     }
 
-    protected ClassType getType() {
-        return this.type;
-    }
+    protected void setTime(int startTime, int endTime) {
 
-    protected void setType(ClassType type) {
-        this.type = type;
-    }
-
-    protected Date getTime() {
-        return this.time;
-    }
-
-    protected void setTime(Date time) {
-        this.time = time;
+        this.startTime = new DateTime(2020, 1, this.dayOfWeek, startTime/100, startTime%100);
+        this.endTime = new DateTime(2020, 1, this.dayOfWeek, endTime/100, endTime%100);
     }
 
     protected String getLocation() {
+
         return this.location;
     }
 
     protected void setLocation(String location) {
+
         this.location = location;
     }
 
     protected void setRemarks(String remarks) {
+
         this.remarks = remarks;
     }
 
     protected String getRemarks() {
+
         return this.remarks;
     }
 }
