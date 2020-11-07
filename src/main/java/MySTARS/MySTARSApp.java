@@ -9,9 +9,5 @@ package MySTARS;
 public final class MySTARSApp {
     public static void main( String[] args ) {
         System.out.println( "Hello World!" );
-
-        Student student = new Student("BHARGAV002", "U1920026B", "Bhargav", "Singapuri");
-
-        Helper.sendMailNotification(student, "CZ2002");
     }
 }
