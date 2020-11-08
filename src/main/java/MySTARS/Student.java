@@ -120,6 +120,10 @@ public final class Student extends User {
         }
         return courseInds;
     }
+    //TODO 
+    protected CourseIndex getIndex(String courseIndex) {
+        return courses.get(courseIndex);
+    }
 
     protected int getAU(){
         return this.registeredAUs;

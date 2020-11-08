@@ -88,4 +88,7 @@ public final class CourseIndex implements Serializable {
             System.out.println("error, no vacancies");
         }
     }
+
+    //TODO addStudent
+    //TODO removeStudent
 }
