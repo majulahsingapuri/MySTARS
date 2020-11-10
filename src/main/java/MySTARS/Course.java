@@ -108,36 +108,6 @@ public final class Course implements Serializable {
         return null == courseIndices.get(courseIndex);
     }
 
-    protected ClassType chooseClassType() {
-        
-        System.out.println("1. Lecture");
-        System.out.println("2. Lab");
-        System.out.println("3. Tutorial");
-        System.out.println("4. Seminar");
-        System.out.println("5. Online");
-        System.out.println("Enter the lesson type for this lesson:");
-
-        int classTypeChoice; 
-
-        do{
-            classTypeChoice = Helper.sc.nextInt();
-            switch (classTypeChoice) {
-                case 1: 
-                    return ClassType.LECTURE;
-                case 2:
-                    return ClassType.LAB;
-                case 3:
-                    return ClassType.TUTORIAL;
-                case 4:
-                    return ClassType.SEMINAR;
-                case 5:
-                    return ClassType.ONLINE;
-                default:
-                    System.out.println("Error, invalid input");
-            }
-        } while(true);
-    }
-
 
     protected void addIndices(int numIndices) {
         
@@ -173,7 +143,7 @@ public final class Course implements Serializable {
                     int endTime;
                 
                     System.out.println("Enter details for lesson " + j+1);
-                    ClassType classType = chooseClassType();
+                    ClassType classType = Lesson.chooseClassType();
 
                     System.out.print("Enter day of week for lesson (1: Monday, 2: Tuesday, etc.): ");
                     dayOfWeek = DayOfWeek.getDayOfWeek(Helper.sc.nextInt());
