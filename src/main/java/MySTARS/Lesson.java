@@ -25,6 +25,37 @@ public final class Lesson implements Serializable {
         this.location = location;
     }
 
+    // method to prompt user to choose the type of class, and return the corresponding ClassType object
+    protected static ClassType chooseClassType() {
+        
+        System.out.println("1. Lecture");
+        System.out.println("2. Lab");
+        System.out.println("3. Tutorial");
+        System.out.println("4. Seminar");
+        System.out.println("5. Online");
+        System.out.println("Enter the lesson type for this lesson:");
+
+        int classTypeChoice; 
+
+        do{
+            classTypeChoice = Helper.sc.nextInt();
+            switch (classTypeChoice) {
+                case 1: 
+                    return ClassType.LECTURE;
+                case 2:
+                    return ClassType.LAB;
+                case 3:
+                    return ClassType.TUTORIAL;
+                case 4:
+                    return ClassType.SEMINAR;
+                case 5:
+                    return ClassType.ONLINE;
+                default:
+                    System.out.println("Error, invalid input");
+            }
+        } while(true);
+    }
+
     protected ClassType getType() {
 
         return this.classType;
