@@ -108,6 +108,11 @@ public final class Course implements Serializable {
         }
     }
 
+    protected void addIndex(CourseIndex courseIndex) {
+
+        courseIndices.put(courseIndex.getCourseIndex(), courseIndex);
+    }
+
     // method to return an array of all the index numbers
     // TODO check that the output of this is correct
     protected String[] getIndices() {

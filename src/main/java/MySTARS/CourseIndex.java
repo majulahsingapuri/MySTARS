@@ -89,6 +89,13 @@ public final class CourseIndex implements Serializable {
         }
     }
 
-    //TODO addStudent
-    //TODO removeStudent
+    protected void addStudent(Student student) {
+
+        enrolledStudents.put(student.getUsername(), student);
+    }
+    
+    protected Student removeStudent(String username) {
+
+        return enrolledStudents.remove(username);
+    }
 }

@@ -81,6 +81,11 @@ public final class Student extends User {
         return lastName;
     }
 
+    protected Course getCourse(String courseCode) {
+
+        return courses.get(courseCode);
+    }
+
     //FIXME This needs to be tested after the Course class is implemented!!!
     protected String[] getCourses(CourseStatus courseStatus) {
 
@@ -119,10 +124,6 @@ public final class Student extends User {
                 courseInds[i++] = course.getIndices()[0];
         }
         return courseInds;
-    }
-    //TODO 
-    protected CourseIndex getIndex(String courseIndex) {
-        return courses.get(courseIndex);
     }
 
     protected int getAU(){
@@ -227,6 +228,11 @@ public final class Student extends User {
             throw new Exception("New index " + newInd + " has no vacancies!");
         dropCourse(code);
         addCourse(code, newInd);
+    }
+
+    protected void setIndex(String courseCode, CourseIndex courseIndex) {
+        
+        courses.get(courseCode).addIndex(courseIndex);
     }
 
     /*
