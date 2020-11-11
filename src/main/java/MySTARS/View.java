@@ -14,13 +14,11 @@ public abstract class View {
             else {
                 Runtime.getRuntime().exec("clear");
             }
-        }
-
-        catch (final Exception e) {
+        } catch (final Exception e) {
             System.err.println(e);
         }
                
-        String spaces = String.format("%" + (74 - directory.length()) + "s", "");
+        String spaces = String.format("%" + (71 - directory.length()) + "s", "");
 
         System.out.println("╔════════════════════════════════════════════════════════════════════════╗");
         System.out.println("║                                                                        ║");

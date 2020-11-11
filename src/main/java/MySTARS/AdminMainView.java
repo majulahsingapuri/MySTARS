@@ -16,9 +16,10 @@ public final class AdminMainView extends View {
             System.out.println("1: Add course to MySTARS"); 
             System.out.println("2: Update course in MySTARS"); 
             System.out.println("3: Change student's entry timing to MySTARS"); 
-            System.out.println("4: Add student user to MySTARS"); 
+            System.out.println("4: Add new user to MySTARS"); 
             System.out.println("5: Logout");
             choice = Helper.sc.nextInt();
+            Helper.sc.nextLine();
 
             switch (choice) { 
 
@@ -60,6 +61,7 @@ public final class AdminMainView extends View {
 
                 System.out.print("Enter no. of AUs: ");
                 int au = Helper.sc.nextInt();
+                Helper.sc.nextLine();
                 AU acadUnits = AU.getAU(au);
 
                 System.out.print("Enter course description: ");
@@ -68,6 +70,7 @@ public final class AdminMainView extends View {
                 Course course = new Course(courseCode, courseName, acadUnits, description);
                 System.out.print("Enter the number of indices in this course: ");
                 course.addIndices(Helper.sc.nextInt());
+                Helper.sc.nextLine();
                 Database.serialise(FileType.COURSES);
             } else {
                 System.out.println("Course already exists!");
@@ -113,7 +116,7 @@ public final class AdminMainView extends View {
                 do {
                     System.out.print("Enter account type (Admin/Student): ");
                     accessLevel = Helper.sc.nextLine();
-                } while (!accessLevel.equals("Admin") || !accessLevel.equals("Student"));
+                } while (!accessLevel.equals("Admin") && !accessLevel.equals("Student"));
 
                 if (accessLevel.equals("Admin")) {
                     String password1, password2;
@@ -152,22 +155,24 @@ public final class AdminMainView extends View {
                         }
                     }
 
-                    String password1, password2;
-                    while (true) {
-                        System.out.print("Enter the password: ");
-                        password1 = Helper.getPasswordInput();
-                        System.out.print("Enter the password again: ");
-                        password2 = Helper.getPasswordInput();
-                        if (password1.equals(password2)) {
-                            break;
-                        } else {
-                            System.out.println("The passwords do not match!");
-                        }
+                    // TODO: change to String.format()
+                    System.out.println("\n\nNew Student Details:");
+                    System.out.println("Name\t\t: " + firstName + " " + lastName);
+                    System.out.println("Network Username\t\t: " + username);
+                    System.out.println("Matric No\t\t: " + matricNumber);
+                    System.out.println("Gender\t\t: " + gender.label);
+                    System.out.println("Nationality\t\t: " + nationality);
+
+                    System.out.print("\nConfirm? y/n: ");
+                    String confirm = Helper.sc.nextLine();
+                    if (confirm.equals("y")) {
+                        Student student = new Student(username, matricNumber, firstName, lastName, gender, nationality);
+                        Database.USERS.put(username, student);
+                        Database.serialise(FileType.USERS);
+                    } else {
+                        System.out.println("Aborting");
                     }
-                    Student student = new Student(username, matricNumber, firstName, lastName, gender, nationality);
-                    Database.USERS.put(username, student);
                 }
-                Database.serialise(FileType.USERS);
             } else {
                 System.out.println("User has already been added");
             }

@@ -14,9 +14,8 @@ public final class Database {
 
         
         deserialise(FileType.COURSES);
-        if (!deserialise(FileType.USERS)) {
-            resetUsers();
-        }
+        deserialise(FileType.USERS);
+        resetUsers();
     }
 
     @SuppressWarnings("unchecked")

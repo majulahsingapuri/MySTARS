@@ -20,6 +20,7 @@ public final class StudentMainView extends View {
             System.out.print("Enter the number of your choice: ");
 
             choice = Helper.sc.nextInt();
+            Helper.sc.nextLine();
 
             switch (choice) {
                 case 1:
@@ -38,8 +39,9 @@ public final class StudentMainView extends View {
                     changePassword();
                     break;
                 case 6:
-                    PrintTimetableView timetableView = new PrintTimetableView();
-                    timetableView.print();
+                    // PrintTimetableView timetableView = new PrintTimetableView();
+                    // timetableView.print();
+                    System.out.println("Will open timetable view");
                     break;
                 case 7:
                     LogoutView logoutView = new LogoutView();

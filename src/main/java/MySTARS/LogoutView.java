@@ -21,6 +21,8 @@ public final class LogoutView extends View {
         System.out.println("║                                                  ║");
         System.out.println("╚══════════════════════════════════════════════════╝");
 
+        clearScreen("Login");
+
     }
 
 

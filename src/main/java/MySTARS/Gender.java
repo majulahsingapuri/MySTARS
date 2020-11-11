@@ -16,7 +16,7 @@ public enum Gender {
     protected static Gender getGender(String gender) {
 
         for (Gender g : Gender.values()) {
-            if (g.label == gender) {
+            if (g.label.equals(gender)) {
                 return g;
             }
         }

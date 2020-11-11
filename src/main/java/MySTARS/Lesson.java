@@ -39,6 +39,7 @@ public final class Lesson implements Serializable {
 
         do{
             classTypeChoice = Helper.sc.nextInt();
+            Helper.sc.nextLine();
             switch (classTypeChoice) {
                 case 1: 
                     return ClassType.LECTURE;

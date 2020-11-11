@@ -7,7 +7,7 @@ package MySTARS;
 
 public final class MySTARSApp {
     public static void main( String[] args ) {
-        System.out.println( "Hello World!" );
+        new Database();
         LoginView view = new LoginView();
         view.print();
     }

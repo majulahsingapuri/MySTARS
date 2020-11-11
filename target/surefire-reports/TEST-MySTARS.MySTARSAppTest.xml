@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="MySTARS.MySTARSAppTest" time="0.029" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="MySTARS.MySTARSAppTest" time="0.03" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="14"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="GB"/>
     <property name="sun.boot.library.path" value="/usr/local/Cellar/openjdk/14.0.1/libexec/openjdk.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/surefire/surefirebooter8891770139097244885.jar /Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/surefire 2020-11-07T20-41-26_210-jvmRun1 surefire16025943748691817635tmp surefire_012611297158055172232tmp"/>
+    <property name="sun.java.command" value="/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/surefire/surefirebooter3195545409872561485.jar /Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/surefire 2020-11-11T15-27-02_758-jvmRun1 surefire9407586123724877784tmp surefire_07394158658154494563tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/test-classes:/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/classes:/Users/bhargav/.m2/repository/junit/junit/4.11/junit-4.11.jar:/Users/bhargav/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/bhargav/.m2/repository/joda-time/joda-time/2.10.7/joda-time-2.10.7.jar:/Users/bhargav/.m2/repository/javax/mail/mail/1.5.0-b01/mail-1.5.0-b01.jar:/Users/bhargav/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -27,7 +27,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/surefire/surefirebooter8891770139097244885.jar"/>
+    <property name="surefire.real.class.path" value="/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/surefire/surefirebooter3195545409872561485.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="14.0.1+14"/>
     <property name="user.name" value="bhargav"/>

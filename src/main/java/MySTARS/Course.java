@@ -121,7 +121,8 @@ public final class Course implements Serializable {
             System.out.println("");
 
             System.out.print("Enter number of vacancies: ");
-            vacancies = Helper.sc.nextInt();            
+            vacancies = Helper.sc.nextInt();
+            Helper.sc.nextLine();           
 
             if (!this.containsIndex(courseIndex)) {  
                 ArrayList<Lesson> lessons = new ArrayList<>();
@@ -129,6 +130,7 @@ public final class Course implements Serializable {
                     System.out.println("Setup for index no. " + courseIndex);
                     System.out.print("Enter number of lessons: ");
                     numLessons = Helper.sc.nextInt();
+                    Helper.sc.nextLine();
                     if (numLessons <= 0 || numLessons >= 5) {
                         System.out.println("Number of lessons for a particular index should be between 0 and 5");
                     }
@@ -147,12 +149,15 @@ public final class Course implements Serializable {
 
                     System.out.print("Enter day of week for lesson (1: Monday, 2: Tuesday, etc.): ");
                     dayOfWeek = DayOfWeek.getDayOfWeek(Helper.sc.nextInt());
+                    Helper.sc.nextLine();
 
                     System.out.print("Enter the class start time in 24h format (eg. 1430): ");
                     startTime = Helper.sc.nextInt();
+                    Helper.sc.nextLine();
 
                     System.out.print("Enter the class end time in 24h format (eg. 1530): ");
                     endTime = Helper.sc.nextInt();
+                    Helper.sc.nextLine();
 
                     System.out.print("Enter lesson location: ");
                     location = Helper.sc.nextLine();
