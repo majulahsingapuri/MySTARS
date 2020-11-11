@@ -8,8 +8,8 @@ public final class LoginView extends View {
     private String password;
     private String username;
     private String domain;
-    private static DateTime loginStartDate;
-    private static DateTime loginEndDate;
+    private static DateTime loginStart;
+    private static DateTime loginEnd;
 
     public LoginView() {}
     
@@ -68,8 +68,14 @@ public final class LoginView extends View {
         }
     }
 
+    protected static void setLoginTime(DateTime start, DateTime end) {
+
+        LoginView.loginStart = start;
+        LoginView.loginEnd = end;
+    }
+
     private boolean isValidLoginDate() {
 
-        return LoginView.loginStartDate.isBeforeNow() && LoginView.loginEndDate.isAfterNow();
+        return LoginView.loginStart.isBeforeNow() && LoginView.loginEnd.isAfterNow();
     }
 }
