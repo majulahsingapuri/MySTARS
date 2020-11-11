@@ -1,6 +1,6 @@
 package MySTARS;
 
-public class LogoutView extends View {
+public final class LogoutView extends View {
     
     public LogoutView() {}
    

@@ -170,6 +170,7 @@ public final class Course implements Serializable {
     protected void addIndex(CourseIndex courseIndex) {
 
         courseIndices.put(courseIndex.getCourseIndex(), courseIndex);
+        Database.serialise(FileType.COURSES);
     }
 
     protected String[] getIndicesString() {

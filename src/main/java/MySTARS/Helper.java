@@ -1,6 +1,7 @@
 package MySTARS;
 
 import java.util.Scanner;
+import java.io.Console;
 import org.joda.time.DateTime;
 import java.util.Properties;
 import javax.mail.Message;
@@ -65,15 +66,14 @@ public final class Helper {
 
     }
 
-    protected static String getPasswordInput(){ //TODO remove from login
+    protected static String getPasswordInput(){
 		Console console = System.console();
 		String password = null;
 		try {
 			char[] input = console.readPassword();
 			password = String.copyValueOf(input);
 		} catch (Exception e){
-			Scanner sc = new Scanner(System.in);
-			password = sc.nextLine();
+			password = Helper.sc.nextLine();
 		}
 		return password;
 	}

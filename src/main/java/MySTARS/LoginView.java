@@ -3,7 +3,7 @@ package MySTARS;
 import java.io.Console;
 import org.joda.time.DateTime;
 
-public class LoginView extends View {
+public final class LoginView extends View {
 
     private String password;
     private String username;
@@ -28,7 +28,7 @@ public class LoginView extends View {
             username = Helper.sc.nextLine();
             
             System.out.print("Enter password: ");
-            password = getPassword();
+            password = Helper.getPasswordInput();
             
             if (Database.USERS.containsKey(username)) {
                 User result = Database.USERS.get(username);
@@ -41,7 +41,7 @@ public class LoginView extends View {
                             } catch (Exception e) {
                                 System.out.println("Invalid user. Please enter again!");
                             }
-                            StudentAdminView view = new StudentAdminView();
+                            StudentMainView view = new StudentMainView();
                             view.print();
                         } else{
                             System.out.println("Login at an invalid timeframe! Please log in later.");
@@ -72,17 +72,4 @@ public class LoginView extends View {
 
         return LoginView.loginStartDate.isBeforeNow() && LoginView.loginEndDate.isAfterNow();
     }
-
-    private String getPassword(){
-		Console console = System.console();
-		String password = null;
-		try {
-			char[] input = console.readPassword();
-			password = String.copyValueOf(input);
-		} catch (Exception e){
-			password = Helper.sc.nextLine();
-		}
-		return password;
-	}
-
 }

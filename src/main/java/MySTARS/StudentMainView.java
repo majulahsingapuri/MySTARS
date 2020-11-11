@@ -1,6 +1,6 @@
 package MySTARS;
 
-public class StudentMainView extends View {
+public final class StudentMainView extends View {
     private int choice;
     public StudentMainView() {}
 
@@ -38,12 +38,12 @@ public class StudentMainView extends View {
                     changePassword();
                     break;
                 case 6:
-                    PrintTimetableView view = new PrintTimetableView();
-                    view.print();
+                    PrintTimetableView timetableView = new PrintTimetableView();
+                    timetableView.print();
                     break;
                 case 7:
-                    LogoutView view = new LogoutView();
-                    view.print();
+                    LogoutView logoutView = new LogoutView();
+                    logoutView.print();
                     break;
                 default:
                     System.out.println("Please input correct choice number.");
@@ -85,42 +85,70 @@ public class StudentMainView extends View {
 
     protected void addCourse() {
 
-        // TODO: make this work with course manager after merge
-        //display all courses
-        //parameter passed in CourseStatus.NOT_REGISTERED to display the course
-        System.out.print("Enter the course code: ");
-        String courseCode = Helper.sc.nextLine();
-        Course course = Database.COURSES.get(courseCode);
-        CourseManager.printIndexList(course, true);
-        //should get from courseManager
-        // print index list, print vacancies true
-        //printLesson
-        System.out.print("Enter the course index that you wish to add: ");
-        String courseIndex = Helper.sc.nextLine();
-        CourseManager.printLesson(courseIndex);
-        /*
-        have course, have index that the user wants,
-        add it as a new course object to the CurrentUser.addCourse() hashmap
-        */
-        Database.CURRENT_USER.addCourse(courseCode,courseIndex);
+        CourseManager.printCourseList(CourseStatus.NONE);
+        while (true) {
+            System.out.print("Enter the course code or Q to quit: ");
+            String courseCode = Helper.sc.nextLine();
+            if (courseCode.equals("Q")) {
+                break;
+            }
+
+            Course course = Database.COURSES.get(courseCode);
+            if (course != null) {
+
+                CourseManager.printIndexList(course, true);
+                System.out.print("Enter the course index that you wish to add or Q to quit: ");
+                String courseIndex = Helper.sc.nextLine();
+                if (courseIndex.equals("Q")) {
+                    break;
+                }
+
+                CourseIndex index = course.getIndex(courseIndex);
+                if (index != null) {
+                    CourseManager.printLesson(index);
+                    System.out.print("These lesson timings will be added to your timetable. Confirm? y/n: ");
+                    String answer = Helper.sc.nextLine();
+
+                    if (answer.equals("y")) {
+                        Student currentUser = (Student) Database.CURRENT_USER;
+                        try {
+                            currentUser.addCourse(courseCode,courseIndex);
+                            break;
+                        } catch (Exception e) {
+                            System.out.println(e.getLocalizedMessage());
+                        }
+                    }
+                } else {
+                    System.out.println("The course index that you have entered is invalid!");
+                }
+            } else {
+                System.out.println("The course code you entered is invalid!");
+            }
+        }
     }
 
     protected void dropCourse() {
 
-        CourseManager.printCourseList(CourseStatus.REGISTERED, Database.CURRENT_USER);
-        System.out.print("Enter the course code to drop: ");
-        String courseCode = Helper.sc.nextLine();
-        Student currentUser = (Student) Database.CURRENT_USER;
-        try {
-            currentUser.dropCourse(courseCode);
-        } catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
+        CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
+        while (true) {
+            System.out.print("Enter the course code to drop or Q to quit: ");
+            String courseCode = Helper.sc.nextLine();
+            if (courseCode.equals("Q")) {
+                break;
+            }
+            Student currentUser = (Student) Database.CURRENT_USER;
+            try {
+                currentUser.dropCourse(courseCode);
+                break;
+            } catch (Exception e) {
+                System.out.println(e.getLocalizedMessage());
+            }
         }
     }
 
     protected void changeIndex() {
 
-        CourseManager.printCourseList(CourseStatus.REGISTERED, Database.CURRENT_USER);
+        CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
         while (true) {
             System.out.print("Enter the course code or Q to quit: ");
             String courseCode = Helper.sc.nextLine();
@@ -135,7 +163,6 @@ public class StudentMainView extends View {
                 String curIndex = Helper.sc.nextLine();
                 System.out.print("Enter the new index that you wish to change to: ");
                 String newIndex = Helper.sc.nextLine();
-                Student currentUser = (Student) Database.CURRENT_USER;
                 try {
                     currentUser.changeIndex(courseCode, curIndex, newIndex);
                 } catch (Exception e) {
@@ -149,7 +176,7 @@ public class StudentMainView extends View {
 
     protected void swapIndex() {
 
-        CourseManager.printCourseList(CourseStatus.REGISTERED, Database.CURRENT_USER);
+        CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
         while (true) {
             System.out.print("Enter the course code to swap with a friend or Q to Quit: ");
             String courseCode = Helper.sc.nextLine();
@@ -162,7 +189,7 @@ public class StudentMainView extends View {
                 if (secondUser == null) {
                     break;
                 } else {
-                    CourseIndex currentUserIndex = currentUser.getCourse(courseCode).getIndices()[0]
+                    CourseIndex currentUserIndex = currentUser.getCourse(courseCode).getIndices()[0];
                     CourseIndex secondUserIndex = secondUser.getCourse(courseCode).getIndices()[0];
                     if (!currentUser.clashes(courseCode, secondUserIndex.getCourseIndex()) && !secondUser.clashes(courseCode, currentUserIndex.getCourseIndex())) {
                         currentUser.setIndex(courseCode, secondUserIndex);

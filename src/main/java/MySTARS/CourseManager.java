@@ -3,7 +3,7 @@ package MySTARS;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class CourseManager {
+public final class CourseManager {
 
     // TODO: Check print formatting
     protected static void printCourseList(CourseStatus status) {
@@ -24,7 +24,9 @@ public class CourseManager {
 
         for (Course course: Student.getCourses(status)) {
 
-            System.out.println(course.getCourseCode() + " ║ " + String.format("%-30s", course.getCourseName()) + " ║ " + String.format("%-20s", course.getDescription()));
+            if (course.getStatus() == status) {
+                System.out.println(course.getCourseCode() + " ║ " + String.format("%-30s", course.getCourseName()) + " ║ " + String.format("%-20s", course.getDescription()));   
+            }
             printLine();
         }
     }

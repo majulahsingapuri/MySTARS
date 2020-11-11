@@ -146,7 +146,7 @@ public final class Student extends User {
     protected void removeAU(AU acadUnits) {
 
         this.registeredAUs -= acadUnits.value;
-        //ensures logic is not broken
+    
         if (this.registeredAUs < 0){
             this.registeredAUs = 0;
         }
@@ -167,7 +167,7 @@ public final class Student extends User {
         CourseIndex courseInd = course.getIndex(courseIndex);
         
         if (courseInd.getVacancies() > 0) {
-            //add course successfully
+            
             this.courses.put(courseCode, course.simpleCopy(CourseStatus.REGISTERED, courseInd.simpleCopy()));
             courseInd.enrollStudent(this);
             addAU(course.getCourseAU());
@@ -175,7 +175,7 @@ public final class Student extends User {
             Database.serialise(FileType.COURSES);
             return CourseStatus.REGISTERED;
         } else {
-            //put on waitlist
+
             this.courses.put(courseCode, course.simpleCopy(CourseStatus.WAITLIST, courseInd.simpleCopy()));
             courseInd.addToWaitlist(this.matricNumber);
             Database.serialise(FileType.USERS);
@@ -246,27 +246,6 @@ public final class Student extends User {
         Database.serialise(FileType.COURSES);
     }
 
-    protected boolean clashes(String courseCode){
-        CourseIndex[] addCourseIndices = Database.COURSES.get(courseCode).getIndices();
-
-        for (Course studentCourse : this.courses.values()) {
-            if (!studentCourse.getCourseCode().equals(courseCode) && studentCourse.getStatus() == CourseStatus.REGISTERED) {
-                CourseIndex studentCourseIndex = studentCourse.getIndices()[0];
-                for (Lesson registeredLesson : studentCourseIndex.getLessons()) {
-                    for (CourseIndex addCourseIndex : addCourseIndices) {
-                        for (Lesson addCourseLesson : addCourseIndex.getLessons()) {
-                            if (registeredLesson.getTime().overlaps(addCourseLesson.getTime())) {
-                                return true;
-                            }
-                        }   
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
     protected boolean clashes(String courseCode, String index) {
 
         CourseIndex addCourseIndex = Database.COURSES.get(courseCode).getIndex(index);
@@ -312,9 +291,11 @@ public final class Student extends User {
 	protected void setIndex(String courseCode, CourseIndex courseIndex) {
         
         courses.get(courseCode).addIndex(courseIndex);
+        Database.serialise(FileType.USERS);
     }
     
-    protected Student simpleCopy(){
+    protected Student simpleCopy() {
+
         return new Student(this.getUsername(), this.matricNumber, this.firstName, this.lastName, this.gender, this.nationality);
     }
 }
