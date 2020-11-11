@@ -11,4 +11,15 @@ public enum AU {
     private AU(Integer value) {
         this.value = value;
     }
+
+    protected static AU getAU(int acadUnit) {
+
+        for (AU au : AU.values()) {
+            if (au.value == acadUnit) {
+                return au;
+            }
+        }
+
+        return AU.ONE;
+    }
 }
