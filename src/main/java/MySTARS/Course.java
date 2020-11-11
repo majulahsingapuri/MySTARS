@@ -167,6 +167,11 @@ public final class Course implements Serializable {
         }
     }
 
+    protected void addIndex(CourseIndex courseIndex) {
+
+        courseIndices.put(courseIndex.getCourseIndex(), courseIndex);
+    }
+
     protected String[] getIndicesString() {
         return courseIndices.keySet().toArray(new String[courseIndices.size()]);
     }

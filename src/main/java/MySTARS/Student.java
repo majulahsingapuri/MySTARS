@@ -98,6 +98,11 @@ public final class Student extends User {
         return this.nationality;
     }
 
+	protected Course getCourse(String courseCode) {
+
+        return courses.get(courseCode);
+    }
+
     protected Course[] getCourses(CourseStatus courseStatus) {
 
         if (courseStatus == CourseStatus.NONE) {
@@ -302,6 +307,11 @@ public final class Student extends User {
         } else{
             return false;
         }
+    }
+
+	protected void setIndex(String courseCode, CourseIndex courseIndex) {
+        
+        courses.get(courseCode).addIndex(courseIndex);
     }
     
     protected Student simpleCopy(){

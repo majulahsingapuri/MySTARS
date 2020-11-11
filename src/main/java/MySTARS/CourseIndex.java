@@ -152,7 +152,18 @@ public final class CourseIndex implements Serializable {
         }
     }
 
+    protected void addStudent(Student student) {
+
+        enrolledStudents.put(student.getUsername(), student);
+    }
+    
+    protected Student removeStudent(String username) {
+
+        return enrolledStudents.remove(username);
+	}
+
     protected CourseIndex simpleCopy() {
+
         return new CourseIndex(0, this.courseCode, this.indexNumber, this.lessons);
     }
 }
