@@ -69,8 +69,11 @@ public final class AdminMainView extends View {
 
                 Course course = new Course(courseCode, courseName, acadUnits, description);
                 System.out.print("Enter the number of indices in this course: ");
-                course.addIndices(Helper.sc.nextInt());
+                int numIndices = Helper.sc.nextInt();
                 Helper.sc.nextLine();
+                course.addIndices(numIndices);
+                
+                Database.COURSES.put(courseCode, course);
                 Database.serialise(FileType.COURSES);
             } else {
                 System.out.println("Course already exists!");

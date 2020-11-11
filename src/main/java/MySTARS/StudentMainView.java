@@ -6,9 +6,8 @@ public final class StudentMainView extends View {
 
     protected void print() {
 
-        clearScreen("StudentMain");
-
         do {
+            clearScreen("StudentMain");
             System.out.println("What would you like to do? Choose one of the options below: ");
             System.out.println("1. Add a new course");
             System.out.println("2. Drop a course");
@@ -46,13 +45,11 @@ public final class StudentMainView extends View {
                 case 7:
                     LogoutView logoutView = new LogoutView();
                     logoutView.print();
-                    break;
+                    return;
                 default:
                     System.out.println("Please input correct choice number.");
             }
-        } while (choice < 8);
-
-        
+        } while (true);
     }
     
     private Student verifySecondUser(String courseCode) {
@@ -115,6 +112,8 @@ public final class StudentMainView extends View {
                         Student currentUser = (Student) Database.CURRENT_USER;
                         try {
                             currentUser.addCourse(courseCode,courseIndex);
+                            Database.serialise(FileType.USERS);
+                            Database.serialise(FileType.COURSES);
                             break;
                         } catch (Exception e) {
                             System.out.println(e.getLocalizedMessage());
@@ -141,6 +140,8 @@ public final class StudentMainView extends View {
             Student currentUser = (Student) Database.CURRENT_USER;
             try {
                 currentUser.dropCourse(courseCode);
+                Database.serialise(FileType.COURSES);
+                Database.serialise(FileType.USERS);
                 break;
             } catch (Exception e) {
                 System.out.println(e.getLocalizedMessage());
@@ -167,6 +168,9 @@ public final class StudentMainView extends View {
                 String newIndex = Helper.sc.nextLine();
                 try {
                     currentUser.changeIndex(courseCode, curIndex, newIndex);
+                    Database.serialise(FileType.USERS);
+                    Database.serialise(FileType.COURSES);
+                    break;
                 } catch (Exception e) {
                     System.out.println(e.getLocalizedMessage());
                 }
@@ -203,6 +207,9 @@ public final class StudentMainView extends View {
                         secondUserIndex.addStudent(temp);
                         temp = secondUserIndex.removeStudent(secondUser.getUsername());
                         currentUserIndex.addStudent(temp);
+                        Database.serialise(FileType.USERS);
+                        Database.serialise(FileType.COURSES);
+                        break;
                     } else {
                         System.out.println("There is a clash of index!");
                     }
@@ -216,18 +223,20 @@ public final class StudentMainView extends View {
     protected void changePassword() {
 
         while (true) {
-            System.out.println("Enter current password or Q to quit: ");
+            System.out.print("Enter current password or Q to quit: ");
             String oldPassowrd = Helper.getPasswordInput();
             if (oldPassowrd.equals("Q")) {
                 break;
             }
             if (Database.CURRENT_USER.checkPassword(oldPassowrd)) {
-                System.out.println("Enter new password: ");
+                System.out.print("Enter new password: ");
                 String newPassword1 = Helper.getPasswordInput();
-                System.out.println("Enter the new password again: ");
+                System.out.print("Enter the new password again: ");
                 String newPassword2 = Helper.getPasswordInput();
                 if (newPassword1.equals(newPassword2)){
                     Database.CURRENT_USER.changePassword(newPassword1);
+                    Database.serialise(FileType.USERS);
+                    break;
                 } else{
                     System.out.println("The passwords you entered do not match. Please try again.");
                 }

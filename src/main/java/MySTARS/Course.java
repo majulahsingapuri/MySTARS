@@ -105,7 +105,7 @@ public final class Course implements Serializable {
 
     protected boolean containsIndex(String courseIndex) {
 
-        return null == courseIndices.get(courseIndex);
+        return null != courseIndices.get(courseIndex);
     }
 
 
@@ -117,8 +117,7 @@ public final class Course implements Serializable {
 
         for(int i = 0; i < numIndices; i++) {
             System.out.print("Enter index number to add: ");
-            courseIndex = Helper.sc.nextLine(); 
-            System.out.println("");
+            courseIndex = Helper.sc.nextLine();
 
             System.out.print("Enter number of vacancies: ");
             vacancies = Helper.sc.nextInt();

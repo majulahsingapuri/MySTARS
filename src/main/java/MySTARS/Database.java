@@ -11,8 +11,7 @@ public final class Database {
     protected static AccessLevel CURRENT_ACCESS_LEVEL = AccessLevel.NONE;
 
     protected Database() {
-
-        
+  
         deserialise(FileType.COURSES);
         deserialise(FileType.USERS);
         resetUsers();

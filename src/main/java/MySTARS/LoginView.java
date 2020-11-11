@@ -1,6 +1,8 @@
 package MySTARS;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public final class LoginView extends View {
 
@@ -10,10 +12,29 @@ public final class LoginView extends View {
     private static DateTime loginStart;
     private static DateTime loginEnd;
 
-    public LoginView() {}
+    public LoginView() {
+
+        if (loginStart == null || loginEnd == null) {
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
+            loginStart = formatter.parseDateTime("01/01/2020 00:00:00");
+            loginEnd = formatter.parseDateTime("31/12/2020 23:59:59");
+        }
+    }
+
+    protected DateTime getStartTime() {
+        
+        return LoginView.loginStart;
+    }
+
+    protected DateTime getEndTime() {
+        
+        return LoginView.loginEnd;
+    }
     
     protected void print() {
         clearScreen("Login");
+
+        //TODO: Print current time and log in timings for student
 
         while (true) {
             System.out.print("Enter the domain (Student or Admin): ");

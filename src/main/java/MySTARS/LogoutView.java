@@ -21,6 +21,13 @@ public final class LogoutView extends View {
         System.out.println("║                                                  ║");
         System.out.println("╚══════════════════════════════════════════════════╝");
 
+        System.out.println("\n\nTaking you back to the log in screen");
+        for (int i = 0; i < 6; i++) {
+            Helper.load();
+        }
+
+        System.out.println("\n");
+
         clearScreen("Login");
 
     }
