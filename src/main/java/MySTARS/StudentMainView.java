@@ -2,7 +2,6 @@ package MySTARS;
 
 public final class StudentMainView extends View {
     private int choice;
-    public StudentMainView() {}
 
     protected void print() {
 
@@ -18,8 +17,14 @@ public final class StudentMainView extends View {
             System.out.println("7. Logout");
             System.out.print("Enter the number of your choice: ");
 
-            choice = Helper.sc.nextInt();
-            Helper.sc.nextLine();
+            try{
+                choice = Helper.sc.nextInt();
+                Helper.sc.nextLine();
+            }
+            catch (Exception e){
+                choice = -1;
+                Helper.sc.nextLine();
+            }
 
             switch (choice) {
                 case 1:
@@ -48,6 +53,7 @@ public final class StudentMainView extends View {
                 default:
                     System.out.println("Please input correct choice number.");
             }
+            Helper.pause();
         } while (true);
     }
     
@@ -102,14 +108,12 @@ public final class StudentMainView extends View {
                         else{
                             System.out.println("You are already on the waitlist for this course!");
                         }
-                        System.out.println("Enter anything to continue...");
-                        Helper.sc.nextLine();
-                        courseCode = 'Q';
+                        courseCode = "Q";
                         break;
                     }
                 }
 
-                if (courseCode.equals('Q')){
+                if (courseCode.equals("Q")){
                     break;
                 }
 
@@ -132,7 +136,7 @@ public final class StudentMainView extends View {
                             currentUser.addCourse(courseCode,courseIndex);
                             Database.serialise(FileType.USERS);
                             Database.serialise(FileType.COURSES);
-                            //FIXME add confirmation message and wait for user input to continue
+                            System.out.println(courseCode + " has been added successfully.");
                             break;
                         } catch (Exception e) {
                             System.out.println(e.getLocalizedMessage());
@@ -145,6 +149,9 @@ public final class StudentMainView extends View {
                 System.out.println("The course code you entered is invalid!");
             }
         }
+        
+        System.out.println("Going back to main menu...");
+        Helper.pause();
     }
 
     protected void dropCourse() {

@@ -11,7 +11,7 @@ public abstract class View {
             if (os.contains("Windows")) {
                 //FIXME java.io.IOException: Cannot run program "cls": CreateProcess error=2, The system cannot find the file specified
                 Runtime.getRuntime().exec("cls");
-                }
+            }
             else {
                 Runtime.getRuntime().exec("clear");
             }
