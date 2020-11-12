@@ -95,7 +95,7 @@ public final class CourseIndex implements Serializable {
 
         String username = student.getUsername();
         if(this.vacancies != 0) {
-            enrolledStudents.put(username, student);
+            enrolledStudents.put(username, student.simpleCopy());
             this.vacancies -= 1;
         } else {
             String answer;
@@ -153,12 +153,12 @@ public final class CourseIndex implements Serializable {
     }
 
     protected void addStudent(Student student) {
-
-        enrolledStudents.put(student.getUsername(), student);
+        enrolledStudents.put(student.getUsername(), student.simpleCopy());
+        vacancies -= 1;
     }
     
     protected Student removeStudent(String username) {
-
+        vacancies += 1;
         return enrolledStudents.remove(username);
 	}
 

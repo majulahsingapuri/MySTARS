@@ -198,8 +198,8 @@ public final class StudentMainView extends View {
                     CourseIndex currentUserIndex = currentUser.getCourse(courseCode).getIndices()[0];
                     CourseIndex secondUserIndex = secondUser.getCourse(courseCode).getIndices()[0];
                     if (!currentUser.clashes(courseCode, secondUserIndex.getCourseIndex()) && !secondUser.clashes(courseCode, currentUserIndex.getCourseIndex())) {
-                        currentUser.setIndex(courseCode, secondUserIndex);
-                        secondUser.setIndex(courseCode, currentUserIndex);
+                        currentUser.swapIndex(courseCode, secondUserIndex);
+                        secondUser.swapIndex(courseCode, currentUserIndex);
                         Course course = Database.COURSES.get(courseCode);
                         currentUserIndex = course.getIndex(currentUserIndex.getCourseIndex());
                         secondUserIndex = course.getIndex(secondUserIndex.getCourseIndex());

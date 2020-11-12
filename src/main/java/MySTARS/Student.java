@@ -3,6 +3,13 @@ package MySTARS;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Represents one Student
+ * @author DSAI2 Group 1
+ * @version 1.0
+ * @since 2020-11-11
+ */
+
 public final class Student extends User {
 
     private static final long serialVersionUID = 77L;
@@ -14,6 +21,15 @@ public final class Student extends User {
     private String nationality = "";
     private int registeredAUs = 0;
 
+    /**
+     * The constructor with the minimum required number of parameters.
+     * @param userName the student's unique username (eg.HKIM007)
+     * @param matricNumber the student's unique, 9-character matriculation number
+     * @param firstName the student's first name
+     * @param lastName the student's last name
+     * @param gender the student's gender
+     * @param nationality the student's nationality
+    */
     protected Student(String userName, String matricNumber, String firstName, String lastName, Gender gender, String nationality) {
 
         super(userName, AccessLevel.STUDENT);
@@ -24,6 +40,16 @@ public final class Student extends User {
         this.nationality = nationality;
     }
 
+    /**
+     * The constructor with all possible parameters.
+     * @param userName the student's unique username (eg.HKIM007)
+     * @param matricNumber the student's unique, 9-character matriculation number
+     * @param firstName the student's first name
+     * @param lastName the student's last name
+     * @param password the student's password for accessing the STARS system
+     * @param gender the student's gender
+     * @param nationality the student's nationality
+    */
     protected Student(String userName, String matricNumber, String firstName, String lastName, String password, Gender gender, String nationality) {
 
         super(userName, password, AccessLevel.STUDENT);
@@ -34,6 +60,11 @@ public final class Student extends User {
         this.nationality = nationality;
     }
 
+    /**
+     * Checks if a String can be used as a matriculation number.
+     * @param matricNo the string you are testing
+     * @return returns whether the passed in value is in a valid matriculation number format
+    */
     protected static boolean isValidMatricNo(String matricNo) {
 
         //has to have 9 characters
@@ -56,6 +87,11 @@ public final class Student extends User {
         return true;
     }
 
+    /**
+     * Checks if a String can be used as a new matriculation number.
+     * @param matricNo the string you are testing
+     * @return returns whether the passed in value is in a valid matriculation number format and has not been used yet
+    */
     protected static boolean isValidNewMatricNo(String matricNo) {
 
         if (!isValidMatricNo(matricNo)) {return false;}
@@ -74,35 +110,65 @@ public final class Student extends User {
         return true;
     }
 
+    /**
+     * Returns the student's matriculation number.
+     * @return the student's unique matriculation number
+    */
     protected String getMatricNumber() {
 
         return this.matricNumber;
     }
 
+    /**
+     * Returns the student's first name.
+     * @return the student's first name
+    */
     protected String getFirstName() {
         return this.firstName;
     }
 
+    /**
+     * Returns the student's last name.
+     * @return the student's last name
+    */
     protected String getLastName() {
 
         return this.lastName;
     }
 
+    /**
+     * Returns the student's gender.
+     * @return the student's gender
+    */
     protected Gender getGender() {
 
         return this.gender;
     }
 
+    /**
+     * Returns the student's nationality.
+     * @return the student's nationality
+    */
     protected String getNationality() {
 
         return this.nationality;
     }
 
+    /**
+     * Returns the student's first name.
+     * @return the student's first name
+    */
 	protected Course getCourse(String courseCode) {
 
         return courses.get(courseCode);
     }
 
+    /**
+     * Returns a list of the student's courses, based on the desired course status.
+     * Eg. If courseStatus = CourseStatus.REGISTERED, then only registered courses will be returned.
+     * @param courseStatus defines the desried course status used to filter courses
+     * @return a list of the student's courses that have the desired course status
+    */
     protected Course[] getCourses(CourseStatus courseStatus) {
 
         if (courseStatus == CourseStatus.NONE) {
@@ -119,6 +185,12 @@ public final class Student extends User {
         return courseIDs.toArray(new Course[courseIDs.size()]);
     }
 
+    /**
+     * Returns a list of the student's course indices, based on the desired course status.
+     * Eg. If courseStatus = CourseStatus.REGISTERED, then only registered course indices will be returned.
+     * @param courseStatus defines the desried course status used to filter courses
+     * @return a list of the student's course indices that have the desired course status
+    */
     protected CourseIndex[] getIndices(CourseStatus courseStatus) {
 
         ArrayList<CourseIndex> courseInds = new ArrayList<CourseIndex>();
@@ -132,18 +204,22 @@ public final class Student extends User {
         return courseInds.toArray(new CourseIndex[courseInds.size()]);
     }
 
+    /**
+     * Returns the student's current number of registered Academic Units (AUs).
+     * @return the student's current number of registered Academic Units (AUs)
+    */
     protected int getAU() {
 
         return this.registeredAUs;
     }
 
-    protected void addAU(AU acadUnits) {
+    private void addAU(AU acadUnits) {
 
         this.registeredAUs += acadUnits.value;
         Database.serialise(FileType.USERS);
     }
 
-    protected void removeAU(AU acadUnits) {
+    private void removeAU(AU acadUnits) {
 
         this.registeredAUs -= acadUnits.value;
     
@@ -153,6 +229,14 @@ public final class Student extends User {
         Database.serialise(FileType.USERS);
     }
 
+    /**
+     * Adds a course to the student's timetable. If there is no timetbale clash, will try to register the course.
+     * If the course has no vacancies, the student will be put on the waitlist.
+     * @param courseCode the course code of the desired course to be added, the student cannot be registered in the course nor on its waitlist
+     * @param courseIndex the couse index of the desired course to be added
+     * @return the course status that the course has been successfully added as
+     * @exception Exception if the courseCode does not exist or there is a timetable clash
+    */
     protected CourseStatus addCourse(String courseCode, String courseIndex) throws Exception {
         
         //TODO make sure calling class checks that course is not yet registered nor on the waitlist
@@ -184,6 +268,11 @@ public final class Student extends User {
         }
     }
 
+    /**
+     * Drops a course from the student's timetable.
+     * @param courseCode the course code of the desired course to be dropped
+     * @exception Exception if the courseCode does not exist has not been added by the student
+    */
     protected void dropCourse(String courseCode) throws Exception {
 
         Database.deserialise(FileType.COURSES);
@@ -210,10 +299,20 @@ public final class Student extends User {
             Database.serialise(FileType.COURSES);
             Database.serialise(FileType.USERS);
         } else {
+            //ensure logic is not broken
             throw new Exception("Invalid course courseStatus!");
         }
     }
 
+    /**
+     * Puts the student in a different index of a registered course.
+     * @param code the course code of the registered course whose index we want to change
+     * @param currentInd the current registered index of the registered course
+     * @param newInd the new index of the registered course that the student is to be switched into
+     * @exception Exception if the courseCode does not exist or has not been registered by the student
+     * @exception Exception if the indices are not part of the course or the student is not registered in currentInd
+     * @exception Exception if the new index clashes with the student's timetable or the new index has no vancancies
+    */
     protected void changeIndex(String code, String currentInd, String newInd) throws Exception {
 
         Database.deserialise(FileType.COURSES);
@@ -246,6 +345,13 @@ public final class Student extends User {
         Database.serialise(FileType.COURSES);
     }
 
+    /**
+     * Checks if a course index of a course clashes with the student's timetable.
+     * Only checks with registered courses that are different from the course to be checked.
+     * @param courseCode the course code of the course to be checked
+     * @param index the couse index to be checked
+     * @return true if a clash is found, false if there are no clashes
+    */
     protected boolean clashes(String courseCode, String index) {
 
         CourseIndex addCourseIndex = Database.COURSES.get(courseCode).getIndex(index);
@@ -266,6 +372,12 @@ public final class Student extends User {
         return false;
     }
 
+    /**
+     * Registers the student from waitlist.
+     * @param courseIndex the course index to be registered
+     * @return true if registered successfully, false otherwise
+     * @exception Exception from the {@link #dropCourse(String)} and {@link #addCourse(String, String)} methods
+    */
 	protected boolean addCourseFromWaitlist(CourseIndex courseIndex) throws Exception {
         String courseCode = courseIndex.getCourseCode();
         Course myCourse = this.courses.get(courseCode);
@@ -288,12 +400,32 @@ public final class Student extends User {
         }
     }
 
-	protected void setIndex(String courseCode, CourseIndex courseIndex) {
+    /**
+     * Used to swap indices with another student.
+     * Different from changeIndex(...) as vacacies should not be checked.
+     * Timetable clashes will have already been checked before this method is called.
+     * @param courseCode the course code of the course to be updated
+     * @param newIndex the course index to be swapped to
+    */
+	protected void swapIndex(String courseCode, CourseIndex newIndex) {
+        //TODO ensure called class checkd there are no errors (courseCode and index is registered by student and newIndex is valid)
+        Course course = Database.COURSES.get(courseCode);
+
+        CourseIndex currentIndex = course.getIndex(this.courses.get(courseCode).getIndicesString()[0]);
+        currentIndex.removeStudent(this.getUsername());
         
-        courses.get(courseCode).addIndex(courseIndex);
+        newIndex.addStudent(this);
+        this.courses.put(courseCode, course.simpleCopy(CourseStatus.REGISTERED, newIndex));
+
         Database.serialise(FileType.USERS);
+        Database.serialise(FileType.COURSES);
     }
     
+    /**
+     * Creates a copy of this student object with minimal information.
+     * Used in CourseIndex objects to store tjust the necessary student information.
+     * @return a stripped down copy of this student object
+    */
     protected Student simpleCopy() {
 
         return new Student(this.getUsername(), this.matricNumber, this.firstName, this.lastName, this.gender, this.nationality);
