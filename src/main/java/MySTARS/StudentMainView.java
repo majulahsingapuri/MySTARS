@@ -65,9 +65,14 @@ public final class StudentMainView extends View {
             if (username.equals("Q")) {
                 return null;
             }
-            System.out.print("Enter password: ");
-            String password = Helper.getPasswordInput();
-            if (Database.USERS.containsKey(username)) {
+
+            if (!Database.USERS.containsKey(username)) {
+                System.out.println(username + " does not exist!");
+                Helper.pause();
+            }
+            else {
+                System.out.print("Enter password: ");
+                String password = Helper.getPasswordInput();
                 User result = Database.USERS.get(username);
                 if (result.checkPassword(password)) {
                     try {
@@ -77,11 +82,16 @@ public final class StudentMainView extends View {
                             return secondUser;
                         } else {
                             System.out.println("Second User is not registered for this course!");
+                            Helper.pause();
                         }
                     } catch (Exception e) {
-                        // print error message
                         System.out.println("Invalid user. Please enter again!");
+                        Helper.pause();
                     }
+                }
+                else{
+                    System.out.println("Invalid Password!");
+                    Helper.pause();
                 }
             }
         }
@@ -140,13 +150,16 @@ public final class StudentMainView extends View {
                             break;
                         } catch (Exception e) {
                             System.out.println(e.getLocalizedMessage());
+                            Helper.pause();
                         }
                     }
                 } else {
                     System.out.println("The course index that you have entered is invalid!");
+                    Helper.pause();
                 }
             } else {
                 System.out.println("The course code you entered is invalid!");
+                Helper.pause();
             }
         }
         
@@ -156,8 +169,8 @@ public final class StudentMainView extends View {
 
     protected void dropCourse() {
 
-        CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
         while (true) {
+            CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
             System.out.print("Enter the course code to drop or Q to quit: ");
             String courseCode = Helper.sc.nextLine();
             if (courseCode.equals("Q")) {
@@ -168,11 +181,16 @@ public final class StudentMainView extends View {
                 currentUser.dropCourse(courseCode);
                 Database.serialise(FileType.COURSES);
                 Database.serialise(FileType.USERS);
+                System.out.println(courseCode + " has been dropped successfully.");
                 break;
             } catch (Exception e) {
                 System.out.println(e.getLocalizedMessage());
+                Helper.pause();
             }
         }
+
+        System.out.println("Going back to main menu...");
+        Helper.pause();
     }
 
     protected void changeIndex() {
@@ -200,21 +218,27 @@ public final class StudentMainView extends View {
                         currentUser.changeIndex(courseCode, curIndex, newIndex);
                         Database.serialise(FileType.USERS);
                         Database.serialise(FileType.COURSES);
+                        System.out.println("Changed " + courseCode + " to index " + newIndex + " succesfully.");
                         break;
                     } catch (Exception e) {
                         System.out.println(e.getLocalizedMessage());
+                        Helper.pause();
                     }
                 }
             } else {
                 System.out.println("You are not registerd for this Course!");
+                Helper.pause();
             }
         }
+
+        System.out.println("Going back to main menu...");
+        Helper.pause();
     }
 
     protected void swapIndex() {
 
-        CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
         while (true) {
+            CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
             System.out.print("Enter the course code to swap with a friend or Q to Quit: ");
             String courseCode = Helper.sc.nextLine();
             if (courseCode.equals("Q")) {
@@ -224,6 +248,7 @@ public final class StudentMainView extends View {
             if (currentUser.getCourse(courseCode) != null) {
                 Student secondUser = verifySecondUser(courseCode);
                 if (secondUser == null) {
+                    //User has entered "Q"
                     break;
                 } else {
                     CourseIndex currentUserIndex = currentUser.getCourse(courseCode).getIndices()[0];
@@ -231,28 +256,25 @@ public final class StudentMainView extends View {
                     if (!currentUser.clashes(courseCode, secondUserIndex.getCourseIndex()) && !secondUser.clashes(courseCode, currentUserIndex.getCourseIndex())) {
                         currentUser.swapIndex(courseCode, secondUserIndex);
                         secondUser.swapIndex(courseCode, currentUserIndex);
-                        Course course = Database.COURSES.get(courseCode);
-                        currentUserIndex = course.getIndex(currentUserIndex.getCourseIndex());
-                        secondUserIndex = course.getIndex(secondUserIndex.getCourseIndex());
-                        Student temp = currentUserIndex.removeStudent(currentUser.getUsername());
-                        secondUserIndex.addStudent(temp);
-                        temp = secondUserIndex.removeStudent(secondUser.getUsername());
-                        currentUserIndex.addStudent(temp);
-                        Database.serialise(FileType.USERS);
-                        Database.serialise(FileType.COURSES);
+                        System.out.println("Swapped successfully.");
                         break;
                     } else {
                         System.out.println("There is a clash of index!");
+                        Helper.pause();
                     }
                 }
             } else {
-                System.out.println("You have not registered for this course!");
+                System.out.println("You are not registered in this course!");
+                Helper.pause();
             }
         }
+
+        System.out.println("Going back to main menu...");
+        Helper.pause();
     }
 
     protected void changePassword() {
-
+        //FIXME should this be put in the User class instead?
         while (true) {
             System.out.print("Enter current password or Q to quit: ");
             String oldPassowrd = Helper.getPasswordInput();
@@ -266,12 +288,20 @@ public final class StudentMainView extends View {
                 String newPassword2 = Helper.getPasswordInput();
                 if (newPassword1.equals(newPassword2)){
                     Database.CURRENT_USER.changePassword(newPassword1);
-                    Database.serialise(FileType.USERS);
+                    System.out.println("Password updated successfully.");
                     break;
                 } else{
                     System.out.println("The passwords you entered do not match. Please try again.");
+                    Helper.pause();
                 }
             }
+            else{
+                System.out.println("Invalid password!");
+                Helper.pause();
+            }
         }
+
+        System.out.println("Going back to main menu...");
+        Helper.pause();
     } 
 }
