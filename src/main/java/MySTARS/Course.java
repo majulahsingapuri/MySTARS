@@ -143,9 +143,10 @@ public final class Course implements Serializable {
                     int startTime;
                     int endTime;
                 
-                    System.out.println("Enter details for lesson " + j+1);
+                    System.out.println("Enter details for lesson " + (j+1));
                     ClassType classType = Lesson.chooseClassType();
 
+                    //FIXME error checking!!!
                     System.out.print("Enter day of week for lesson (1: Monday, 2: Tuesday, etc.): ");
                     dayOfWeek = DayOfWeek.getDayOfWeek(Helper.sc.nextInt());
                     Helper.sc.nextLine();

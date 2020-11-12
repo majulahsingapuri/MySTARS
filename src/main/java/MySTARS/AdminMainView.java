@@ -142,6 +142,7 @@ public final class AdminMainView extends View {
                     String firstName = Helper.sc.nextLine();
                     System.out.print("Enter the Student's Last Name: ");
                     String lastName = Helper.sc.nextLine();
+                    //TODO clarify what is PNTS?
                     System.out.print("Enter the Student's Gender (M/F/NB/PNTS): ");
                     Gender gender = Gender.getGender(Helper.sc.nextLine());
                     System.out.print("Enter the Student's Nationality: ");
@@ -160,11 +161,13 @@ public final class AdminMainView extends View {
 
                     // TODO: change to String.format()
                     System.out.println("\n\nNew Student Details:");
-                    System.out.println("Name\t\t: " + firstName + " " + lastName);
-                    System.out.println("Network Username\t\t: " + username);
+                    System.out.println("Name\t\t\t: " + firstName + " " + lastName);
+                    System.out.println("Network Username\t: " + username);
                     System.out.println("Matric No\t\t: " + matricNumber);
-                    System.out.println("Gender\t\t: " + gender.label);
+                    System.out.println("Gender\t\t\t: " + gender.label);
                     System.out.println("Nationality\t\t: " + nationality);
+
+                    //FIXME add password!!!
 
                     System.out.print("\nConfirm? y/n: ");
                     String confirm = Helper.sc.nextLine();

@@ -95,7 +95,7 @@ public final class CourseIndex implements Serializable {
 
         String username = student.getUsername();
         if(this.vacancies != 0) {
-            enrolledStudents.put(username, student);
+            enrolledStudents.put(username, student.simpleCopy());
             this.vacancies -= 1;
         } else {
             String answer;
@@ -115,9 +115,9 @@ public final class CourseIndex implements Serializable {
         String username = student.getUsername();
 
         if(enrolledStudents.remove(username) == null) {
-            System.out.println("student not found in course register");
+            System.out.println("student not found in " + this.getCourseCode() + " course register");
         } else {
-            System.out.println(username + " removed from course register");
+            System.out.println(username + " removed from " + this.getCourseCode() + " course register");
             this.vacancies += 1;
             enrollNextInWaitlist();
         }
@@ -126,7 +126,7 @@ public final class CourseIndex implements Serializable {
     // need to add a method to pop the first student in waitlist to the class automatically? 
     protected void enrollNextInWaitlist() {
 
-        if(this.vacancies != 0) {
+        if(this.vacancies != 0 && waitlist.size()>0) {
             String username = waitlist.removeFirst();
             System.out.println("removed first student in waitlist");
             
@@ -147,18 +147,16 @@ public final class CourseIndex implements Serializable {
             else{
                 enrollNextInWaitlist();
             }
-        } else {
-            System.out.println("error, no vacancies");
         }
     }
 
     protected void addStudent(Student student) {
-
-        enrolledStudents.put(student.getUsername(), student);
+        enrolledStudents.put(student.getUsername(), student.simpleCopy());
+        vacancies -= 1;
     }
     
     protected Student removeStudent(String username) {
-
+        vacancies += 1;
         return enrolledStudents.remove(username);
 	}
 
