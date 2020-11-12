@@ -16,7 +16,7 @@ public final class CourseManager {
             Course course = courseEntry.getValue();
 
             if (course.getStatus() == status) {
-                System.out.println(String.format("%12s", course.getCourseCode()) + " ║ " + String.format("%-56s", course.getCourseName()));
+                System.out.println(String.format("%12.12s", course.getCourseCode()) + " ║ " + String.format("%-56.56s", course.getCourseName()));
                 printLine();
             }
         }
@@ -25,13 +25,13 @@ public final class CourseManager {
     protected static void printCourseList(CourseStatus status, Student Student) {
 
         printLine();
-        System.out.println(" Course Code ║ " + String.format("%-30s ║ %-23s", "Course Name", "Course Description"));
+        System.out.println(" Course Code ║ " + String.format("%-30.30s ║ %-23.23s", "Course Name", "Course Description"));
         printLine();
 
         for (Course course: Student.getCourses(status)) {
 
             if (course.getStatus() == status) {
-                System.out.println(course.getCourseCode() + " ║ " + String.format("%-30s ║ %-23s", course.getCourseName(), course.getDescription()));   
+                System.out.println(course.getCourseCode() + " ║ " + String.format("%-30.30s ║ %-23.23s", course.getCourseName(), course.getDescription()));   
             }
             printLine();
         }
@@ -44,11 +44,12 @@ public final class CourseManager {
         if (printVacancies) {
             System.out.print(" ║ Vacancies");
         }
+        System.out.println();
         printLine();
 
         for (CourseIndex courseIndex : course.getIndices()) {
             
-            System.out.print(String.format("%12s", courseIndex.getCourseIndex()));
+            System.out.print(String.format("%12.12s", courseIndex.getCourseIndex()));
 
             if (printVacancies) {
                 System.out.print(" ║ " + String.format("%4d", courseIndex.getVacancies()));
@@ -63,13 +64,13 @@ public final class CourseManager {
     protected static void printLesson(CourseIndex index) {
 
         printLine();
-        System.out.println(String.format("Lesson Type ║ %-13s ║ Location", "Lesson Time"));
+        System.out.println(String.format("Lesson Type ║ %-13.13s ║ Location", "Lesson Time"));
         printLine();
 
         for (Lesson lesson : index.getLessons()) {
 
             String[] time = lesson.getTime().toString().split("[T:/]");
-            System.out.println(String.format("%11s ║ %s:%s - %s:%s ║ %-48s", lesson.getType().label, time[1], time[2], time[5], time[6], lesson.getLocation()));
+            System.out.println(String.format("%11.11s ║ %2s:%2s - %2s:%2s ║ %-48.48s", lesson.getType().label, time[1], time[2], time[6], time[7], lesson.getLocation()));
             printLine();
         }
     }
@@ -90,11 +91,11 @@ public final class CourseManager {
         }
 
         printLine();
-        System.out.println("Matric No. ║ " + String.format("%-49s ║ %6s", "First Name", "Gender"));
+        System.out.println("Matric No. ║ " + String.format("%-49.49s ║ %6.6s", "First Name", "Gender"));
         printLine();
 
         for (Student student : studentsArray) {
-            System.out.println(String.format("%10s ║ %-49s ║ %6s", student.getMatricNumber(), student.getFirstName(), student.getGender().label));
+            System.out.println(String.format("%10.10s ║ %-49.49s ║ %6.6s", student.getMatricNumber(), student.getFirstName(), student.getGender().label));
             printLine();
         }
     }

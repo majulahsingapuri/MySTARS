@@ -53,7 +53,7 @@ public final class LoginView extends View {
             if (Database.USERS.containsKey(username)) {
                 User result = Database.USERS.get(username);
                 if (result.checkPassword(password)) {
-                    if (domain.equals("Student")) {
+                    if (domain.equals("Student") && result.getAccessLevel() == AccessLevel.STUDENT) {
                         if (isValidLoginDate()) {
                             try {
                                 Database.CURRENT_USER = (Student) result;
@@ -66,7 +66,7 @@ public final class LoginView extends View {
                         } else{
                             System.out.println("Login at an invalid timeframe! Please log in later.");
                         }
-                    } else if (domain.equals("Admin")){
+                    } else if (domain.equals("Admin") && result.getAccessLevel() == AccessLevel.ADMIN) {
                         try{
                             Database.CURRENT_USER = (Admin) result;
                             Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
