@@ -5,27 +5,33 @@ import java.util.HashMap;
 
 public final class CourseManager {
 
-    // TODO: Check print formatting
     protected static void printCourseList(CourseStatus status) {
+
+        printLine();
+        System.out.println(" Course Code ║ Course Name");
+        printLine();
 
         for (HashMap.Entry<String, Course> courseEntry : Database.COURSES.entrySet()) {
 
             Course course = courseEntry.getValue();
 
             if (course.getStatus() == status) {
-                System.out.println(course.getCourseCode() + " ║ " + String.format("%-55s", course.getCourseName()));
+                System.out.println(String.format("%12s", course.getCourseCode()) + " ║ " + String.format("%-56s", course.getCourseName()));
                 printLine();
             }
         }
     }
 
-    // TODO check print formatting
     protected static void printCourseList(CourseStatus status, Student Student) {
+
+        printLine();
+        System.out.println(" Course Code ║ " + String.format("%-30s ║ %-23s", "Course Name", "Course Description"));
+        printLine();
 
         for (Course course: Student.getCourses(status)) {
 
             if (course.getStatus() == status) {
-                System.out.println(course.getCourseCode() + " ║ " + String.format("%-30s", course.getCourseName()) + " ║ " + String.format("%-20s", course.getDescription()));   
+                System.out.println(course.getCourseCode() + " ║ " + String.format("%-30s ║ %-23s", course.getCourseName(), course.getDescription()));   
             }
             printLine();
         }
@@ -33,9 +39,16 @@ public final class CourseManager {
 
     protected static void printIndexList(Course course, boolean printVacancies) {
 
+        printLine();
+        System.out.print("Course Index");
+        if (printVacancies) {
+            System.out.print(" ║ Vacancies");
+        }
+        printLine();
+
         for (CourseIndex courseIndex : course.getIndices()) {
             
-            System.out.print(courseIndex.getCourseIndex());
+            System.out.print(String.format("%12s", courseIndex.getCourseIndex()));
 
             if (printVacancies) {
                 System.out.print(" ║ " + String.format("%4d", courseIndex.getVacancies()));
@@ -49,10 +62,14 @@ public final class CourseManager {
     // TODO: Check Regex
     protected static void printLesson(CourseIndex index) {
 
+        printLine();
+        System.out.println(String.format("Lesson Type ║ %-13s ║ Location", "Lesson Time"));
+        printLine();
+
         for (Lesson lesson : index.getLessons()) {
 
             String[] time = lesson.getTime().toString().split("[T:/]");
-            System.out.println(lesson.getType().label + " ║ " + String.format("%s:%s - %s:%s", time[1], time[2], time[5], time[6]) + " ║ " + String.format("%55s", lesson.getLocation()));
+            System.out.println(String.format("%11s ║ %s:%s - %s:%s ║ %-48s", lesson.getType().label, time[1], time[2], time[5], time[6], lesson.getLocation()));
             printLine();
         }
     }
@@ -72,14 +89,18 @@ public final class CourseManager {
             Arrays.sort(studentsArray);
         }
 
+        printLine();
+        System.out.println("Matric No. ║ " + String.format("%-49s ║ %6s", "First Name", "Gender"));
+        printLine();
+
         for (Student student : studentsArray) {
-            System.out.println(String.format("%9s", student.getMatricNumber()) + " ║ " + String.format("%-61s", student.getFirstName()) + " ║ " + String.format("%4s", student.getGender().label));
+            System.out.println(String.format("%10s ║ %-49s ║ %6s", student.getMatricNumber(), student.getFirstName(), student.getGender().label));
             printLine();
         }
     }
 
     private static void printLine() {
-        String line = String.format("%" + 74 + "s", "").replace(" ", "═");
+        String line = String.format("%" + 71 + "s", "").replace(" ", "═");
         System.out.println(line);
     }
 }
