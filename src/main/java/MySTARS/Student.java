@@ -394,6 +394,7 @@ public final class Student extends User {
         if (!clashes(courseCode, myIndex.getCourseIndex())) {
             dropCourse(courseCode);
             addCourse(courseCode, myIndex.getCourseIndex());
+            Helper.sendMailNotification(this, courseCode);
             return true;
         } else{
             return false;
