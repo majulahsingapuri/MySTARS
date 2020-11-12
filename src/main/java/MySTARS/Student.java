@@ -3,7 +3,7 @@ package MySTARS;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public final class Student extends User {
+public final class Student extends User implements Comparable<Student> {
 
     private static final long serialVersionUID = 77L;
     private String matricNumber;
@@ -298,4 +298,11 @@ public final class Student extends User {
 
         return new Student(this.getUsername(), this.matricNumber, this.firstName, this.lastName, this.gender, this.nationality);
     }
+
+    public int compareTo(Student o) {
+        
+        return this.firstName.compareTo(o.firstName);
+    }
+
+    
 }
