@@ -1,18 +1,20 @@
 package MySTARS;
 
 public enum DayOfWeek {
-    MONDAY(1),
-    TUESDAY(2),
-    WEDNESDAY(3),
-    THURSDAY(4),
-    FRIDAY(5),
-    SATURDAY(6),
-    SUNDAY(7);
+    MONDAY(1, "MON"),
+    TUESDAY(2, "TUE"),
+    WEDNESDAY(3, "WED"),
+    THURSDAY(4, "THU"),
+    FRIDAY(5, "FRI"),
+    SATURDAY(6, "SAT"),
+    SUNDAY(7, "SUN");
 
     public final Integer value;
+    public final String label;
 
-    private DayOfWeek(Integer value) {
+    private DayOfWeek(Integer value, String label) {
         this.value = value;
+        this.label = label;
     }
 
     protected static DayOfWeek getDayOfWeek(int day) {

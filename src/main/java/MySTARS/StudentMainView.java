@@ -38,9 +38,8 @@ public final class StudentMainView extends View {
                     changePassword();
                     break;
                 case 6:
-                    // PrintTimetableView timetableView = new PrintTimetableView();
-                    // timetableView.print();
-                    System.out.println("Will open timetable view");
+                    PrintTimeTableView timetableView = new PrintTimeTableView();
+                    timetableView.print();
                     break;
                 case 7:
                     LogoutView logoutView = new LogoutView();
