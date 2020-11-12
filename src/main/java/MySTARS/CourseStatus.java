@@ -2,8 +2,14 @@ package MySTARS;
 
 public enum CourseStatus {
     
-    REGISTERED,
-    NOT_REGISTERED,
-    WAITLIST,
-    NONE
+    REGISTERED("RGSTED"),
+    NOT_REGISTERED("NOTREG"),
+    WAITLIST("WLIST"),
+    NONE("NONE");
+
+    public final String label;
+
+    private CourseStatus(String label) {
+        this.label = label;
+    }
 }
