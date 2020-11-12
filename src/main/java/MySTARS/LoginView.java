@@ -40,6 +40,7 @@ public final class LoginView extends View {
             System.out.print("Enter the domain (Student or Admin): ");
             domain = Helper.sc.nextLine();
 
+            //TODO print soemthing to let the user know how to quitAdmin
             if (domain.equals("Quit")) {
                 break;
             }

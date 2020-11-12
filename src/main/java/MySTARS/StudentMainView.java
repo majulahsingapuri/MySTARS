@@ -83,9 +83,9 @@ public final class StudentMainView extends View {
     }
 
     protected void addCourse() {
-
-        CourseManager.printCourseList(CourseStatus.NONE);
+        Student currentUser = (Student) Database.CURRENT_USER;
         while (true) {
+            CourseManager.printCourseList(CourseStatus.NONE);
             System.out.print("Enter the course code or Q to quit: ");
             String courseCode = Helper.sc.nextLine();
             if (courseCode.equals("Q")) {
@@ -94,6 +94,25 @@ public final class StudentMainView extends View {
 
             Course course = Database.COURSES.get(courseCode);
             if (course != null) {
+                Course[] studentCourses = currentUser.getCourses(CourseStatus.NONE);
+                for (Course studentCourse : studentCourses){
+                    if (studentCourse.getCourseCode().equals(courseCode)){
+                        if (studentCourse.getStatus() == CourseStatus.REGISTERED){
+                            System.out.println("You are already registered in this course!");
+                        }
+                        else{
+                            System.out.println("You are already on the waitlist for this course!");
+                        }
+                        System.out.println("Enter anything to continue...");
+                        Helper.sc.nextLine();
+                        courseCode = 'Q';
+                        break;
+                    }
+                }
+
+                if (courseCode.equals('Q')){
+                    break;
+                }
 
                 CourseManager.printIndexList(course, true);
                 System.out.print("Enter the course index that you wish to add or Q to quit: ");
@@ -104,16 +123,17 @@ public final class StudentMainView extends View {
 
                 CourseIndex index = course.getIndex(courseIndex);
                 if (index != null) {
+                    System.out.println();
                     CourseManager.printLesson(index);
                     System.out.print("These lesson timings will be added to your timetable. Confirm? y/n: ");
                     String answer = Helper.sc.nextLine();
 
                     if (answer.equals("y")) {
-                        Student currentUser = (Student) Database.CURRENT_USER;
                         try {
                             currentUser.addCourse(courseCode,courseIndex);
                             Database.serialise(FileType.USERS);
                             Database.serialise(FileType.COURSES);
+                            //FIXME add confirmation message and wait for user input to continue
                             break;
                         } catch (Exception e) {
                             System.out.println(e.getLocalizedMessage());
@@ -151,8 +171,8 @@ public final class StudentMainView extends View {
 
     protected void changeIndex() {
 
-        CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
         while (true) {
+            CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
             System.out.print("Enter the course code or Q to quit: ");
             String courseCode = Helper.sc.nextLine();
             if (courseCode.equals("Q")) {
@@ -162,17 +182,22 @@ public final class StudentMainView extends View {
             if (currentUser.getCourse(courseCode) != null) {
                 Course course = Database.COURSES.get(courseCode);
                 CourseManager.printIndexList(course, true);
-                System.out.print("Enter your current index: ");
-                String curIndex = Helper.sc.nextLine();
+                String curIndex = currentUser.getCourse(courseCode).getIndicesString()[0];
+                System.out.println("Your current index is: " + curIndex);
                 System.out.print("Enter the new index that you wish to change to: ");
                 String newIndex = Helper.sc.nextLine();
-                try {
-                    currentUser.changeIndex(courseCode, curIndex, newIndex);
-                    Database.serialise(FileType.USERS);
-                    Database.serialise(FileType.COURSES);
-                    break;
-                } catch (Exception e) {
-                    System.out.println(e.getLocalizedMessage());
+                if (newIndex.equals(curIndex)){
+                    System.out.println("You are already in this index!");
+                }
+                else{
+                    try {
+                        currentUser.changeIndex(courseCode, curIndex, newIndex);
+                        Database.serialise(FileType.USERS);
+                        Database.serialise(FileType.COURSES);
+                        break;
+                    } catch (Exception e) {
+                        System.out.println(e.getLocalizedMessage());
+                    }
                 }
             } else {
                 System.out.println("You are not registerd for this Course!");

@@ -115,9 +115,9 @@ public final class CourseIndex implements Serializable {
         String username = student.getUsername();
 
         if(enrolledStudents.remove(username) == null) {
-            System.out.println("student not found in course register");
+            System.out.println("student not found in " + this.getCourseCode() + " course register");
         } else {
-            System.out.println(username + " removed from course register");
+            System.out.println(username + " removed from " + this.getCourseCode() + " course register");
             this.vacancies += 1;
             enrollNextInWaitlist();
         }
@@ -126,7 +126,7 @@ public final class CourseIndex implements Serializable {
     // need to add a method to pop the first student in waitlist to the class automatically? 
     protected void enrollNextInWaitlist() {
 
-        if(this.vacancies != 0) {
+        if(this.vacancies != 0 && waitlist.size()>0) {
             String username = waitlist.removeFirst();
             System.out.println("removed first student in waitlist");
             
@@ -147,8 +147,6 @@ public final class CourseIndex implements Serializable {
             else{
                 enrollNextInWaitlist();
             }
-        } else {
-            System.out.println("error, no vacancies");
         }
     }
 

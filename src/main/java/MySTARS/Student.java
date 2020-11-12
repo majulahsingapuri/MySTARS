@@ -319,7 +319,7 @@ public final class Student extends User {
 
         if (!Database.COURSES.containsKey(code)) {
             throw new Exception("Course " + code + " does not exist!");
-        } else if (this.courses.containsKey(code)) {
+        } else if (!this.courses.containsKey(code)) {
             throw new Exception("Course " + code + " has not been added by Student!");
         } else if (!Database.COURSES.get(code).containsIndex(currentInd)) {
             throw new Exception("Course " + currentInd + " does not contain index " + currentInd + "!");

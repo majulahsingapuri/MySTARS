@@ -33,6 +33,7 @@ public final class CourseManager {
 
     protected static void printIndexList(Course course, boolean printVacancies) {
 
+        //FIXME add table headings! especially for the vacancies column
         for (CourseIndex courseIndex : course.getIndices()) {
             
             System.out.print(courseIndex.getCourseIndex());
@@ -52,6 +53,16 @@ public final class CourseManager {
         for (Lesson lesson : index.getLessons()) {
 
             String[] time = lesson.getTime().toString().split("[T:/]");
+            //FIXME add day of week, remove year, shorten space to location
+            //FIXME add table headings?
+/* currently looks like this:
+LEC ║ 10:30 - 2020-01-01:11 ║                                               LocationA
+══════════════════════════════════════════════════════════════════════════
+LAB ║ 10:30 - 2020-01-02:11 ║                                                    LabA
+══════════════════════════════════════════════════════════════════════════
+TUT ║ 14:00 - 2020-01-02:15 ║                                                    TutA
+══════════════════════════════════════════════════════════════════════════
+*/
             System.out.println(lesson.getType().label + " ║ " + String.format("%s:%s - %s:%s", time[1], time[2], time[5], time[6]) + " ║ " + String.format("%55s", lesson.getLocation()));
             printLine();
         }
