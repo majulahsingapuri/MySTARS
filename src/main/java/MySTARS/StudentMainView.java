@@ -6,7 +6,7 @@ public final class StudentMainView extends View {
     protected void print() {
 
         do {
-            clearScreen("StudentMain");
+            clearScreen("Student Main");
             System.out.println("What would you like to do? Choose one of the options below: ");
             System.out.println("1. Add a new course");
             System.out.println("2. Drop a course");
@@ -28,18 +28,23 @@ public final class StudentMainView extends View {
 
             switch (choice) {
                 case 1:
+                    clearScreen("Student Main > Add Course");
                     addCourse();
                     break;
                 case 2:
+                    clearScreen("Student Main > Drop Course");
                     dropCourse();
                     break;
                 case 3:
+                    clearScreen("Student Main > Change Index");
                     changeIndex();
                     break;
                 case 4:
+                    clearScreen("Student Main > Swap Index with Peer");
                     swapIndex();
                     break;
                 case 5:
+                    clearScreen("Student Main > Change Password");
                     changePassword();
                     break;
                 case 6:
@@ -109,8 +114,7 @@ public final class StudentMainView extends View {
 
             Course course = Database.COURSES.get(courseCode);
             if (course != null) {
-                Course[] studentCourses = currentUser.getCourses(CourseStatus.NONE);
-                for (Course studentCourse : studentCourses){
+                for (Course studentCourse : currentUser.getCourses(CourseStatus.NONE)){
                     if (studentCourse.getCourseCode().equals(courseCode)){
                         if (studentCourse.getStatus() == CourseStatus.REGISTERED){
                             System.out.println("You are already registered in this course!");
@@ -164,7 +168,6 @@ public final class StudentMainView extends View {
         }
         
         System.out.println("Going back to main menu...");
-        Helper.pause();
     }
 
     protected void dropCourse() {
@@ -190,7 +193,6 @@ public final class StudentMainView extends View {
         }
 
         System.out.println("Going back to main menu...");
-        Helper.pause();
     }
 
     protected void changeIndex() {
@@ -212,6 +214,7 @@ public final class StudentMainView extends View {
                 String newIndex = Helper.sc.nextLine();
                 if (newIndex.equals(curIndex)){
                     System.out.println("You are already in this index!");
+                    Helper.pause();
                 }
                 else{
                     try {
@@ -232,7 +235,6 @@ public final class StudentMainView extends View {
         }
 
         System.out.println("Going back to main menu...");
-        Helper.pause();
     }
 
     protected void swapIndex() {
@@ -270,7 +272,6 @@ public final class StudentMainView extends View {
         }
 
         System.out.println("Going back to main menu...");
-        Helper.pause();
     }
 
     protected void changePassword() {
@@ -300,8 +301,6 @@ public final class StudentMainView extends View {
                 Helper.pause();
             }
         }
-
         System.out.println("Going back to main menu...");
-        Helper.pause();
     } 
 }

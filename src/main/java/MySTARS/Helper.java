@@ -26,7 +26,7 @@ public final class Helper {
 	}
 	
 	protected static void pause(){
-		System.out.println("Enter anything to continue...");
+		System.out.print("Press <Enter> to continue... ");
 		sc.nextLine();
 	}
 

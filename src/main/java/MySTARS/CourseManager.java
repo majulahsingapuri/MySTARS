@@ -22,16 +22,16 @@ public final class CourseManager {
         }
     }
 
-    protected static void printCourseList(CourseStatus status, Student Student) {
+    protected static void printCourseList(CourseStatus status, Student student) {
 
         printLine();
         System.out.println(" Course Code ║ " + String.format("%-30.30s ║ %-23.23s", "Course Name", "Course Description"));
         printLine();
 
-        for (Course course: Student.getCourses(status)) {
+        for (Course course: student.getCourses(status)) {
 
             if (course.getStatus() == status) {
-                System.out.println(course.getCourseCode() + " ║ " + String.format("%-30.30s ║ %-23.23s", course.getCourseName(), course.getDescription()));   
+                System.out.println("   " + course.getCourseCode() + "   ║ " + String.format("%-30.30s ║ %-23.23s", course.getCourseName(), course.getDescription()));   
             }
             printLine();
         }

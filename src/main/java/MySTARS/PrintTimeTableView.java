@@ -6,7 +6,7 @@ public final class PrintTimeTableView extends View {
 
     protected void print() {
 
-        clearScreen("Main > Print Timetable");
+        clearScreen("Student Main > Print Timetable");
 
         printLine();
         System.out.println(String.format("%6s ║ %-20s ║ %2s ║ %5s ║ %6s ║ %4s ║ %3s ║ %-13s ║ %-10s ║ %-26s", "Course", "Title", "AU", "Index", "Status", "Type", "Day", "Time", "Venue", "Remark"));
@@ -31,8 +31,6 @@ public final class PrintTimeTableView extends View {
             }
         }
         
-        System.out.println("Press Enter to return to Main Menu");
-        Helper.sc.nextLine();
         return;
     }
 
