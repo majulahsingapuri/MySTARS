@@ -14,7 +14,8 @@ public final class StudentMainView extends View {
             System.out.println("4. Swap index of one of your current courses with a peer");
             System.out.println("5. Change your password");
             System.out.println("6. Show timetable");
-            System.out.println("7. Logout");
+            System.out.println("7. Show courses on waitlist");
+            System.out.println("8. Logout");
             System.out.print("Enter the number of your choice: ");
 
             try{
@@ -52,6 +53,10 @@ public final class StudentMainView extends View {
                     timetableView.print();
                     break;
                 case 7:
+                    clearScreen("Student Main > View Courses on Waitlist");
+                    viewWaitlistedCourses();
+                    break;
+                case 8:
                     LogoutView logoutView = new LogoutView();
                     logoutView.print();
                     return;
@@ -61,7 +66,7 @@ public final class StudentMainView extends View {
             Helper.pause();
         } while (true);
     }
-    
+
     private Student verifySecondUser(String courseCode) {
 
         while (true) {
@@ -303,4 +308,9 @@ public final class StudentMainView extends View {
         }
         System.out.println("Going back to main menu...");
     } 
+
+    protected void viewWaitlistedCourses() {
+        Student currentUser = (Student) Database.CURRENT_USER;
+        CourseManager.printCourseList(CourseStatus.WAITLIST, currentUser);
+    }
 }
