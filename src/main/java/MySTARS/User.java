@@ -22,8 +22,8 @@ public class User implements Serializable {
     }
 
     protected boolean changePassword(String newPassword) {
-        //reinput password to ensure correct person changing password
-        password = newPassword;
+        this.password = newPassword;
+        Database.serialise(FileType.USERS);
         return true;
         //if wrong password, return false
     }

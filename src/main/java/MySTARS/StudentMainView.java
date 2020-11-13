@@ -2,12 +2,11 @@ package MySTARS;
 
 public final class StudentMainView extends View {
     private int choice;
-    public StudentMainView() {}
 
     protected void print() {
 
         do {
-            clearScreen("StudentMain");
+            clearScreen("Student Main");
             System.out.println("What would you like to do? Choose one of the options below: ");
             System.out.println("1. Add a new course");
             System.out.println("2. Drop a course");
@@ -15,26 +14,38 @@ public final class StudentMainView extends View {
             System.out.println("4. Swap index of one of your current courses with a peer");
             System.out.println("5. Change your password");
             System.out.println("6. Show timetable");
-            System.out.println("7. Logout");
+            System.out.println("7. Show courses on waitlist");
+            System.out.println("8. Logout");
             System.out.print("Enter the number of your choice: ");
 
-            choice = Helper.sc.nextInt();
-            Helper.sc.nextLine();
+            try{
+                choice = Helper.sc.nextInt();
+                Helper.sc.nextLine();
+            }
+            catch (Exception e){
+                choice = -1;
+                Helper.sc.nextLine();
+            }
 
             switch (choice) {
                 case 1:
+                    clearScreen("Student Main > Add Course");
                     addCourse();
                     break;
                 case 2:
+                    clearScreen("Student Main > Drop Course");
                     dropCourse();
                     break;
                 case 3:
+                    clearScreen("Student Main > Change Index");
                     changeIndex();
                     break;
                 case 4:
+                    clearScreen("Student Main > Swap Index with Peer");
                     swapIndex();
                     break;
                 case 5:
+                    clearScreen("Student Main > Change Password");
                     changePassword();
                     break;
                 case 6:
@@ -42,15 +53,20 @@ public final class StudentMainView extends View {
                     timetableView.print();
                     break;
                 case 7:
+                    clearScreen("Student Main > View Courses on Waitlist");
+                    viewWaitlistedCourses();
+                    break;
+                case 8:
                     LogoutView logoutView = new LogoutView();
                     logoutView.print();
                     return;
                 default:
                     System.out.println("Please input correct choice number.");
             }
+            Helper.pause();
         } while (true);
     }
-    
+
     private Student verifySecondUser(String courseCode) {
 
         while (true) {
@@ -59,9 +75,14 @@ public final class StudentMainView extends View {
             if (username.equals("Q")) {
                 return null;
             }
-            System.out.print("Enter password: ");
-            String password = Helper.getPasswordInput();
-            if (Database.USERS.containsKey(username)) {
+
+            if (!Database.USERS.containsKey(username)) {
+                System.out.println(username + " does not exist!");
+                Helper.pause();
+            }
+            else {
+                System.out.print("Enter password: ");
+                String password = Helper.getPasswordInput();
                 User result = Database.USERS.get(username);
                 if (result.checkPassword(password)) {
                     try {
@@ -71,11 +92,16 @@ public final class StudentMainView extends View {
                             return secondUser;
                         } else {
                             System.out.println("Second User is not registered for this course!");
+                            Helper.pause();
                         }
                     } catch (Exception e) {
-                        // print error message
                         System.out.println("Invalid user. Please enter again!");
+                        Helper.pause();
                     }
+                }
+                else{
+                    System.out.println("Invalid Password!");
+                    Helper.pause();
                 }
             }
         }
@@ -93,8 +119,7 @@ public final class StudentMainView extends View {
 
             Course course = Database.COURSES.get(courseCode);
             if (course != null) {
-                Course[] studentCourses = currentUser.getCourses(CourseStatus.NONE);
-                for (Course studentCourse : studentCourses){
+                for (Course studentCourse : currentUser.getCourses(CourseStatus.NONE)){
                     if (studentCourse.getCourseCode().equals(courseCode)){
                         if (studentCourse.getStatus() == CourseStatus.REGISTERED){
                             System.out.println("You are already registered in this course!");
@@ -102,14 +127,12 @@ public final class StudentMainView extends View {
                         else{
                             System.out.println("You are already on the waitlist for this course!");
                         }
-                        System.out.println("Enter anything to continue...");
-                        Helper.sc.nextLine();
-                        courseCode = 'Q';
+                        courseCode = "Q";
                         break;
                     }
                 }
 
-                if (courseCode.equals('Q')){
+                if (courseCode.equals("Q")){
                     break;
                 }
 
@@ -132,25 +155,30 @@ public final class StudentMainView extends View {
                             currentUser.addCourse(courseCode,courseIndex);
                             Database.serialise(FileType.USERS);
                             Database.serialise(FileType.COURSES);
-                            //FIXME add confirmation message and wait for user input to continue
+                            System.out.println(courseCode + " has been added successfully.");
                             break;
                         } catch (Exception e) {
                             System.out.println(e.getLocalizedMessage());
+                            Helper.pause();
                         }
                     }
                 } else {
                     System.out.println("The course index that you have entered is invalid!");
+                    Helper.pause();
                 }
             } else {
                 System.out.println("The course code you entered is invalid!");
+                Helper.pause();
             }
         }
+        
+        System.out.println("Going back to main menu...");
     }
 
     protected void dropCourse() {
 
-        CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
         while (true) {
+            CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
             System.out.print("Enter the course code to drop or Q to quit: ");
             String courseCode = Helper.sc.nextLine();
             if (courseCode.equals("Q")) {
@@ -161,11 +189,15 @@ public final class StudentMainView extends View {
                 currentUser.dropCourse(courseCode);
                 Database.serialise(FileType.COURSES);
                 Database.serialise(FileType.USERS);
+                System.out.println(courseCode + " has been dropped successfully.");
                 break;
             } catch (Exception e) {
                 System.out.println(e.getLocalizedMessage());
+                Helper.pause();
             }
         }
+
+        System.out.println("Going back to main menu...");
     }
 
     protected void changeIndex() {
@@ -187,27 +219,33 @@ public final class StudentMainView extends View {
                 String newIndex = Helper.sc.nextLine();
                 if (newIndex.equals(curIndex)){
                     System.out.println("You are already in this index!");
+                    Helper.pause();
                 }
                 else{
                     try {
                         currentUser.changeIndex(courseCode, curIndex, newIndex);
                         Database.serialise(FileType.USERS);
                         Database.serialise(FileType.COURSES);
+                        System.out.println("Changed " + courseCode + " to index " + newIndex + " succesfully.");
                         break;
                     } catch (Exception e) {
                         System.out.println(e.getLocalizedMessage());
+                        Helper.pause();
                     }
                 }
             } else {
                 System.out.println("You are not registerd for this Course!");
+                Helper.pause();
             }
         }
+
+        System.out.println("Going back to main menu...");
     }
 
     protected void swapIndex() {
 
-        CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
         while (true) {
+            CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
             System.out.print("Enter the course code to swap with a friend or Q to Quit: ");
             String courseCode = Helper.sc.nextLine();
             if (courseCode.equals("Q")) {
@@ -217,6 +255,7 @@ public final class StudentMainView extends View {
             if (currentUser.getCourse(courseCode) != null) {
                 Student secondUser = verifySecondUser(courseCode);
                 if (secondUser == null) {
+                    //User has entered "Q"
                     break;
                 } else {
                     CourseIndex currentUserIndex = currentUser.getCourse(courseCode).getIndices()[0];
@@ -224,28 +263,24 @@ public final class StudentMainView extends View {
                     if (!currentUser.clashes(courseCode, secondUserIndex.getCourseIndex()) && !secondUser.clashes(courseCode, currentUserIndex.getCourseIndex())) {
                         currentUser.swapIndex(courseCode, secondUserIndex);
                         secondUser.swapIndex(courseCode, currentUserIndex);
-                        Course course = Database.COURSES.get(courseCode);
-                        currentUserIndex = course.getIndex(currentUserIndex.getCourseIndex());
-                        secondUserIndex = course.getIndex(secondUserIndex.getCourseIndex());
-                        Student temp = currentUserIndex.removeStudent(currentUser.getUsername());
-                        secondUserIndex.addStudent(temp);
-                        temp = secondUserIndex.removeStudent(secondUser.getUsername());
-                        currentUserIndex.addStudent(temp);
-                        Database.serialise(FileType.USERS);
-                        Database.serialise(FileType.COURSES);
+                        System.out.println("Swapped successfully.");
                         break;
                     } else {
                         System.out.println("There is a clash of index!");
+                        Helper.pause();
                     }
                 }
             } else {
-                System.out.println("You have not registered for this course!");
+                System.out.println("You are not registered in this course!");
+                Helper.pause();
             }
         }
+
+        System.out.println("Going back to main menu...");
     }
 
     protected void changePassword() {
-
+        //FIXME should this be put in the User class instead?
         while (true) {
             System.out.print("Enter current password or Q to quit: ");
             String oldPassowrd = Helper.getPasswordInput();
@@ -259,12 +294,23 @@ public final class StudentMainView extends View {
                 String newPassword2 = Helper.getPasswordInput();
                 if (newPassword1.equals(newPassword2)){
                     Database.CURRENT_USER.changePassword(newPassword1);
-                    Database.serialise(FileType.USERS);
+                    System.out.println("Password updated successfully.");
                     break;
                 } else{
                     System.out.println("The passwords you entered do not match. Please try again.");
+                    Helper.pause();
                 }
             }
+            else{
+                System.out.println("Invalid password!");
+                Helper.pause();
+            }
         }
+        System.out.println("Going back to main menu...");
     } 
+
+    protected void viewWaitlistedCourses() {
+        Student currentUser = (Student) Database.CURRENT_USER;
+        CourseManager.printCourseList(CourseStatus.WAITLIST, currentUser);
+    }
 }

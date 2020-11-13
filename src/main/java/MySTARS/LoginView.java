@@ -9,6 +9,7 @@ public final class LoginView extends View {
     private String password;
     private String username;
     private String domain;
+    //why are these static?
     private static DateTime loginStart;
     private static DateTime loginEnd;
 
@@ -23,12 +24,12 @@ public final class LoginView extends View {
 
     protected DateTime getStartTime() {
         
-        return LoginView.loginStart;
+        return this.loginStart;
     }
 
     protected DateTime getEndTime() {
         
-        return LoginView.loginEnd;
+        return this.loginEnd;
     }
     
     protected void print() {

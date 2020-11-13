@@ -171,13 +171,9 @@ public final class Student extends User {
     */
     protected Course[] getCourses(CourseStatus courseStatus) {
 
-        if (courseStatus == CourseStatus.NONE) {
-            return courses.keySet().toArray(new Course[courses.size()]);
-        }
-        
         ArrayList<Course> courseIDs = new ArrayList<Course>();
         for (Course course : courses.values()) {
-            if (course.getStatus() == courseStatus) {
+            if (courseStatus == CourseStatus.NONE || course.getStatus() == courseStatus) {
                 courseIDs.add(course);
             }
         }
@@ -322,9 +318,9 @@ public final class Student extends User {
         } else if (!this.courses.containsKey(code)) {
             throw new Exception("Course " + code + " has not been added by Student!");
         } else if (!Database.COURSES.get(code).containsIndex(currentInd)) {
-            throw new Exception("Course " + currentInd + " does not contain index " + currentInd + "!");
+            throw new Exception("Course " + code + " does not contain index " + currentInd + "!");
         } else if (!Database.COURSES.get(code).containsIndex(newInd)) {
-            throw new Exception("Course " + newInd + " does not contain index " + newInd + "!");
+            throw new Exception("Course " + code + " does not contain index " + newInd + "!");
         } else if (!this.courses.get(code).getIndices()[0].getCourseIndex().equals(currentInd)) {
             throw new Exception("Student is not in index " + currentInd + "!");
         } else if (this.courses.get(code).getStatus() != CourseStatus.REGISTERED) {
@@ -394,6 +390,7 @@ public final class Student extends User {
         if (!clashes(courseCode, myIndex.getCourseIndex())) {
             dropCourse(courseCode);
             addCourse(courseCode, myIndex.getCourseIndex());
+            Helper.sendMailNotification(this, courseCode);
             return true;
         } else{
             return false;

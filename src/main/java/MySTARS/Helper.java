@@ -23,7 +23,12 @@ public final class Helper {
             Thread.sleep(500);
         } catch (InterruptedException e) {
         }
-    }
+	}
+	
+	protected static void pause(){
+		System.out.print("Press <Enter> to continue... ");
+		sc.nextLine();
+	}
 
     protected static DateTime formatTime(DayOfWeek day, int hour_24, int minute) {
 
