@@ -62,8 +62,8 @@ public final class StudentMainView extends View {
                     return;
                 default:
                     System.out.println("Please input correct choice number.");
+                    Helper.pause();
             }
-            Helper.pause();
         } while (true);
     }
 

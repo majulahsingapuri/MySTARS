@@ -25,7 +25,7 @@ public final class CourseManager {
     protected static void printCourseList(CourseStatus status, Student student) {
 
         printLine();
-        System.out.println(String.format("12.12s ║ %-30.30s ║ %-23.23s", "Course Code", "Course Name", "Course Description"));
+        System.out.println(String.format("%12.12s ║ %-30.30s ║ %-23.23s", "Course Code", "Course Name", "Course Description"));
         printLine();
 
         for (Course course: student.getCourses(status)) {
@@ -101,7 +101,7 @@ public final class CourseManager {
     }
 
     private static void printLine() {
-        String line = String.format("%" + 71 + "s", "").replace(" ", "═");
+        String line = String.format("%" + 74 + "s", "").replace(" ", "═");
         System.out.println(line);
     }
 }
