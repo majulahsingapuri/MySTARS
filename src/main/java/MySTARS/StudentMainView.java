@@ -79,8 +79,7 @@ public final class StudentMainView extends View {
             if (!Database.USERS.containsKey(username)) {
                 System.out.println(username + " does not exist!");
                 Helper.pause();
-            }
-            else {
+            } else {
                 System.out.print("Enter password: ");
                 String password = Helper.getPasswordInput();
                 User result = Database.USERS.get(username);
@@ -98,8 +97,7 @@ public final class StudentMainView extends View {
                         System.out.println("Invalid user. Please enter again!");
                         Helper.pause();
                     }
-                }
-                else{
+                } else {
                     System.out.println("Invalid Password!");
                     Helper.pause();
                 }
@@ -123,8 +121,7 @@ public final class StudentMainView extends View {
                     if (studentCourse.getCourseCode().equals(courseCode)){
                         if (studentCourse.getStatus() == CourseStatus.REGISTERED){
                             System.out.println("You are already registered in this course!");
-                        }
-                        else{
+                        } else {
                             System.out.println("You are already on the waitlist for this course!");
                         }
                         courseCode = "Q";
@@ -220,8 +217,7 @@ public final class StudentMainView extends View {
                 if (newIndex.equals(curIndex)){
                     System.out.println("You are already in this index!");
                     Helper.pause();
-                }
-                else{
+                } else {
                     try {
                         currentUser.changeIndex(courseCode, curIndex, newIndex);
                         Database.serialise(FileType.USERS);
@@ -280,32 +276,8 @@ public final class StudentMainView extends View {
     }
 
     protected void changePassword() {
-        //FIXME should this be put in the User class instead?
-        while (true) {
-            System.out.print("Enter current password or Q to quit: ");
-            String oldPassowrd = Helper.getPasswordInput();
-            if (oldPassowrd.equals("Q")) {
-                break;
-            }
-            if (Database.CURRENT_USER.checkPassword(oldPassowrd)) {
-                System.out.print("Enter new password: ");
-                String newPassword1 = Helper.getPasswordInput();
-                System.out.print("Enter the new password again: ");
-                String newPassword2 = Helper.getPasswordInput();
-                if (newPassword1.equals(newPassword2)){
-                    Database.CURRENT_USER.changePassword(newPassword1);
-                    System.out.println("Password updated successfully.");
-                    break;
-                } else{
-                    System.out.println("The passwords you entered do not match. Please try again.");
-                    Helper.pause();
-                }
-            }
-            else{
-                System.out.println("Invalid password!");
-                Helper.pause();
-            }
-        }
+        
+        Database.CURRENT_USER.changePassword();
         System.out.println("Going back to main menu...");
     } 
 

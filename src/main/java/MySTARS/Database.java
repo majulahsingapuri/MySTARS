@@ -2,11 +2,13 @@ package MySTARS;
 
 import java.util.HashMap;
 import java.io.*;
+import org.joda.time.DateTime;
 
 public final class Database {
     
     protected static HashMap<String, Course> COURSES = new HashMap<String, Course>();
     protected static HashMap<String, User> USERS = new HashMap<String, User>();
+    protected static HashMap<String, Object> SETTINGS = new HashMap<String, Object>();
     protected static User CURRENT_USER = null;
     protected static AccessLevel CURRENT_ACCESS_LEVEL = AccessLevel.NONE;
 
@@ -14,7 +16,9 @@ public final class Database {
   
         deserialise(FileType.COURSES);
         deserialise(FileType.USERS);
+        deserialise(FileType.MISC);
         resetUsers();
+        restoreSettings();
     }
 
     @SuppressWarnings("unchecked")
@@ -26,6 +30,8 @@ public final class Database {
             fileName = "Courses";
         } else if (fileType == FileType.USERS) {
             fileName = "Users";
+        } else if (fileType == FileType.MISC) {
+            fileName = "Misc";
         } else {
             System.out.println("Incorrect file specifier");
             return false;
@@ -38,11 +44,15 @@ public final class Database {
             Object object = objectInput.readObject();
 
             if (fileType == FileType.COURSES && object != null) {
-                COURSES = (HashMap<String, Course>)object;
+                COURSES = (HashMap<String, Course>) object;
                 objectInput.close();
                 fileInput.close();
             } else if (fileType == FileType.USERS && object != null) {
                 USERS = (HashMap<String, User>) object;
+                objectInput.close();
+                fileInput.close();
+            } else if (fileType == FileType.MISC && object != null) {
+                SETTINGS = (HashMap<String, Object>) object;
                 objectInput.close();
                 fileInput.close();
             } else {
@@ -106,5 +116,12 @@ public final class Database {
         USERS.put("Esther", new Admin("Esther", "JavaForLife"));
         USERS.put("Nicolette", new Admin("Nicolette", "this.isBest"));
         USERS.put("JiaHui", new Admin("JiaHui", "return"));
+    }
+
+    private void restoreSettings() {
+
+        DateTime startTime = (DateTime) Database.SETTINGS.get("loginStart");
+        DateTime endTime = (DateTime) Database.SETTINGS.get("loginEnd");
+        LoginView.setLoginTime(startTime, endTime);
     }
 }

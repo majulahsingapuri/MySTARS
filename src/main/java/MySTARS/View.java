@@ -9,8 +9,8 @@ public abstract class View {
             final String os = System.getProperty("os.name");
         
             if (os.contains("Windows")) {
-                //FIXME java.io.IOException: Cannot run program "cls": CreateProcess error=2, The system cannot find the file specified
-                Runtime.getRuntime().exec("cls");
+                //FIXME check if this new version works
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             }
             else {
                 Runtime.getRuntime().exec("clear");

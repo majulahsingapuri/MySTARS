@@ -399,13 +399,13 @@ public final class Student extends User {
 
     /**
      * Used to swap indices with another student.
-     * Different from changeIndex(...) as vacacies should not be checked.
+     * Different from changeIndex(...) as vacancies should not be checked.
      * Timetable clashes will have already been checked before this method is called.
      * @param courseCode the course code of the course to be updated
      * @param newIndex the course index to be swapped to
     */
 	protected void swapIndex(String courseCode, CourseIndex newIndex) {
-        //TODO ensure called class checkd there are no errors (courseCode and index is registered by student and newIndex is valid)
+
         Course course = Database.COURSES.get(courseCode);
 
         CourseIndex currentIndex = course.getIndex(this.courses.get(courseCode).getIndicesString()[0]);

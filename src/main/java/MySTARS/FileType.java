@@ -3,5 +3,6 @@ package MySTARS;
 public enum FileType {
     
     COURSES,
-    USERS
+    USERS,
+    MISC;
 }

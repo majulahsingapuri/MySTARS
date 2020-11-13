@@ -16,8 +16,10 @@ public final class AdminMainView extends View {
             System.out.println("1: Add course to MySTARS"); 
             System.out.println("2: Update course in MySTARS"); 
             System.out.println("3: Change student's entry timing to MySTARS"); 
-            System.out.println("4: Add new user to MySTARS"); 
-            System.out.println("5: Logout");
+            System.out.println("4: Add new user to MySTARS");
+            //TODO: change user's access level?
+            System.out.println("5: Change Password");
+            System.out.println("6: Logout");
             choice = Helper.sc.nextInt();
             Helper.sc.nextLine();
 
@@ -36,6 +38,9 @@ public final class AdminMainView extends View {
                     addUser();
                     break;
                 case 5:
+                    changePassword();
+                    break;
+                case 6:
                     LogoutView view = new LogoutView();
                     view.print();
                     return;
@@ -183,5 +188,11 @@ public final class AdminMainView extends View {
                 System.out.println("User has already been added");
             }
         }
+    }
+
+    protected void changePassword() {
+
+        Database.CURRENT_USER.changePassword();
+        System.out.println("Going back to main menu...");
     }
 }

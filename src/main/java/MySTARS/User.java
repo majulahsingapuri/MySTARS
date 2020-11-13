@@ -21,11 +21,34 @@ public class User implements Serializable {
         this.password = "OODP1s7heB3st";
     }
 
-    protected boolean changePassword(String newPassword) {
-        this.password = newPassword;
-        Database.serialise(FileType.USERS);
-        return true;
-        //if wrong password, return false
+    protected boolean changePassword() {
+
+        while (true) {
+            System.out.print("Enter current password or Q to quit: ");
+            String oldPassword = Helper.getPasswordInput();
+            if (oldPassword.equals("Q")) {
+                break;
+            }
+            if (this.checkPassword(oldPassword)) {
+                System.out.print("Enter new password: ");
+                String newPassword1 = Helper.getPasswordInput();
+                System.out.print("Enter the new password again: ");
+                String newPassword2 = Helper.getPasswordInput();
+                if (newPassword1.equals(newPassword2)){
+                    this.password = newPassword1;
+                    Database.serialise(FileType.USERS);
+                    System.out.println("Password updated successfully.");
+                    return true;
+                } else {
+                    System.out.println("The passwords you entered do not match. Please try again.");
+                    Helper.pause();
+                }
+            } else {
+                System.out.println("Invalid password!");
+                Helper.pause();
+            }
+        }
+        return false;
     }
 
     protected boolean checkPassword(String input) {
