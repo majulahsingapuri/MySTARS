@@ -4,17 +4,67 @@ import java.io.Serializable;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+/**
+ * Represents one lesson timeslot
+ * @author DSAI2 Group 1
+ * @version 1.0
+ * @since 2020-11-1
+ */
+
 public final class Lesson implements Serializable {
 
+    /**
+     * The type of class (lecture, tutorial etc.) which is an enum ClassType.
+     */
     private ClassType classType;
+    
+    /**
+     * The allocated block of time for the lesson, of type Interval.
+     */
+    // TODO: is this attribute necessary for conflict resolution??
     private Interval time;
+
+    /**
+     * The start time of the lesson in 24h time (4 digit integer).
+     */
     private DateTime startTime;
+
+
+    /**
+     * The end time of the lesson in 24h time (4 digit integer).
+     */
     private DateTime endTime;
+
+    /**
+     * The day of the week when the lesson occurs (Monday - Sunday).
+     */
     private DayOfWeek dayOfWeek;
+
+    /**
+     * Location of the lesson 
+     */
     private String location;
+
+    /**
+     * Additional remarks (eg. If lesson only occurs every other week).
+     */
     private String remarks;
+
+    /**
+     * For java serializable
+     */
     private static final long serialVersionUID = 12L;
 
+
+    /**
+     * Lesson constructor, creates new lesson of specified ClassType on a certain day of the week.
+     * 
+     * @param classType an enum giving the type of class (lecture, tutorial etc.).
+     * @param dayOfWeek integer representing the day of the week.
+     * @param startTime start time of lesson in 24h format.
+     * @param endTime end time of lesson in 24h format.
+     * @param location location of lesson.
+     */
     protected Lesson(ClassType classType, DayOfWeek dayOfWeek, int startTime, int endTime, String location) {
 
         this.classType = classType;
@@ -57,26 +107,47 @@ public final class Lesson implements Serializable {
         } while(true);
     }
 
+    /**
+     * Returns a ClassType enum specifying the type of the specified lesson.
+     * @return ClassType enum specifying the type of the specified lesson.
+     */
     protected ClassType getType() {
 
         return this.classType;
     }
 
+    /**
+     * Returns the interval of time where the lesson occurs, as a JodaTime Interval object.
+     * @return interval of time where the lesson occurs, as a JodaTime Interval object.
+     */
     protected Interval getTime() {
 
         return this.time;
     }
 
+    /**
+     * Returns starting time of the lesson slot, in JodaTime DateTime object (year, month, day of week, hour, minute).
+     * @return starting time of the lesson slot, in JodaTime DateTime object (year, month, day of week, hour, minute).
+     */
     protected DateTime getStartTime() {
 
         return this.startTime;
     }
 
+    /**
+     * Returns end time of the lesson slot, in JodaTime DateTime object (year, month, day of week, hour, minute).
+     * @return end time of the lesson slot, in JodaTime DateTime object (year, month, day of week, hour, minute).
+     */
     protected DateTime getEndTime() {
 
         return this.endTime;
     }
 
+    /**
+     * Set start and end time of lesson slot.
+     * @param startTime start time of lesson in 24h format (4 digit integer).
+     * @param endTime end time of lesson in 24h format (4 digit integer).
+     */
     protected void setTime(int startTime, int endTime) {
 
         this.startTime = new DateTime(2020, 1, this.dayOfWeek.value, startTime/100, startTime%100);
@@ -84,21 +155,37 @@ public final class Lesson implements Serializable {
         this.time = new Interval(this.startTime, this.endTime);
     }
 
+    /**
+     * Returns location of lesson as a string.
+     * @return location of lesson as a string.
+     */
     protected String getLocation() {
 
         return this.location;
     }
 
+    /**
+     * Sets the location of the lesson.
+     * @param location location of the lesson as a string.
+     */
     protected void setLocation(String location) {
 
         this.location = location;
     }
 
+    /**
+     * Sets any relevant remarks for the lesson slot.
+     * @param remarks additional remarks for the lesson, in a string.
+     */
     protected void setRemarks(String remarks) {
 
         this.remarks = remarks;
     }
 
+    /**
+     * Returns the remarks for this lesson slot.
+     * @return remarks for this lesson slot as a string.
+     */
     protected String getRemarks() {
 
         return this.remarks;
