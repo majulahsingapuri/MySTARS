@@ -49,9 +49,9 @@ public final class Course implements Serializable {
 
     /**
      * Constructor for course object, to be created without a description and course status.
-     * @param coursecode Course code (eg. cz2002).
-     * @param coursename Course name (eg. object oriented design programming).
-     * @param acadunits Number of AUs credited upon completion of course.
+     * @param courseCode Course code (eg. cz2002).
+     * @param courseName Course name (eg. object oriented design programming).
+     * @param acadUnits Number of AUs credited upon completion of course.
      */
     protected Course(String courseCode, String courseName, AU acadUnits) {
 
@@ -62,9 +62,9 @@ public final class Course implements Serializable {
 
     /**
      * Constructor for course object, to be created with a description but without course status.
-     * @param coursecode Course code (eg. cz2002).
-     * @param coursename Course name (eg. object oriented design programming).
-     * @param acadunits Number of AUs credited upon completion of course.
+     * @param courseCode Course code (eg. cz2002).
+     * @param courseName Course name (eg. object oriented design programming).
+     * @param acadUnits Number of AUs credited upon completion of course.
      * @param description Course description.
      */
     protected Course(String courseCode, String courseName, AU acadUnits, String description) {
@@ -77,9 +77,9 @@ public final class Course implements Serializable {
 
     /**
      * Constructor for course object, to be created with a description and with course status.
-     * @param coursecode Course code (eg. cz2002).
-     * @param coursename Course name (eg. object oriented design programming).
-     * @param acadunits Number of AUs credited upon completion of course.
+     * @param courseCode Course code (eg. cz2002).
+     * @param courseName Course name (eg. object oriented design programming).
+     * @param acadUnits Number of AUs credited upon completion of course.
      * @param description Course description.
      * @param courseStatus Enrollment status of a particular Student.
      */
@@ -94,9 +94,9 @@ public final class Course implements Serializable {
 
     /**
      * Constructor for course object, creates course with description, course status, and an initial course index.
-     * @param coursecode Course code (eg. cz2002).
-     * @param coursename Course name (eg. object oriented design programming).
-     * @param acadunits Number of AUs credited upon completion of course.
+     * @param courseCode Course code (eg. cz2002).
+     * @param courseName Course name (eg. object oriented design programming).
+     * @param acadUnits Number of AUs credited upon completion of course.
      * @param description Course description.
      * @param courseStatus Enrollment status of a particular student.
      * @param courseIndex Course index to initialize with this course.
@@ -214,7 +214,7 @@ public final class Course implements Serializable {
     /**
      * Check if the Course has a particular Index number.
      * @param courseIndex Number of the index that is being queried.
-     * @return
+     * @return {@code true} if Course contains given index.
      */
     protected boolean containsIndex(String courseIndex) {
 
@@ -321,7 +321,7 @@ public final class Course implements Serializable {
      * Make a simple copy of the course to be stored under the {@link Student} object.
      * @param status The current status of the Course.
      * @param courseIndex The Index that the Student registered for.
-     * @return
+     * @return A Course object with all the basic information with the current CourseStatus and CourseIndex. 
      */
     protected Course simpleCopy(CourseStatus status, CourseIndex courseIndex){
         return new Course(this.courseCode, this.courseName, this.acadUnits, this.description, status, courseIndex);

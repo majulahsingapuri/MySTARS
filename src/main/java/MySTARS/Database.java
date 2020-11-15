@@ -13,17 +13,17 @@ import org.joda.time.DateTime;
 public final class Database {
     
     /**
-     * A Hashmap<String, Course> that stores all {@link Course}s and its contained information.
+     * A {@code Hashmap<String, Course>} that stores all {@link Course}s and its contained information.
      */
     protected static HashMap<String, Course> COURSES = new HashMap<String, Course>();
 
     /**
-     * A Hashmap<String, User> that stores all {@link User}s and their contained information.
+     * A {@code Hashmap<String, User>} that stores all {@link User}s and their contained information.
      */
     protected static HashMap<String, User> USERS = new HashMap<String, User>();
 
     /**
-     * A Hashmap<String, Object> that stores all Miscellaneous settings so that the application can return to its previous state after shutdown. 
+     * A {@code Hashmap<String, Object>} that stores all Miscellaneous settings so that the application can return to its previous state after shutdown. 
      */
     protected static HashMap<String, Object> SETTINGS = new HashMap<String, Object>();
 

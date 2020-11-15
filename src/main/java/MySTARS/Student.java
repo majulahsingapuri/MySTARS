@@ -155,9 +155,10 @@ public final class Student extends User implements Comparable<Student> {
     }
 
     /**
-     * Returns the student's first name.
-     * @return the student's first name
-    */
+     * Returns a {@link Course} object that the Student has registered for.
+     * @param courseCode The String value of the course.
+     * @return A Course Object.
+     */
 	protected Course getCourse(String courseCode) {
 
         return courses.get(courseCode);
