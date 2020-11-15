@@ -44,7 +44,7 @@ public enum DayOfWeek {
     SUNDAY(7, "SUN");
 
     /**
-     * The Integer value corresponding to the DayOfWeek in {@link org.joda.DateTime#dayOfWeek DayOfWeek}.
+     * The Integer value corresponding to the DayOfWeek in {@link org.joda.time.DateTime}.
      */
     public final Integer value;
 

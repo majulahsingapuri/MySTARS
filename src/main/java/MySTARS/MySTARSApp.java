@@ -11,7 +11,7 @@ public final class MySTARSApp {
 
     /**
      * Main function that is the starting point of the application. Initialises a new {@link MySTARS.Database} and loads in the first view.
-     * @param args
+     * @param args Arguments passsed to the App.
      */
     public static void main( String[] args ) {
         new Database();

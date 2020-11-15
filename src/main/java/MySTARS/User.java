@@ -7,7 +7,6 @@ import java.io.Serializable;
  * @author Jia Hui, Bhargav
  * @version 1.0
  * @since 2020-11-1
- * @see {@link Serialisable}
  */
 public class User implements Serializable {
 

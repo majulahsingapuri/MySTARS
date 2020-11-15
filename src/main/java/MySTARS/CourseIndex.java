@@ -36,7 +36,7 @@ public final class CourseIndex implements Serializable {
 
     /**
      * The current waitlist for the index.
-     * Given as a LinkedList<String> of matriculation numbers
+     * Given as a {@code LinkedList<String>} of matriculation numbers
      */
     private LinkedList<String> waitlist = new LinkedList<>();
 
