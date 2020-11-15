@@ -301,8 +301,17 @@ public final class Student extends User implements Comparable<Student> {
 
     public int compareTo(Student o) {
         
-        return this.firstName.compareTo(o.firstName);
-    }
+        int answer = this.firstName.compareTo(o.firstName);
 
-    
+        if (answer == 0) {
+            answer = this.lastName.compareTo(o.lastName);
+            if (answer == 0) {
+                return this.matricNumber.compareTo(o.matricNumber);
+            } else {
+                return answer;
+            }
+        } else {
+            return answer;
+        }
+    }
 }
