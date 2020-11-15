@@ -3,6 +3,14 @@ package MySTARS;
 public final class StudentMainView extends View {
     private int choice;
 
+    /**
+     * Constructor method
+     */
+    public StudentMainView() {}
+
+    /**
+     * Prints switch cases for the student to select from
+     */
     protected void print() {
 
         do {
@@ -66,7 +74,11 @@ public final class StudentMainView extends View {
             }
         } while (true);
     }
-
+    /**
+     * For swopping index with peer, checks if peer's matriculation number is valid
+     * @param courseCode course code, e.g CZ2002
+     * @return Student object for the second user
+     */
     private Student verifySecondUser(String courseCode) {
 
         while (true) {
@@ -104,6 +116,10 @@ public final class StudentMainView extends View {
             }
         }
     }
+
+    /**
+     * Adds the student into the selected course
+     */
 
     protected void addCourse() {
         Student currentUser = (Student) Database.CURRENT_USER;
@@ -172,6 +188,10 @@ public final class StudentMainView extends View {
         System.out.println("Going back to main menu...");
     }
 
+    /**
+     * Removes the student from the selected course
+     */
+
     protected void dropCourse() {
 
         while (true) {
@@ -196,6 +216,10 @@ public final class StudentMainView extends View {
 
         System.out.println("Going back to main menu...");
     }
+
+    /**
+     * Changes the index of the course selected by student 
+     */
 
     protected void changeIndex() {
 
@@ -238,6 +262,10 @@ public final class StudentMainView extends View {
         System.out.println("Going back to main menu...");
     }
 
+    /**
+     * After verifying peer, swops index of selected course with peer's index
+     */
+
     protected void swapIndex() {
 
         while (true) {
@@ -274,6 +302,10 @@ public final class StudentMainView extends View {
 
         System.out.println("Going back to main menu...");
     }
+
+    /**
+     * Changes student's login password
+     */
 
     protected void changePassword() {
         

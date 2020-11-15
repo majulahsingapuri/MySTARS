@@ -3,11 +3,21 @@ package MySTARS;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import jdk.internal.module.SystemModuleReader;
+
 public final class AdminMainView extends View {
 
     private int choice;
 
+    /**
+     * Constructor method
+     */
+
     public AdminMainView() {}
+
+    /**
+     * Prints switch cases for the admin to select from
+     */
 
     protected void print() {
         clearScreen("AdminMainView");
@@ -50,6 +60,10 @@ public final class AdminMainView extends View {
         } while (true);
     }
 
+    /**
+     * Create new course
+     */
+
     protected void addCourse() {
         System.out.println("Adding course to MySTARS...");
 
@@ -86,11 +100,57 @@ public final class AdminMainView extends View {
         }
     }
 
+    /**
+     * Change course attributes, and update course for every registered student
+     */
+
     protected void updateCourse() {
+
+        do {
+            System.out.println("1: Change course code");
+            // System.out.println("2: Change course name");
+            System.out.println("3: Change course index");
+            System.out.println("4: Change course description");
+            System.out.println("5: Change course vacancies");
+            // System.out.println("6: Change acadamic units");
+            choice = Helper.sc.nextInt();
+            Helper.sc.nextLine();
+
+            switch (choice) {
+
+                case 1: 
+                for (CourseIndex courseIndex : course.getIndices()) {
+                    Student[] studentsArray = courseIndex.getStudents();
+                    for (i=0; i<studentsArray.length; i++) {
+                        
+        
+                        }
+                        studentsArray[i].();
+                    }
+                    System.out.println("Enter course code to update or Q to Quit: ");
+        
+                }
+                    
+            }
+
+        
+
+        CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
+        while (true) {
+            System.out.println("Enter course code to update or Q to Quit: ");
+
+
+        }
         //TODO the update needs to be on a deeper level than just the database. it has to go and check all of the students and the courses registered by them and update accordingly
         System.out.println("Updating course...");
+
         
     }
+
+    /**
+     * Change MySTARS access start and end date and time
+     * @throws Exception handling for access DateTime format
+     */
 
     protected void changeEntryTiming() {
         
@@ -108,6 +168,11 @@ public final class AdminMainView extends View {
             System.out.println(e.getLocalizedMessage());
         }    
     }
+
+    /**
+     * If user does not already exist, a new User object is created
+     * Can choose to create student or admin User object
+     */
 
     protected void addUser() {
         
@@ -177,7 +242,7 @@ public final class AdminMainView extends View {
                     System.out.print("\nConfirm? y/n: ");
                     String confirm = Helper.sc.nextLine();
                     if (confirm.equals("y")) {
-                        Student student = new Student(username, matricNumber, firstName, lastName, gender, nationality);
+                        Student student = new Student(username, matricNumber, firstName, lastName, gender, nationality); // attributes/variables to create student object?
                         Database.USERS.put(username, student);
                         Database.serialise(FileType.USERS);
                     } else {

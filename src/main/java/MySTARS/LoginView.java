@@ -12,29 +12,56 @@ public final class LoginView extends View {
     private static DateTime loginStart;
     private static DateTime loginEnd;
 
+    /**
+     * Constructor method
+     */
     public LoginView() {
 
         if (loginStart == null || loginEnd == null) {
-            DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy hh:mm:ss");
             loginStart = formatter.parseDateTime("01/01/2020 00:00:00");
             loginEnd = formatter.parseDateTime("31/12/2020 23:59:59");
         }
     }
+
+    /**
+     * Gets the time when the student first enters the LoginView
+     * @return date in dd/MM/yyyy, time in hh:mm:ss
+     */
 
     protected DateTime getStartTime() {
         
         return LoginView.loginStart;
     }
 
+    /**
+     * Gets the time when the student exits the LoginView
+     * @return date in dd/MM/yyyy, time in hh:mm:ss
+     */
+
     protected DateTime getEndTime() {
         
         return LoginView.loginEnd;
     }
+
+    /**
+     * Displays login view for student, asks student to input login details 
+     */
     
     protected void print() {
         clearScreen("Login");
 
         //TODO: Print current time and log in timings for student
+
+        LocalDate dt = LocalDate.now(); 
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy hh:mm:ss");
+        LocalDate parsedDate = LocalDate.parse(dt,formatter);
+
+        System.out.print("Student's login date and time is: " + LoginView.loginStart);
+
+
+        // System.out.println("%s", dt);
+        System.out.println(LoginView.loginStart);
 
         while (true) {
             System.out.print("Enter the domain (Student or Admin): ");
@@ -88,7 +115,11 @@ public final class LoginView extends View {
             }        
         }
     }
-
+/**
+ * Assigns login time to 'start' variable, logout time to 'end' variable 
+ * @param start login time in DateTime format 
+ * @param end logout time in DateTime format 
+ */
     protected static void setLoginTime(DateTime start, DateTime end) {
 
         LoginView.loginStart = start;
@@ -98,6 +129,10 @@ public final class LoginView extends View {
         Database.serialise(FileType.MISC);
     }
 
+    /**
+     * Checks if student is allowed to access MySTARS 
+     * @return true if access allowed, false if access denied
+     */
     private boolean isValidLoginDate() {
 
         return LoginView.loginStart.isBeforeNow() && LoginView.loginEnd.isAfterNow();

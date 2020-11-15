@@ -1,8 +1,14 @@
 package MySTARS;
 
 public final class LogoutView extends View {
-    
+    /**
+     * Constructor method
+     */
     public LogoutView() {}
+
+    /**
+     * Prints logout message
+     */
    
     protected void print() {
     clearScreen("Logout");
