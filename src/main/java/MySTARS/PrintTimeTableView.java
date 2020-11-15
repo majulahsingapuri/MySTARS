@@ -2,8 +2,17 @@ package MySTARS;
 
 import java.util.ArrayList;
 
+/**
+ * A view that prints the Timetable for the currently logged in User.
+ * @author Bhargav
+ * @version 1.0
+ * @since 2020-11-1
+ */
 public final class PrintTimeTableView extends View {
 
+    /**
+     * The main print function of the view, which prints out the timetable in the correct formatting.
+     */
     protected void print() {
 
         clearScreen("Student Main > Print Timetable");
@@ -34,6 +43,9 @@ public final class PrintTimeTableView extends View {
         return;
     }
 
+    /**
+     * Method that prints a horizontal line across the screen.
+     */
     private static void printLine() {
         String line = String.format("%" + 120 + "s", "").replace(" ", "═");
         System.out.println(line);

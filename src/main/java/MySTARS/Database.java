@@ -4,14 +4,42 @@ import java.util.HashMap;
 import java.io.*;
 import org.joda.time.DateTime;
 
+/**
+ * The Class that interacts with the files and handles reading and writing of information.
+ * @author Bhargav
+ * @version 1.0
+ * @since 2020-11-1
+ */
 public final class Database {
     
+    /**
+     * A Hashmap<String, Course> that stores all {@link Course}s and its contained information.
+     */
     protected static HashMap<String, Course> COURSES = new HashMap<String, Course>();
+
+    /**
+     * A Hashmap<String, User> that stores all {@link User}s and their contained information.
+     */
     protected static HashMap<String, User> USERS = new HashMap<String, User>();
+
+    /**
+     * A Hashmap<String, Object> that stores all Miscellaneous settings so that the application can return to its previous state after shutdown. 
+     */
     protected static HashMap<String, Object> SETTINGS = new HashMap<String, Object>();
+
+    /**
+     * A User object that keeps track of the currently logged in User.
+     */
     protected static User CURRENT_USER = null;
+    
+    /**
+     * The current AccessLevel of the currently logged in User.
+     */
     protected static AccessLevel CURRENT_ACCESS_LEVEL = AccessLevel.NONE;
 
+    /**
+     * The initialiser for the Database class. Reads Files on startup, resets key Admin Users if they have been deleted and retores all Application Settings from last close.
+     */
     protected Database() {
   
         deserialise(FileType.COURSES);
@@ -21,25 +49,17 @@ public final class Database {
         restoreSettings();
     }
 
+    /**
+     * Reads files into its respective Hashmap.
+     * @param fileType The type of file being read of type {@link FileType}.
+     * @return {@code true} if successfully read file.
+     */
     @SuppressWarnings("unchecked")
     protected static boolean deserialise(FileType fileType) {
-
-        String fileName;
-
-        if (fileType == FileType.COURSES) {
-            fileName = "Courses";
-        } else if (fileType == FileType.USERS) {
-            fileName = "Users";
-        } else if (fileType == FileType.MISC) {
-            fileName = "Misc";
-        } else {
-            System.out.println("Incorrect file specifier");
-            return false;
-        }
         
         try {
-            
-            FileInputStream fileInput = new FileInputStream("./src/main/java/Files/" + fileName + ".dsai");
+            //TODO Change directory before submission
+            FileInputStream fileInput = new FileInputStream("./src/main/java/Files/" + fileType.fileName + ".dsai");
             ObjectInputStream objectInput = new ObjectInputStream(fileInput);
             Object object = objectInput.readObject();
 
@@ -63,28 +83,26 @@ public final class Database {
             }
         } catch (Exception e) {
             
-            System.out.println("Failed to read file with exception" + e.getLocalizedMessage());
-            return false;
+            try {
+                new FileOutputStream("./src/main/java/Files/" + fileType.fileName + ".dsai", true).close();
+            } catch (Exception f) {
+                System.out.println("Failed to write file with exception" + f.getLocalizedMessage());
+                return false;
+            }
         }
         return true;
     }
 
+    /**
+     * Writes Hashmaps into the respective files.
+     * @param fileType The type of the file being written.
+     * @return {@code true} if successfully wrote file.
+     */
     protected static boolean serialise(FileType fileType) {
-
-        String fileName;
-
-        if (fileType == FileType.COURSES) {
-            fileName = "Courses";
-        } else if (fileType == FileType.USERS) {
-            fileName = "Users";
-        } else {
-            System.out.println("Incorrect file specifier");
-            return false;
-        }
         
         try {
-            
-            FileOutputStream fileOutput = new FileOutputStream("./src/main/java/Files/" + fileName + ".dsai");
+            //TODO Change directory before submission
+            FileOutputStream fileOutput = new FileOutputStream("./src/main/java/Files/" + fileType.fileName + ".dsai");
             ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput);
 
             if (fileType == FileType.COURSES) {
@@ -93,6 +111,10 @@ public final class Database {
                 fileOutput.close();
             } else if (fileType == FileType.USERS) {
                 objectOutput.writeObject(USERS);
+                objectOutput.close();
+                fileOutput.close();
+            } else if (fileType == FileType.MISC ) {
+                objectOutput.writeObject(SETTINGS);
                 objectOutput.close();
                 fileOutput.close();
             } else {
@@ -109,6 +131,9 @@ public final class Database {
         return true;
     }
 
+    /**
+     * Resets Admin users if they have been deleted.
+     */
     private void resetUsers() {
         USERS.put("Admin", new Admin("Admin", "AdminPassword"));
         USERS.put("Bhargav", new Admin("Bhargav", "OODPisgood"));
@@ -118,6 +143,9 @@ public final class Database {
         USERS.put("JiaHui", new Admin("JiaHui", "return"));
     }
 
+    /**
+     * Reads and restores key settings from file.
+     */
     private void restoreSettings() {
 
         DateTime startTime = (DateTime) Database.SETTINGS.get("loginStart");

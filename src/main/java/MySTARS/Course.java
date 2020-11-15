@@ -6,7 +6,7 @@ import java.io.*;
 
 /**
  * Represents one course
- * @author DSAI2 Group 1
+ * @author Timothy
  * @version 1.0
  * @since 2020-11-1
  */
@@ -49,9 +49,9 @@ public final class Course implements Serializable {
 
     /**
      * Constructor for course object, to be created without a description and course status.
-     * @param coursecode course code (eg. cz2002).
-     * @param coursename course name  (eg. object oriented design programming).
-     * @param acadunits number of aus credited upon completion of course.
+     * @param coursecode Course code (eg. cz2002).
+     * @param coursename Course name (eg. object oriented design programming).
+     * @param acadunits Number of AUs credited upon completion of course.
      */
     protected Course(String courseCode, String courseName, AU acadUnits) {
 
@@ -62,10 +62,10 @@ public final class Course implements Serializable {
 
     /**
      * Constructor for course object, to be created with a description but without course status.
-     * @param coursecode course code (eg. cz2002).
-     * @param coursename course name  (eg. object oriented design programming).
-     * @param acadunits number of aus credited upon completion of course.
-     * @param description course description.
+     * @param coursecode Course code (eg. cz2002).
+     * @param coursename Course name (eg. object oriented design programming).
+     * @param acadunits Number of AUs credited upon completion of course.
+     * @param description Course description.
      */
     protected Course(String courseCode, String courseName, AU acadUnits, String description) {
 
@@ -77,11 +77,11 @@ public final class Course implements Serializable {
 
     /**
      * Constructor for course object, to be created with a description and with course status.
-     * @param coursecode course code (eg. cz2002).
-     * @param coursename course name  (eg. object oriented design programming).
-     * @param acadunits number of aus credited upon completion of course.
-     * @param description course description.
-     * @param courseStatus enrollment status of a particular student.
+     * @param coursecode Course code (eg. cz2002).
+     * @param coursename Course name (eg. object oriented design programming).
+     * @param acadunits Number of AUs credited upon completion of course.
+     * @param description Course description.
+     * @param courseStatus Enrollment status of a particular Student.
      */
     protected Course(String courseCode, String courseName, AU acadUnits, String description, CourseStatus courseStatus) {
 
@@ -92,15 +92,14 @@ public final class Course implements Serializable {
         this.courseStatus = courseStatus;
     }
 
-    //TODO: should this taken in a list of courses instead?
     /**
      * Constructor for course object, creates course with description, course status, and an initial course index.
-     * @param coursecode course code (eg. cz2002).
-     * @param coursename course name  (eg. object oriented design programming).
-     * @param acadunits number of aus credited upon completion of course.
-     * @param description course description.
-     * @param courseStatus enrollment status of a particular student.
-     * @param courseIndex course index to initialize with this course.
+     * @param coursecode Course code (eg. cz2002).
+     * @param coursename Course name (eg. object oriented design programming).
+     * @param acadunits Number of AUs credited upon completion of course.
+     * @param description Course description.
+     * @param courseStatus Enrollment status of a particular student.
+     * @param courseIndex Course index to initialize with this course.
      */
     protected Course(String courseCode, String courseName, AU acadUnits, String description, CourseStatus courseStatus, CourseIndex courseIndex) {
 
@@ -113,8 +112,8 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Set course code.
-     * @param courseCode the course code as a string.
+     * Sets courseCode.
+     * @param courseCode The courseCode as a String.
      */
     protected void setCourseCode(String courseCode) {
 
@@ -122,8 +121,8 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Returns the course code.
-     * @return course code.
+     * Returns the courseCode.
+     * @return courseCode.
      */
     protected String getCourseCode() {
 
@@ -131,8 +130,8 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Set course name.
-     * @param courseName the name of the course.
+     * Set courseName.
+     * @param courseName The name of the Course.
      */
     protected void setCourseName(String courseName) {
 
@@ -140,8 +139,8 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Return the course name.
-     * @return the name of the course.
+     * Return the courseName.
+     * @return The name of the Course.
      */
     protected String getCourseName() {
 
@@ -149,8 +148,8 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Set the course description.
-     * @param description the course description.
+     * Set the Course description.
+     * @param description The Course description.
      */
     protected void setDescription(String description) {
 
@@ -158,8 +157,8 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Return the course description.
-     * @return the course description.
+     * Return the Course description.
+     * @return The Course description.
      */
     protected String getDescription() {
 
@@ -167,8 +166,8 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Set the number of AUs to be credited upon completion of the course.
-     * @param acadUnits number of AUs to be credited upon completion of the course.
+     * Set the number of AUs to be credited upon completion of the Course.
+     * @param acadUnits Number of AUs to be credited upon completion of the Course.
      */
     protected void setCourseAU(AU acadUnits) {
 
@@ -176,8 +175,8 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Return the number of AUs credited upon completion of the course.
-     * @return the number of AUs credited upon completion of the course.
+     * Return the number of AUs credited upon completion of the Course.
+     * @return The number of AUs credited upon completion of the Course.
      */
     protected AU getCourseAU() {
 
@@ -185,8 +184,8 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Set the status of a student's enrollment in the course.
-     * @param courseStatus the status of a student's enrollment in the course.
+     * Set the CourseStatus of a Student's enrollment in the Course.
+     * @param courseStatus The status of a Student's enrollment in the Course.
      */
     protected void setStatus(CourseStatus courseStatus) {
 
@@ -194,8 +193,8 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Return the status of a student's enrollment in the course.
-     * @return the status of a student's enrollment in the course.
+     * Return the CourseStatus of a Student's enrollment in the Course.
+     * @return The CourseStatus of a Student's enrollment in the Course.
      */
     protected CourseStatus getStatus() {
 
@@ -203,9 +202,9 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Returns a course index object by taking the index number as a parameter.
-     * @param courseIndex the index number of the course to be returned.
-     * @return a course index object corresponding to the specified key value.
+     * Returns a CourseIndex object by taking the index number as a parameter.
+     * @param courseIndex The index number of the course to be returned.
+     * @return A CourseIndex object corresponding to the specified key value.
      */
     protected CourseIndex getIndex(String courseIndex) {
 
@@ -213,8 +212,8 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Check if the course has a particular index number.
-     * @param courseIndex number of the index that is being queried.
+     * Check if the Course has a particular Index number.
+     * @param courseIndex Number of the index that is being queried.
      * @return
      */
     protected boolean containsIndex(String courseIndex) {
@@ -224,9 +223,9 @@ public final class Course implements Serializable {
 
 
     /**
-     * Add a user defined number of indices to the course.
-     * Includes prompts for the user to enter all relevant details for each index and lesson.
-     * @param numIndices integer number of indices to add to the course.
+     * Add a User defined number of CourseIndices to the course.
+     * Includes prompts for the User to enter all relevant details for each CourseIndex and Lesson.
+     * @param numIndices Integer number of indices to add to the Course.
      */
     protected void addIndices(int numIndices) {
         
@@ -286,11 +285,16 @@ public final class Course implements Serializable {
                 }
                 CourseIndex index = new CourseIndex(vacancies, this.courseCode, courseIndex, lessons);
                 courseIndices.put(courseIndex, index);
+                Database.serialise(FileType.COURSES);
             }
             System.out.println(courseIndex + " added to courseIndices!");
         }
     }
 
+    /**
+     * Directly adds a particular CourseIndex to the current Course.
+     * @param courseIndex The index to be added to the Course.
+     */
     protected void addIndex(CourseIndex courseIndex) {
 
         courseIndices.put(courseIndex.getCourseIndex(), courseIndex);
@@ -298,26 +302,25 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Return an array all index numbers registered the course.
-     * @return an array all index numbers registered the course.
+     * Return an array all index numbers registered the Course.
+     * @return An array all index numbers registered the Course.
      */
     protected String[] getIndicesString() {
         return courseIndices.keySet().toArray(new String[courseIndices.size()]);
     }
 
     /**
-     * Return an array of all indices registered under the course.
-     * @return an array of all indices registered under the course.
+     * Returns an array of all indices registered under the Course.
+     * @return An array of all indices registered under the Course.
      */
     protected CourseIndex[] getIndices() {
         return courseIndices.values().toArray(new CourseIndex[courseIndices.size()]);
     }
 
-    //TODO: Need to clarify what this is meant to do
     /**
-     * Make a simple copy of the course.
-     * @param status 
-     * @param courseIndex
+     * Make a simple copy of the course to be stored under the {@link Student} object.
+     * @param status The current status of the Course.
+     * @param courseIndex The Index that the Student registered for.
      * @return
      */
     protected Course simpleCopy(CourseStatus status, CourseIndex courseIndex){
