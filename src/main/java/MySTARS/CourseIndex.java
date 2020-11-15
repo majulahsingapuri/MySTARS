@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 /**
  * Represents one index of a particular course/module
- * @author DSAI2 Group 1
+ * @author Timothy
  * @version 1.0
  * @since 2020-11-11
  */

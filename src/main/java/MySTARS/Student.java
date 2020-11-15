@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 /**
  * Represents one Student
- * @author DSAI2 Group 1
+ * @author Jia Hui
  * @version 1.0
  * @since 2020-11-11
  */

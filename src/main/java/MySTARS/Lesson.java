@@ -6,7 +6,7 @@ import org.joda.time.Interval;
 
 /**
  * Represents one lesson timeslot
- * @author DSAI2 Group 1
+ * @author Timothy
  * @version 1.0
  * @since 2020-11-1
  */
@@ -21,14 +21,12 @@ public final class Lesson implements Serializable {
     /**
      * The allocated block of time for the lesson, of type Interval.
      */
-    // TODO: is this attribute necessary for conflict resolution??
     private Interval time;
 
     /**
      * The start time of the lesson in 24h time (4 digit integer).
      */
     private DateTime startTime;
-
 
     /**
      * The end time of the lesson in 24h time (4 digit integer).
@@ -75,7 +73,10 @@ public final class Lesson implements Serializable {
         this.location = location;
     }
 
-    // method to prompt user to choose the type of class, and return the corresponding ClassType object
+    /**
+     * Method to prompt user to choose the type of class
+     * @return The corresponding ClassType object
+     */
     protected static ClassType chooseClassType() {
         
         System.out.println("1. Lecture");
