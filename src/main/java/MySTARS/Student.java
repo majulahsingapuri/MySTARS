@@ -236,7 +236,6 @@ public final class Student extends User implements Comparable<Student> {
     */
     protected CourseStatus addCourse(String courseCode, String courseIndex) throws Exception {
         
-        //TODO make sure calling class checks that course is not yet registered nor on the waitlist
         Database.deserialise(FileType.COURSES);
         if (!Database.COURSES.containsKey(courseCode)) {
             throw new Exception("Course " + courseCode + " does not exist!");

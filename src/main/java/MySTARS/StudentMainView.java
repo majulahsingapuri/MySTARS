@@ -1,10 +1,10 @@
 package MySTARS;
 
 public final class StudentMainView extends View {
-    private int choice;
 
     protected void print() {
 
+        int choice;
         do {
             clearScreen("Student Main");
             System.out.println("What would you like to do? Choose one of the options below: ");
