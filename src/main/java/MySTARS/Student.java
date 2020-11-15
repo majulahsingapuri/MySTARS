@@ -12,13 +12,44 @@ import java.util.HashMap;
 
 public final class Student extends User implements Comparable<Student> {
 
+    /**
+     * The unique ID of the class for Serialisation.
+     */
     private static final long serialVersionUID = 77L;
+
+    /**
+     * The student's unique, 9-character matriculation number.
+     */
     private String matricNumber;
+
+    /**
+     * The student's first name.
+     */
     private String firstName;
+
+    /**
+     * The student's last name.
+     */
     private String lastName;
+
+    /**
+     * A list of courses the student is registered under or on waitlist for.
+     */
     private HashMap<String, Course> courses = new HashMap<String, Course>();
+
+    /**
+     * The student's gender.
+     */
     private Gender gender = Gender.PREFER_NOT_TO_SAY;
+
+    /**
+     * The student's nationality.
+     */
     private String nationality = "";
+
+    /**
+     * The student's number of registered Academic Units.
+     */
     private int registeredAUs = 0;
 
     /**
@@ -94,7 +125,7 @@ public final class Student extends User implements Comparable<Student> {
     */
     protected static boolean isValidNewMatricNo(String matricNo) {
 
-        if (!isValidMatricNo(matricNo)) {return false;}
+        if (!Student.isValidMatricNo(matricNo)) {return false;}
 
         //check that the matric number hasn't been used yet.
         for (User u : Database.USERS.values()) {
@@ -210,12 +241,20 @@ public final class Student extends User implements Comparable<Student> {
         return this.registeredAUs;
     }
 
+    /**
+     * Adds the specified number of AUs to the student's registered AUs.
+     * @param acadUnits the number of AUs to be added
+     */
     private void addAU(AU acadUnits) {
 
         this.registeredAUs += acadUnits.value;
         Database.serialise(FileType.USERS);
     }
 
+    /**
+     * Removes the specified number of AUs from the student's registered AUs.
+     * @param acadUnits the number of AUs to be removed
+     */
     private void removeAU(AU acadUnits) {
 
         this.registeredAUs -= acadUnits.value;
@@ -429,6 +468,13 @@ public final class Student extends User implements Comparable<Student> {
         return new Student(this.getUsername(), this.matricNumber, this.firstName, this.lastName, this.gender, this.nationality);
     }
 
+    /**
+     * Compares this student with the specified student for order.
+     * Returns a negative integer, zero, or a positive integer as this student is less than, equal to, or greater than the specified student.
+     * Order is based on first name, then last name, followed lastly by matriculation number.
+     * @param o the student to be compared
+     * @return a negative integer, zero, or a positive integer as this student is less than, equal to, or greater than the specified student
+     */
     public int compareTo(Student o) {
         
         int answer = this.firstName.compareTo(o.firstName);
