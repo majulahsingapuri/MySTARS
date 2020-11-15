@@ -10,7 +10,7 @@ import java.util.HashMap;
  * @since 2020-11-11
  */
 
-public final class Student extends User {
+public final class Student extends User implements Comparable<Student> {
 
     private static final long serialVersionUID = 77L;
     private String matricNumber;
@@ -426,5 +426,21 @@ public final class Student extends User {
     protected Student simpleCopy() {
 
         return new Student(this.getUsername(), this.matricNumber, this.firstName, this.lastName, this.gender, this.nationality);
+    }
+
+    public int compareTo(Student o) {
+        
+        int answer = this.firstName.compareTo(o.firstName);
+
+        if (answer == 0) {
+            answer = this.lastName.compareTo(o.lastName);
+            if (answer == 0) {
+                return this.matricNumber.compareTo(o.matricNumber);
+            } else {
+                return answer;
+            }
+        } else {
+            return answer;
+        }
     }
 }
