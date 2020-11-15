@@ -101,6 +101,7 @@ public class User implements Serializable {
      * @param accessLevel The new AccessLevel
      * @return {@code true} once AccessLevel has been changed.
      */
+    //FIXME we never use this but it is good to have this here anyway right?
     protected boolean changeAccessLevel(AccessLevel accessLevel) {
         
         if (this.accessLevel == accessLevel) {
