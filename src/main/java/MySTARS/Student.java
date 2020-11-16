@@ -52,6 +52,8 @@ public final class Student extends User implements Comparable<Student> {
      */
     private int registeredAUs = 0;
 
+    protected static final int maxAUs = 21;
+
     /**
      * The constructor with the minimum required number of parameters.
      * @param userName the student's unique username (eg.HKIM007)
@@ -219,6 +221,7 @@ public final class Student extends User implements Comparable<Student> {
      * @param courseStatus defines the desried course status used to filter courses
      * @return a list of the student's course indices that have the desired course status
     */
+    //FIXME never used, maybe not needed? can delete?
     protected CourseIndex[] getIndices(CourseStatus courseStatus) {
 
         ArrayList<CourseIndex> courseInds = new ArrayList<CourseIndex>();
@@ -287,6 +290,10 @@ public final class Student extends User implements Comparable<Student> {
         
         if (courseInd.getVacancies() > 0) {
             
+            if (course.getCourseAU().value + this.registeredAUs > Student.maxAUs){
+                throw new Exception("Cannot register more than the maximum " + Student.maxAUs + " AUs!");
+            }
+
             this.courses.put(courseCode, course.simpleCopy(CourseStatus.REGISTERED, courseInd.simpleCopy()));
             courseInd.enrollStudent(this);
             addAU(course.getCourseAU());

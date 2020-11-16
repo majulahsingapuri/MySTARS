@@ -130,7 +130,7 @@ public final class CourseManager {
         printLine();
 
         for (Student student : studentsArray) {
-            System.out.println(String.format("%10.10s ║ %-49.49s ║ %6.6s", student.getMatricNumber(), student.getFirstName(), student.getGender().label));
+            System.out.println(String.format("%10.10s ║ %-20.20s %29.29s ║ %6.6s", student.getMatricNumber(), student.getFirstName(), student.getLastName(), student.getGender().label));
             printLine();
         }
     }

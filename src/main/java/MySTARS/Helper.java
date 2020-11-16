@@ -88,7 +88,7 @@ public final class Helper {
 			message.setFrom(new InternetAddress("from-email@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receipient.getUsername() + "@e.ntu.edu.sg"));
 			message.setSubject("You have successfully been added to: " + course);
-			message.setText("Dear " + receipient.getFirstName() + ","
+			message.setText("Dear " + receipient.getFirstName() + " " + receipient.getLastName() + ","
 				+ "\n\nYou have successfully been added to: " + course + "!\n\nThis is a system generated email.\n\nRegards,\nMySTARS ADMIN");
 
 			Transport.send(message);

@@ -39,6 +39,15 @@ public final class PrintTimeTableView extends View {
                 printLine();
             }
         }
+
+        System.out.println("Student Information:");
+        System.out.println(String.format("%-30s : %s\n%-30s : %s\n%-30s : %s\n%-30s : %s\n%-30s : %s\n%-30s : %s\n",
+                                        "First Name", currentUser.getFirstName(),
+                                        "Last Name", currentUser.getLastName(), 
+                                        "Matric No.", currentUser.getMatricNumber(),
+                                        "Gender:", currentUser.getGender(),
+                                        "Nationality", currentUser.getNationality(),
+                                        "Registered AUs", currentUser.getAU()));
         
         return;
     }
