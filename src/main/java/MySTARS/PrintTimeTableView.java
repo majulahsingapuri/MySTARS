@@ -45,7 +45,7 @@ public final class PrintTimeTableView extends View {
                                         "First Name", currentUser.getFirstName(),
                                         "Last Name", currentUser.getLastName(), 
                                         "Matric No.", currentUser.getMatricNumber(),
-                                        "Gender:", currentUser.getGender(),
+                                        "Gender:", currentUser.getGender().label,
                                         "Nationality", currentUser.getNationality(),
                                         "Registered AUs", currentUser.getAU()));
         

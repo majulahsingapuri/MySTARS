@@ -52,6 +52,9 @@ public final class Student extends User implements Comparable<Student> {
      */
     private int registeredAUs = 0;
 
+    /**
+     * The maximum number of AUs that a Student can take.
+     */
     protected static final int maxAUs = 21;
 
     /**
@@ -237,10 +240,9 @@ public final class Student extends User implements Comparable<Student> {
     /**
      * Returns a list of the student's course indices, based on the desired course status.
      * Eg. If courseStatus = CourseStatus.REGISTERED, then only registered course indices will be returned.
-     * @param courseStatus defines the desried course status used to filter courses
-     * @return a list of the student's course indices that have the desired course status
+     * @param courseStatus defines the desried course status used to filter courses.
+     * @return a list of the student's course indices that have the desired course status.
     */
-    //FIXME never used, maybe not needed? can delete?
     protected CourseIndex[] getIndices(CourseStatus courseStatus) {
 
         ArrayList<CourseIndex> courseInds = new ArrayList<CourseIndex>();

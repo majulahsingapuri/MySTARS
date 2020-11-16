@@ -5,6 +5,9 @@ import org.joda.time.format.DateTimeFormatter;
 
 /**
  * The main menu for the Student side of the Application. Extends View.
+ * @author Bhargav
+ * @version 1.0
+ * @since 2020-11-1
  */
 public final class AdminMainView extends View {
 

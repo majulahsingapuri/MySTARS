@@ -2,6 +2,9 @@ package MySTARS;
 
 /**
  * Create new {@link Course} object and fills in necessary information.
+ * @author Bhargav
+ * @version 1.0
+ * @since 2020-11-1
  */
 public final class AddCourseView extends View {
 

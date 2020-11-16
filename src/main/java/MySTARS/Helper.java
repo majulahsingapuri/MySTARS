@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 
 /**
  * A Helper Class with all properties and methods that are generally needed across the application.
- * @author Bhargav, Jia Hui
+ * @author Bhargav, Jia Hui, Timothy Kah Ee
  * @version 1.0
  * @since 2020-11-1
  */
@@ -114,6 +114,11 @@ public final class Helper {
 		return password;
 	}
 
+	/**
+	 * A method to check the Course code to verify it matches a fixed pattern.
+	 * @param courseCode The String value of the course code.
+	 * @return {@code true} if the course code matches the specified pattern.
+	 */
 	protected static boolean checkCourseCodeFormat(String courseCode) {
 
 		if(courseCode.matches("\\p{Alpha}\\p{Alpha}\\d{4}") || courseCode.equals("Q")) {

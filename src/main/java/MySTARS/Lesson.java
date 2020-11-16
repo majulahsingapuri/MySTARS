@@ -47,7 +47,7 @@ public final class Lesson implements Serializable {
     /**
      * Additional remarks (eg. If lesson only occurs every other week).
      */
-    private String remarks;
+    private String remarks = "";
 
     /**
      * Lesson ID, used to identify and update lessons.

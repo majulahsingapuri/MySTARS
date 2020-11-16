@@ -184,6 +184,11 @@ public final class CourseIndex implements Serializable {
         return new ArrayList<Lesson>(values);
     }
 
+    protected Lesson getLesson(Integer lessonID) {
+        
+        return this.lessons.get(lessonID);
+    }
+
     /**
      * Return the length of the waitlist for the index.
      * @return the length of the waitlist for the index.
@@ -300,11 +305,20 @@ public final class CourseIndex implements Serializable {
         }
     }
 
+    /**
+     * Directly adds a {@link Student} to the CourseIndex and bypasses all checks. Used when 2 peers are swapping indices.
+     * @param student {@link Student} to be added to the Index.
+     */
     protected void addStudent(Student student) {
         enrolledStudents.put(student.getUsername(), student.simpleCopy());
         vacancies -= 1;
     }
     
+    /**
+     * Directly removes a {@link Student} from the CourseIndex.
+     * @param username Username of the {@link Student} to be removed.
+     * @return a {@link Student} object that was removed.
+     */
     protected Student removeStudent(String username) {
         vacancies += 1;
         return enrolledStudents.remove(username);

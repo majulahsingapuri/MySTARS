@@ -2,6 +2,9 @@ package MySTARS;
 
 /**
  * Updates {@link Course} object and with new information.
+ * @author Bhargav
+ * @version 1.0
+ * @since 2020-11-1
  */
 public class UpdateCourseView extends View {
 
@@ -303,37 +306,37 @@ public class UpdateCourseView extends View {
                             Integer lessonID;
                             try {
                                 lessonID = Integer.parseInt(id);
+
+                                Lesson lesson = courseIndex.getLesson(lessonID);
+                                if (lesson != null) {
+
+                                    System.out.print("Enter the new lesson location: ");
+                                        String newLocation = Helper.sc.nextLine();
+
+                                        System.out.print("The location for the lesson will change from " + lesson.getLocation() + " to " + newLocation + "\n\nConfirm? y/n:");
+                                        String confirm = Helper.sc.nextLine();
+                                        if (confirm.equals("y")) {
+                                        
+                                            lesson.setLocation(newLocation);
+
+                                            for (CourseIndex studentCourseIndex : course.getIndices()) {
+                                                for (Student student : studentCourseIndex.getStudents()) {
+                                                    Student databaseStudent = (Student) Database.USERS.get(student.getUsername());
+                                                    databaseStudent.getCourse(courseCode).getIndex(index).getLesson(lessonID).setLocation(newLocation);    
+                                                }
+                                            }
+
+                                            System.out.println("Lesson location changed Successfully!");
+                                        } else {
+                                            System.out.println("Aborting");
+                                            Helper.pause();
+                                        }
+                                } else {
+                                    System.out.println("Lesson does not yet exist!");
+                                    Helper.pause();
+                                }
                             } catch (Exception e) {
                                 System.out.println(e.getLocalizedMessage());
-                            }
-                            
-                            Lesson lesson = courseIndex.getLesson(lessonID);
-                            if (lesson != null) {
-
-                                System.out.print("Enter the new lesson location: ");
-                                    String newLocation = Helper.sc.nextLine();
-
-                                    System.out.print("The location for the lesson will change from " + lesson.getLocation() + " to " + newLocation + "\n\nConfirm? y/n:");
-                                    String confirm = Helper.sc.nextLine();
-                                    if (confirm.equals("y")) {
-                                    
-                                        lesson.setLocation(newLocation);
-
-                                        for (CourseIndex studentCourseIndex : course.getIndices()) {
-                                            for (Student student : studentCourseIndex.getStudents()) {
-                                                Student databaseStudent = (Student) Database.USERS.get(student.getUsername());
-                                                databaseStudent.getCourse(courseCode).getIndex(index).getLesson(lessonID).setLocation(newLocation);    
-                                            }
-                                        }
-
-                                        System.out.println("Lesson location changed Successfully!");
-                                    } else {
-                                        System.out.println("Aborting");
-                                        Helper.pause();
-                                    }
-                            } else {
-                                System.out.println("Lesson does not yet exist!");
-                                Helper.pause();
                             }
                         }
                     } else {

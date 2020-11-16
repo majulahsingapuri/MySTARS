@@ -2,6 +2,9 @@ package MySTARS;
 
 /**
  * The log out page before being redirected to the {@link LoginView}.
+ * @author Nicolette
+ * @version 1.0
+ * @since 2020-11-1
  */
 public final class LogoutView extends View {
 

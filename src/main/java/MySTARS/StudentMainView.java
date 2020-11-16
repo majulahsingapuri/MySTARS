@@ -2,6 +2,9 @@ package MySTARS;
 
 /**
  * The main menu for the Student side of the Application. Extends View.
+ * @author Bhargav, Kah Ee
+ * @version 1.0
+ * @since 2020-11-1
  */
 public final class StudentMainView extends View {
 
@@ -48,12 +51,12 @@ public final class StudentMainView extends View {
                     dropCourse();
                     break;
                 case 3:
-                    clearScreen("Student Main > Change Index");
-                    changeIndex();
+                    ChangeIndexView changeIndexView = new ChangeIndexView();
+                    changeIndexView.print();
                     break;
                 case 4:
-                    clearScreen("Student Main > Swap Index with Peer");
-                    swapIndex();
+                    SwapIndexView swapIndexView = new SwapIndexView();
+                    swapIndexView.print();
                     break;
                 case 5:
                     clearScreen("Student Main > Change Password");
@@ -79,49 +82,6 @@ public final class StudentMainView extends View {
     }
 
     /**
-     * For swapping index with a peer, this method checks if peer is a valid user that is registered for the relevant course.
-     * @param courseCode {@link CourseCode}, e.g CZ2002
-     * @return {@link Student} object for the second user
-     */
-    private Student verifySecondUser(String courseCode) {
-
-        while (true) {
-            System.out.print("Enter Second User's username or Q to quit: ");
-            String username = Helper.sc.nextLine();
-            if (username.equals("Q")) {
-                return null;
-            }
-
-            if (!Database.USERS.containsKey(username)) {
-                System.out.println(username + " does not exist!");
-                Helper.pause();
-            } else {
-                System.out.print("Enter password: ");
-                String password = Helper.getPasswordInput();
-                User result = Database.USERS.get(username);
-                if (result.checkPassword(password)) {
-                    try {
-                        Student secondUser = (Student) result;
-                        Course course = secondUser.getCourse(courseCode);
-                        if (course != null && course.getStatus() == CourseStatus.REGISTERED) {
-                            return secondUser;
-                        } else {
-                            System.out.println("Second User is not registered for this course!");
-                            Helper.pause();
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Invalid user. Please enter again!");
-                        Helper.pause();
-                    }
-                } else {
-                    System.out.println("Invalid Password!");
-                    Helper.pause();
-                }
-            }
-        }
-    }
-
-    /**
      * Removes the {@link User} from the selected {@link Course}.
      */
     protected void dropCourse() {
@@ -142,90 +102,6 @@ public final class StudentMainView extends View {
                 break;
             } catch (Exception e) {
                 System.out.println(e.getLocalizedMessage());
-                Helper.pause();
-            }
-        }
-
-        System.out.println("Going back to main menu...");
-    }
-
-    /**
-     * Changes the index of the {@link Course} selected by {@link User}. 
-     */
-    protected void changeIndex() {
-
-        while (true) {
-            CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
-            System.out.print("Enter the course code or Q to quit: ");
-            String courseCode = Helper.sc.nextLine();
-            if (courseCode.equals("Q")) {
-                break;
-            }
-            Student currentUser = (Student) Database.CURRENT_USER;
-            if (currentUser.getCourse(courseCode) != null) {
-                Course course = Database.COURSES.get(courseCode);
-                CourseManager.printIndexList(course, true);
-                String curIndex = currentUser.getCourse(courseCode).getIndicesString()[0];
-                System.out.println("Your current index is: " + curIndex);
-                System.out.print("Enter the new index that you wish to change to: ");
-                String newIndex = Helper.sc.nextLine();
-                if (newIndex.equals(curIndex)){
-                    System.out.println("You are already in this index!");
-                    Helper.pause();
-                } else {
-                    try {
-                        currentUser.changeIndex(courseCode, curIndex, newIndex);
-                        Database.serialise(FileType.USERS);
-                        Database.serialise(FileType.COURSES);
-                        System.out.println("Changed " + courseCode + " to index " + newIndex + " succesfully.");
-                        break;
-                    } catch (Exception e) {
-                        System.out.println(e.getLocalizedMessage());
-                        Helper.pause();
-                    }
-                }
-            } else {
-                System.out.println("You are not registerd for this Course!");
-                Helper.pause();
-            }
-        }
-
-        System.out.println("Going back to main menu...");
-    }
-
-    /**
-     * Verifies a second {@link User} from {@link Database.USERS} and swaps the indices for both the Users.
-     */
-    protected void swapIndex() {
-
-        while (true) {
-            CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
-            System.out.print("Enter the course code to swap with a friend or Q to Quit: ");
-            String courseCode = Helper.sc.nextLine();
-            if (courseCode.equals("Q")) {
-                break;
-            }
-            Student currentUser = (Student) Database.CURRENT_USER;
-            if (currentUser.getCourse(courseCode) != null) {
-                Student secondUser = verifySecondUser(courseCode);
-                if (secondUser == null) {
-                    //User has entered "Q"
-                    break;
-                } else {
-                    CourseIndex currentUserIndex = currentUser.getCourse(courseCode).getIndices()[0];
-                    CourseIndex secondUserIndex = secondUser.getCourse(courseCode).getIndices()[0];
-                    if (!currentUser.clashes(courseCode, secondUserIndex.getCourseIndex()) && !secondUser.clashes(courseCode, currentUserIndex.getCourseIndex())) {
-                        currentUser.swapIndex(courseCode, secondUserIndex);
-                        secondUser.swapIndex(courseCode, currentUserIndex);
-                        System.out.println("Swapped successfully.");
-                        break;
-                    } else {
-                        System.out.println("There is a clash of index!");
-                        Helper.pause();
-                    }
-                }
-            } else {
-                System.out.println("You are not registered in this course!");
                 Helper.pause();
             }
         }
