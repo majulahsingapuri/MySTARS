@@ -16,7 +16,7 @@ public final class StudentMainView extends View {
     /**
      * Prints menu options for the User to select from. Required method from View.
      */
-    protected void print() {
+    public void print() {
 
         int choice;
         do {
@@ -84,7 +84,7 @@ public final class StudentMainView extends View {
     /**
      * Removes the {@link User} from the selected {@link Course}.
      */
-    protected void dropCourse() {
+    private void dropCourse() {
 
         while (true) {
             CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
@@ -112,7 +112,7 @@ public final class StudentMainView extends View {
     /**
      * Changes the Password for the {@link Database.CURRENT_USER}.
      */
-    protected void changePassword() {
+    private void changePassword() {
         
         Database.CURRENT_USER.changePassword();
         System.out.println("Going back to main menu...");
@@ -121,7 +121,7 @@ public final class StudentMainView extends View {
     /**
      * Displays the {@link Course}s that are on {@link CourseStatus.WAITLIST}.
      */
-    protected void viewWaitlistedCourses() {
+    private void viewWaitlistedCourses() {
         Student currentUser = (Student) Database.CURRENT_USER;
         CourseManager.printCourseList(CourseStatus.WAITLIST, currentUser);
     }

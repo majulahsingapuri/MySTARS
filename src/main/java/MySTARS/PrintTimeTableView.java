@@ -13,7 +13,7 @@ public final class PrintTimeTableView extends View {
     /**
      * The main print function of the view, which prints out the timetable in the correct formatting.
      */
-    protected void print() {
+    public void print() {
 
         clearScreen("Student Main > Print Timetable");
 

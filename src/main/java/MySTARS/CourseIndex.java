@@ -58,7 +58,7 @@ public final class CourseIndex implements Serializable {
      * @param courseCode course code of the course
      * @param indexNumber index number of the index
      */
-    protected CourseIndex(int vacancies, String courseCode, String indexNumber) {
+    public CourseIndex(int vacancies, String courseCode, String indexNumber) {
 
         this.vacancies = vacancies; 
         this.courseCode = courseCode;
@@ -72,7 +72,7 @@ public final class CourseIndex implements Serializable {
      * @param indexNumber index number of the index
      * @param lessons ArrayList of lessons to include in the index
      */
-    protected CourseIndex(int vacancies, String courseCode, String indexNumber, ArrayList<Lesson> lessons) {
+    public CourseIndex(int vacancies, String courseCode, String indexNumber, ArrayList<Lesson> lessons) {
 
         this.vacancies = vacancies; 
         this.courseCode = courseCode;
@@ -86,7 +86,8 @@ public final class CourseIndex implements Serializable {
      * Choose from 5 options: Lecture, lab, tutorial, seminar, online. 
      * @return ClassType enum corresponding to user's choice.
      */
-    protected ClassType chooseClassType() {
+    //FIXME delete? already implemented in Lesson class
+    public ClassType chooseClassType() {
         
         System.out.println("1. Lecture");
         System.out.println("2. Lab");
@@ -120,7 +121,7 @@ public final class CourseIndex implements Serializable {
      * Set the number of vacancies
      * @param vacancies number of vacancies
      */
-    protected void setVacancies(int vacancies) {
+    public void setVacancies(int vacancies) {
 
         this.vacancies = vacancies;
     }
@@ -129,7 +130,7 @@ public final class CourseIndex implements Serializable {
      * Return the number of remaining vacancies.
      * @return the number of remaining vacancies.
      */
-    protected int getVacancies() {
+    public int getVacancies() {
 
         return this.vacancies;
     }
@@ -138,7 +139,7 @@ public final class CourseIndex implements Serializable {
      * Return the course code as a string (eg. CZ2002).
      * @return course code as a string.
      */
-    protected String getCourseCode() {
+    public String getCourseCode() {
 
         return this.courseCode;
     }
@@ -147,7 +148,7 @@ public final class CourseIndex implements Serializable {
      * Return the index number of the course index as a string (eg. 100081).
      * @return index number of the course index.
      */
-    protected String getCourseIndex() {
+    public String getCourseIndex() {
 
         return this.indexNumber;
     }
@@ -157,7 +158,7 @@ public final class CourseIndex implements Serializable {
      * Lesson is added into the HashMap {@link lessons}.
      * @param lesson lesson object to be added.
      */
-    protected void addLesson(Lesson lesson) {
+    public void addLesson(Lesson lesson) {
 
         this.lessons.putIfAbsent(lesson.getLessonID(), lesson);
     }
@@ -167,7 +168,7 @@ public final class CourseIndex implements Serializable {
      * All lessons are added into the HashMap {@link lessons}.
      * @param lessons ArrayList containing lesson objects.
      */
-    protected void addLessons(ArrayList<Lesson> lessons) {
+    public void addLessons(ArrayList<Lesson> lessons) {
 
         for (Lesson lesson : lessons) {
             this.lessons.put(lesson.getLessonID(), lesson);
@@ -178,13 +179,13 @@ public final class CourseIndex implements Serializable {
      * Return all the lesson slots in the index.
      * @return ArrayList of all lesson slots in the index.
      */
-    protected ArrayList<Lesson> getLessons() {
+    public ArrayList<Lesson> getLessons() {
 
         Collection<Lesson> values = this.lessons.values();
         return new ArrayList<Lesson>(values);
     }
 
-    protected Lesson getLesson(Integer lessonID) {
+    public Lesson getLesson(Integer lessonID) {
         
         return this.lessons.get(lessonID);
     }
@@ -193,7 +194,7 @@ public final class CourseIndex implements Serializable {
      * Return the length of the waitlist for the index.
      * @return the length of the waitlist for the index.
      */
-    protected int getWaitlistLength() {
+    public int getWaitlistLength() {
 
         return this.waitlist.size();
     }
@@ -202,7 +203,7 @@ public final class CourseIndex implements Serializable {
      * Add student's username to the index waitlist.
      * @param username student's username.
      */
-    protected void addToWaitlist(String username) {
+    public void addToWaitlist(String username) {
 
         waitlist.add(username);
         System.out.println(username + " added to waitlist");
@@ -212,7 +213,7 @@ public final class CourseIndex implements Serializable {
      * Removes a specified student's username from the index waitlist.
      * @param username username of student to be removed.
      */
-    protected void removeFromWaitlist(String username) {
+    public void removeFromWaitlist(String username) {
 
         //TODO have a better implementation for this. Leave this first for testing purposes but change in final version.
         if(waitlist.remove(username)) {
@@ -226,7 +227,7 @@ public final class CourseIndex implements Serializable {
      * Returns an array of students currently enrolled in the index.
      * @return array of students currently enrolled in the index.
      */
-    protected Student[] getStudents() {
+    public Student[] getStudents() {
         
         return this.enrolledStudents.values().toArray(new Student[enrolledStudents.size()]);
     }
@@ -236,7 +237,7 @@ public final class CourseIndex implements Serializable {
      * Prints error message, and gives user choice to add to waitlist instead, if there are no remaining vacancies in the index.
      * @param student student object to be enrolled in the index.
      */
-    protected void enrollStudent(Student student) {
+    public void enrollStudent(Student student) {
 
         String username = student.getUsername();
         if(this.vacancies != 0) {
@@ -260,7 +261,7 @@ public final class CourseIndex implements Serializable {
      * Prints error message to user if student is not found.
      * @param student student object to be unenrolled.
      */
-    protected void unenrollStudent(Student student) {
+    public void unenrollStudent(Student student) {
 
         String username = student.getUsername();
 
@@ -279,7 +280,7 @@ public final class CourseIndex implements Serializable {
      * Removes the student next in line in the waitlist, and enrolls object to course register.
      * Error messages are printed to the user if there are no vacancies in the index, or if the waitlist is empty.
      */
-    protected void enrollNextInWaitlist() {
+    public void enrollNextInWaitlist() {
 
         if(this.vacancies != 0 && waitlist.size()>0) {
             String username = waitlist.removeFirst();
@@ -328,7 +329,7 @@ public final class CourseIndex implements Serializable {
      * Creates a simple copy of this course index, with same parameters except for 0 vacancies.
      * @return CourseIndex object, with same parameters except for 0 vacancies. 
      */
-    protected CourseIndex simpleCopy() {
+    public CourseIndex simpleCopy() {
 
         return new CourseIndex(0, this.courseCode, this.indexNumber, this.getLessons());
     }

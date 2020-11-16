@@ -68,7 +68,7 @@ public enum DayOfWeek {
      * @param day The day of the week in integer form.
      * @return The DayOfWeek, defaults to Monday if int day is out of range.
      */
-    protected static DayOfWeek getDayOfWeek(int day) {
+    public static DayOfWeek getDayOfWeek(int day) {
 
         for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
             if (dayOfWeek.value == day) {

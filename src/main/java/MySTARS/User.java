@@ -58,7 +58,7 @@ public class User implements Serializable {
      * Changes the password for a User.
      * @return {@code true} if password is successfully changed.
      */
-    protected boolean changePassword() {
+    public boolean changePassword() {
 
         while (true) {
             System.out.print("Enter current password or Q to quit: ");
@@ -112,7 +112,7 @@ public class User implements Serializable {
      * @param input the password entered by the User.
      * @return {@code true} if the password is correct.
      */
-    protected boolean checkPassword(String input) {
+    public boolean checkPassword(String input) {
         String rawPassword = decryptPassword();
         return input.equals(rawPassword);
     }
@@ -137,7 +137,7 @@ public class User implements Serializable {
      * Getter method that retrieves the Username of the User.
      * @return The username as a String.
      */
-    protected String getUsername() {
+    public String getUsername() {
         return username;
     }
 
@@ -145,7 +145,7 @@ public class User implements Serializable {
      * Getter method that retireves the AccessLevel of the User.
      * @return the AccessLevel of the User.
      */
-    protected AccessLevel getAccessLevel() {
+    public AccessLevel getAccessLevel() {
         return accessLevel;
     }
 }

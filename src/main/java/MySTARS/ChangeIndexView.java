@@ -8,7 +8,7 @@ public class ChangeIndexView extends View {
     /**
      * Required method from {@link View}. Prints Prompts to 
      */
-    protected void print() {
+    public void print() {
 
         clearScreen("Student Main > Change Index");
         

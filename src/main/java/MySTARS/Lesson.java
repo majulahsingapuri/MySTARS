@@ -69,7 +69,7 @@ public final class Lesson implements Serializable {
      * @param endTime end time of lesson in 24h format.
      * @param location location of lesson.
      */
-    protected Lesson(ClassType classType, DayOfWeek dayOfWeek, int startTime, int endTime, String location) {
+    public Lesson(ClassType classType, DayOfWeek dayOfWeek, int startTime, int endTime, String location) {
 
         this.lessonID = Integer.valueOf(10000 + new Random().nextInt(90000));
         this.classType = classType;
@@ -84,7 +84,7 @@ public final class Lesson implements Serializable {
      * Method to prompt user to choose the type of class
      * @return The corresponding ClassType object
      */
-    protected static ClassType chooseClassType() {
+    public static ClassType chooseClassType() {
         
         System.out.println("1. Lecture");
         System.out.println("2. Lab");
@@ -119,7 +119,7 @@ public final class Lesson implements Serializable {
      * Returns a ClassType enum specifying the type of the specified lesson.
      * @return ClassType enum specifying the type of the specified lesson.
      */
-    protected ClassType getType() {
+    public ClassType getType() {
 
         return this.classType;
     }
@@ -128,7 +128,7 @@ public final class Lesson implements Serializable {
      * Returns the interval of time where the lesson occurs, as a JodaTime Interval object.
      * @return interval of time where the lesson occurs, as a JodaTime Interval object.
      */
-    protected Interval getTime() {
+    public Interval getTime() {
 
         return this.time;
     }
@@ -137,7 +137,7 @@ public final class Lesson implements Serializable {
      * Returns starting time of the lesson slot, in JodaTime DateTime object (year, month, day of week, hour, minute).
      * @return starting time of the lesson slot, in JodaTime DateTime object (year, month, day of week, hour, minute).
      */
-    protected DateTime getStartTime() {
+    public DateTime getStartTime() {
 
         return this.startTime;
     }
@@ -146,7 +146,7 @@ public final class Lesson implements Serializable {
      * Returns end time of the lesson slot, in JodaTime DateTime object (year, month, day of week, hour, minute).
      * @return end time of the lesson slot, in JodaTime DateTime object (year, month, day of week, hour, minute).
      */
-    protected DateTime getEndTime() {
+    public DateTime getEndTime() {
 
         return this.endTime;
     }
@@ -156,7 +156,7 @@ public final class Lesson implements Serializable {
      * @param startTime start time of lesson in 24h format (4 digit integer).
      * @param endTime end time of lesson in 24h format (4 digit integer).
      */
-    protected void setTime(int startTime, int endTime) {
+    public void setTime(int startTime, int endTime) {
 
         this.startTime = new DateTime(2020, 1, this.dayOfWeek.value, startTime/100, startTime%100);
         this.endTime = new DateTime(2020, 1, this.dayOfWeek.value, endTime/100, endTime%100);
@@ -167,7 +167,7 @@ public final class Lesson implements Serializable {
      * Returns location of lesson as a string.
      * @return location of lesson as a string.
      */
-    protected String getLocation() {
+    public String getLocation() {
 
         return this.location;
     }
@@ -176,7 +176,7 @@ public final class Lesson implements Serializable {
      * Sets the location of the lesson.
      * @param location location of the lesson as a string.
      */
-    protected void setLocation(String location) {
+    public void setLocation(String location) {
 
         this.location = location;
     }
@@ -185,7 +185,7 @@ public final class Lesson implements Serializable {
      * Sets any relevant remarks for the lesson slot.
      * @param remarks additional remarks for the lesson, in a string.
      */
-    protected void setRemarks(String remarks) {
+    public void setRemarks(String remarks) {
 
         this.remarks = remarks;
     }
@@ -194,7 +194,7 @@ public final class Lesson implements Serializable {
      * Returns the remarks for this lesson slot.
      * @return remarks for this lesson slot as a string.
      */
-    protected String getRemarks() {
+    public String getRemarks() {
 
         return this.remarks;
     }
@@ -203,7 +203,7 @@ public final class Lesson implements Serializable {
      * Returns Lesson ID for current lesson.
      * @return lesson ID.
      */
-    protected Integer getLessonID() {
+    public Integer getLessonID() {
 
         return this.lessonID;
     }

@@ -46,7 +46,7 @@ public enum AU {
      * @param acadUnit The integer value to compare with.
      * @return The relevant AU value for a given integer. Defaults to AU.ONE if no match found.
      */
-    protected static AU getAU(int acadUnit) {
+    public static AU getAU(int acadUnit) {
 
         for (AU au : AU.values()) {
             if (au.value == acadUnit) {

@@ -53,7 +53,7 @@ public final class Course implements Serializable {
      * @param courseName Course name (eg. object oriented design programming).
      * @param acadUnits Number of AUs credited upon completion of course.
      */
-    protected Course(String courseCode, String courseName, AU acadUnits) {
+    public Course(String courseCode, String courseName, AU acadUnits) {
 
         this.courseCode = courseCode;
         this.courseName = courseName;
@@ -67,7 +67,7 @@ public final class Course implements Serializable {
      * @param acadUnits Number of AUs credited upon completion of course.
      * @param description Course description.
      */
-    protected Course(String courseCode, String courseName, AU acadUnits, String description) {
+    public Course(String courseCode, String courseName, AU acadUnits, String description) {
 
         this.courseCode = courseCode;
         this.courseName = courseName;
@@ -83,7 +83,7 @@ public final class Course implements Serializable {
      * @param description Course description.
      * @param courseStatus Enrollment status of a particular Student.
      */
-    protected Course(String courseCode, String courseName, AU acadUnits, String description, CourseStatus courseStatus) {
+    public Course(String courseCode, String courseName, AU acadUnits, String description, CourseStatus courseStatus) {
 
         this.courseCode = courseCode;
         this.courseName = courseName;
@@ -101,7 +101,7 @@ public final class Course implements Serializable {
      * @param courseStatus Enrollment status of a particular student.
      * @param courseIndex Course index to initialize with this course.
      */
-    protected Course(String courseCode, String courseName, AU acadUnits, String description, CourseStatus courseStatus, CourseIndex courseIndex) {
+    public Course(String courseCode, String courseName, AU acadUnits, String description, CourseStatus courseStatus, CourseIndex courseIndex) {
 
         this.courseCode = courseCode;
         this.courseName = courseName;
@@ -115,7 +115,7 @@ public final class Course implements Serializable {
      * Sets courseCode.
      * @param courseCode The courseCode as a String.
      */
-    protected void setCourseCode(String courseCode) {
+    public void setCourseCode(String courseCode) {
 
         this.courseCode = courseCode;
     }
@@ -124,7 +124,7 @@ public final class Course implements Serializable {
      * Returns the courseCode.
      * @return courseCode.
      */
-    protected String getCourseCode() {
+    public String getCourseCode() {
 
         return this.courseCode;
     }
@@ -133,7 +133,7 @@ public final class Course implements Serializable {
      * Set courseName.
      * @param courseName The name of the Course.
      */
-    protected void setCourseName(String courseName) {
+    public void setCourseName(String courseName) {
 
         this.courseName = courseName;
     }
@@ -142,7 +142,7 @@ public final class Course implements Serializable {
      * Return the courseName.
      * @return The name of the Course.
      */
-    protected String getCourseName() {
+    public String getCourseName() {
 
         return this.courseName;
     }
@@ -151,7 +151,7 @@ public final class Course implements Serializable {
      * Set the Course description.
      * @param description The Course description.
      */
-    protected void setDescription(String description) {
+    public void setDescription(String description) {
 
         this.description = description;
     }
@@ -160,7 +160,7 @@ public final class Course implements Serializable {
      * Return the Course description.
      * @return The Course description.
      */
-    protected String getDescription() {
+    public String getDescription() {
 
         return this.description;
     }
@@ -169,7 +169,7 @@ public final class Course implements Serializable {
      * Set the number of AUs to be credited upon completion of the Course.
      * @param acadUnits Number of AUs to be credited upon completion of the Course.
      */
-    protected void setCourseAU(AU acadUnits) {
+    public void setCourseAU(AU acadUnits) {
 
         this.acadUnits = acadUnits;
     }
@@ -178,7 +178,7 @@ public final class Course implements Serializable {
      * Return the number of AUs credited upon completion of the Course.
      * @return The number of AUs credited upon completion of the Course.
      */
-    protected AU getCourseAU() {
+    public AU getCourseAU() {
 
         return this.acadUnits;
     }
@@ -187,7 +187,7 @@ public final class Course implements Serializable {
      * Set the CourseStatus of a Student's enrollment in the Course.
      * @param courseStatus The status of a Student's enrollment in the Course.
      */
-    protected void setStatus(CourseStatus courseStatus) {
+    public void setStatus(CourseStatus courseStatus) {
 
         this.courseStatus = courseStatus;
     }
@@ -196,7 +196,7 @@ public final class Course implements Serializable {
      * Return the CourseStatus of a Student's enrollment in the Course.
      * @return The CourseStatus of a Student's enrollment in the Course.
      */
-    protected CourseStatus getStatus() {
+    public CourseStatus getStatus() {
 
         return this.courseStatus;
     }
@@ -206,7 +206,7 @@ public final class Course implements Serializable {
      * @param courseIndex The index number of the course to be returned.
      * @return A CourseIndex object corresponding to the specified key value.
      */
-    protected CourseIndex getIndex(String courseIndex) {
+    public CourseIndex getIndex(String courseIndex) {
 
         return courseIndices.get(courseIndex);
     }
@@ -216,7 +216,7 @@ public final class Course implements Serializable {
      * @param courseIndex Number of the index that is being queried.
      * @return {@code true} if Course contains given index.
      */
-    protected boolean containsIndex(String courseIndex) {
+    public boolean containsIndex(String courseIndex) {
 
         return null != courseIndices.get(courseIndex);
     }
@@ -227,7 +227,7 @@ public final class Course implements Serializable {
      * Includes prompts for the User to enter all relevant details for each CourseIndex and Lesson.
      * @param numIndices Integer number of indices to add to the Course.
      */
-    protected void addIndices(int numIndices) {
+    public void addIndices(int numIndices) {
         
         String courseIndex;
         int vacancies;
@@ -295,7 +295,7 @@ public final class Course implements Serializable {
      * Directly adds a particular CourseIndex to the current Course.
      * @param courseIndex The index to be added to the Course.
      */
-    protected void addIndex(CourseIndex courseIndex) {
+    public void addIndex(CourseIndex courseIndex) {
 
         courseIndices.put(courseIndex.getCourseIndex(), courseIndex);
         Database.serialise(FileType.COURSES);
@@ -305,7 +305,7 @@ public final class Course implements Serializable {
      * Return an array all index numbers registered the Course.
      * @return An array all index numbers registered the Course.
      */
-    protected String[] getIndicesString() {
+    public String[] getIndicesString() {
         return courseIndices.keySet().toArray(new String[courseIndices.size()]);
     }
 
@@ -313,7 +313,7 @@ public final class Course implements Serializable {
      * Returns an array of all indices registered under the Course.
      * @return An array of all indices registered under the Course.
      */
-    protected CourseIndex[] getIndices() {
+    public CourseIndex[] getIndices() {
         return courseIndices.values().toArray(new CourseIndex[courseIndices.size()]);
     }
 
@@ -323,7 +323,7 @@ public final class Course implements Serializable {
      * @param courseIndex The Index that the Student registered for.
      * @return A Course object with all the basic information with the current CourseStatus and CourseIndex. 
      */
-    protected Course simpleCopy(CourseStatus status, CourseIndex courseIndex){
+    public Course simpleCopy(CourseStatus status, CourseIndex courseIndex){
         return new Course(this.courseCode, this.courseName, this.acadUnits, this.description, status, courseIndex);
     }
 }

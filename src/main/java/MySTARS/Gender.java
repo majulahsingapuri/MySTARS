@@ -46,7 +46,7 @@ public enum Gender {
      * @param gender The desired Gender as a String.
      * @return The matching Gender. Defaults to Prefer Not To Say for invalid inputs.
      */
-    protected static Gender getGender(String gender) {
+    public static Gender getGender(String gender) {
 
         for (Gender g : Gender.values()) {
             if (g.label.equals(gender)) {
