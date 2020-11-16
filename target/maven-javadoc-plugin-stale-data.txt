@@ -20,38 +20,38 @@
 -docencoding
 'UTF-8'
 -doctitle
-'MySTARS 1.0 Test API'
+'MySTARS 1.0-beta-4 Test API'
 -link
 '../apidocs'
 -use
 -version
 -windowtitle
-'MySTARS 1.0 Test API'
+'MySTARS 1.0-beta-4 Test API'
 MySTARS
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/classes = 1605444148000
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/test-classes = 1605444148000
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/classes = 1605537038000
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/test-classes = 0
 /Users/bhargav/.m2/repository/junit/junit/4.11/junit-4.11.jar = 1598248279238
 /Users/bhargav/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar = 1598248278868
 /Users/bhargav/.m2/repository/joda-time/joda-time/2.10.8/joda-time-2.10.8.jar = 1605419807824
 /Users/bhargav/.m2/repository/javax/mail/mail/1.5.0-b01/mail-1.5.0-b01.jar = 1604280820712
 /Users/bhargav/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar = 1604280820327
 /Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/src/test/java = 1605420299000
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/constant-values.html = 1605444657711
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/member-search-index.zip = 1605444657745
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/overview-tree.html = 1605444657726
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/index.html = 1605444657770
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/package-search-index.js = 1605444657738
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/package-search-index.zip = 1605444657742
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/type-search-index.zip = 1605444657744
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/index-all.html = 1605444657746
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/allpackages-index.html = 1605444657757
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/deprecated-list.html = 1605444657732
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/member-search-index.js = 1605444657744
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/script.js = 1605444657801
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/stylesheet.css = 1605444657796
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/help-doc.html = 1605444657784
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/system-properties.html = 1605444657765
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/element-list = 1605444657695
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/allclasses-index.html = 1605444657752
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/type-search-index.js = 1605444657743
-/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/search.js = 1605444657803
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/constant-values.html = 1605537095309
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/member-search-index.zip = 1605537095334
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/overview-tree.html = 1605537095320
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/index.html = 1605537095345
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/package-search-index.js = 1605537095330
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/package-search-index.zip = 1605537095333
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/type-search-index.zip = 1605537095334
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/index-all.html = 1605537095335
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/allpackages-index.html = 1605537095341
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/deprecated-list.html = 1605537095325
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/member-search-index.js = 1605537095334
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/script.js = 1605537095351
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/stylesheet.css = 1605537095350
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/help-doc.html = 1605537095348
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/system-properties.html = 1605537095343
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/element-list = 1605537095296
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/allclasses-index.html = 1605537095339
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/type-search-index.js = 1605537095333
+/Users/bhargav/Documents/Uni/Year 2/Sem 1/Object Oriented Programming/Project/MySTARS/target/site/testapidocs/search.js = 1605537095352

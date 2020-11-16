@@ -230,7 +230,7 @@ public final class Student extends User implements Comparable<Student> {
 
     /**
      * Directly adds a {@link Course} to the Hashmap.
-     * @param course
+     * @param course The course to be added.
      */
     protected void setCourse(Course course) {
 

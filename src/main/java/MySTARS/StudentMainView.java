@@ -109,7 +109,7 @@ public final class StudentMainView extends View {
     }
 
     /**
-     * Changes the Password for the {@link Database.CURRENT_USER}.
+     * Changes the Password for the {@link Database}.CURRENT_USER.
      */
     private void changePassword() {
         
@@ -118,7 +118,7 @@ public final class StudentMainView extends View {
     } 
 
     /**
-     * Displays the {@link Course}s that are on {@link CourseStatus.WAITLIST}.
+     * Displays the {@link Course}s that are on {@link CourseStatus}.WAITLIST.
      */
     private void viewWaitlistedCourses() {
         Student currentUser = (Student) Database.CURRENT_USER;

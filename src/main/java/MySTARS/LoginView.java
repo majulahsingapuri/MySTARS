@@ -16,7 +16,7 @@ public final class LoginView extends View {
     private static DateTime loginEnd;
 
     /**
-     * Constructor method that checks if the {@Student} login period has been set. Defaults to the whole of 2020.
+     * Constructor method that checks if the {@link Student} login period has been set. Defaults to the whole of 2020.
      */
     public LoginView() {
 

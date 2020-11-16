@@ -69,7 +69,6 @@ public final class AdminMainView extends View {
 
     /**
      * Changes MySTARS access start and end dates and times
-     * @throws Exception If unable to parse to {@link org.joda.time.DateTime} from String.
      */
     private void changeEntryTiming() {
         
@@ -92,7 +91,7 @@ public final class AdminMainView extends View {
     }
 
     /**
-     * Changes the Password for the {@link Database.CURRENT_USER}.
+     * Changes the Password for the {@link Database}.CURRENT_USER.
      */
     private void changePassword() {
 

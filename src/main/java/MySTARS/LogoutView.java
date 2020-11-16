@@ -14,7 +14,7 @@ public final class LogoutView extends View {
     public LogoutView() {}
 
     /**
-     * Required method from View. Logs out the {@link Database.CURRENT_USER} and redirects user back to the log in page.
+     * Required method from View. Logs out the {@link Database}.CURRENT_USER and redirects user back to the log in page.
      */
     public void print() {
         clearScreen("Logout");

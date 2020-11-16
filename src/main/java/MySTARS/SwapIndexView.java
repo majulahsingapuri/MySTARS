@@ -1,7 +1,7 @@
 package MySTARS;
 
 /**
- * Verifies a second {@link User} from {@link Database.USERS} and swaps the indices for both the Users.
+ * Verifies a second {@link User} from {@link Database}.USERS and swaps the indices for both the Users.
  */
 public class SwapIndexView extends View {
     
@@ -48,7 +48,7 @@ public class SwapIndexView extends View {
 
     /**
      * For swapping index with a peer, this method checks if peer is a valid user that is registered for the relevant course.
-     * @param courseCode {@link CourseCode}, e.g CZ2002
+     * @param courseCode The course code, e.g CZ2002
      * @return {@link Student} object for the second user
      */
     private Student verifySecondUser(String courseCode) {
