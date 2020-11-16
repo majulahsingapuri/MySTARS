@@ -17,18 +17,27 @@ public final class AddUserView extends View {
 
         while (true) {
             System.out.print("Enter username or Q to quit: ");
-            String username = Helper.sc.nextLine();
+            String username = Helper.readLine();
             if (username.equals("Q")) {
                 break;
             }
             if (!Database.USERS.containsKey(username)) {
                 String accessLevel;
-                do {
-                    System.out.print("Enter account type (Admin/Student): ");
-                    accessLevel = Helper.sc.nextLine();
-                } while (!accessLevel.equals("Admin") && !accessLevel.equals("Student"));
+                System.out.println("Enter user domain: ");
+                System.out.println("1. Admin");
+                System.out.println("2. Student");
+                System.out.print("Choice: ");
+                while (true) {
+                    accessLevel = Helper.readLine();
+                    
+                    if (accessLevel.equals("1") || accessLevel.equals("2")) {
+                        break;
+                    } else {
+                        System.out.print("Invalid input, enter choice again: ");
+                    }
+                }
 
-                if (accessLevel.equals("Admin")) {
+                if (accessLevel.equals("1")) {
                     String password1, password2;
                     while (true) {
                         System.out.print("Enter the password: ");
@@ -48,19 +57,35 @@ public final class AddUserView extends View {
                 } else {
 
                     System.out.print("Enter the Student's First Name: ");
-                    String firstName = Helper.sc.nextLine();
+                    String firstName = Helper.readLine();
+
                     System.out.print("Enter the Student's Last Name: ");
-                    String lastName = Helper.sc.nextLine();
-                    System.out.print("Enter the Student's Gender (M/F/NB/PNTS): ");
-                    //FIXME error check gender
-                    Gender gender = Gender.getGender(Helper.sc.nextLine());
+                    String lastName = Helper.readLine();
+
+                    int genderChoice;
+                    Gender gender;
+                    
+                    while (true) {
+                        try {
+                            System.out.print("Enter the Student's Gender \n1. F\n2. M\n3. NB\n4. PNTS\nDefault (PNTS): ");
+                            genderChoice = Integer.parseInt(Helper.readLine());
+                            if (genderChoice < 1 || genderChoice > 4) {
+                                throw new Exception();
+                            }
+                            gender = Gender.getGender(genderChoice);
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("Please enter a valid number.");
+                        }
+                    }
+
                     System.out.print("Enter the Student's Nationality: ");
-                    String nationality = Helper.sc.nextLine();
+                    String nationality = Helper.readLine();
                     
                     String matricNumber;
                     while (true) {
                         System.out.print("Enter the Student's Matric number: ");
-                        matricNumber = Helper.sc.nextLine();
+                        matricNumber = Helper.readLine();
                         if (Student.isValidNewMatricNo(matricNumber)) {
                             break;
                         } else {
@@ -76,8 +101,8 @@ public final class AddUserView extends View {
                     System.out.println(String.format("%-20s:", "Nationality") + nationality);
 
                     System.out.print("\nConfirm? y/n: ");
-                    String confirm = Helper.sc.nextLine();
-                    if (confirm.equals("y")) {
+                    String confirm = Helper.readLine();
+                    if (confirm.equals("Y")) {
                         Student student = new Student(username, matricNumber, firstName, lastName, gender, nationality);
                         Database.USERS.put(username, student);
                         Database.serialise(FileType.USERS);

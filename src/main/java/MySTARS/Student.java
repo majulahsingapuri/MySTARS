@@ -117,7 +117,7 @@ public final class Student extends User implements Comparable<Student> {
         }
 
         //the last character has to be an uppercase letter
-        if (matricNo.charAt(0) < 'A' || matricNo.charAt(0) > 'Z') {return false;}
+        if (matricNo.charAt(8) < 'A' || matricNo.charAt(8) > 'Z') {return false;}
 
         //all conditions have been passed
         return true;

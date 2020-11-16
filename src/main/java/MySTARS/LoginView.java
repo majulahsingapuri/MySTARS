@@ -58,17 +58,31 @@ public final class LoginView extends View {
 
         System.out.println("Current Time: " + formatter.print(now));
         System.out.println("Student's login period is: " + formatter.print(LoginView.loginStart) + " - " + formatter.print(LoginView.loginEnd));
+        System.out.println("");
 
         while (true) {
-            System.out.print("Enter the domain (Student or Admin): ");
-            domain = Helper.sc.nextLine();
 
-            if (domain.equals("Q")) {
-                break;
+            System.out.println("Enter user domain: ");
+            System.out.println("1. Admin");
+            System.out.println("2. Student");
+            System.out.print("Choice: ");
+            while (true) {
+                domain = Helper.readLine();
+                
+                if (domain.equals("Q")) {
+                    return;
+                } else if (domain.equals("1")) {
+                    System.out.print("Enter admin username: ");
+                    break;
+                } else if (domain.equals("2")) {
+                    System.out.print("Enter student username: ");
+                    break;
+                } else {
+                    System.out.print("Invalid input, enter choice again: ");
+                }
             }
-            
-            System.out.print("Enter username: ");
-            username = Helper.sc.nextLine();
+
+            username = Helper.readLine();
             
             System.out.print("Enter password: ");
             password = Helper.getPasswordInput();
@@ -76,7 +90,7 @@ public final class LoginView extends View {
             if (Database.USERS.containsKey(username)) {
                 User result = Database.USERS.get(username);
                 if (result.checkPassword(password)) {
-                    if (domain.equals("Student") && result.getAccessLevel() == AccessLevel.STUDENT) {
+                    if (domain.equals("2") && result.getAccessLevel() == AccessLevel.STUDENT) {
                         if (isValidLoginDate()) {
                             try {
                                 Database.CURRENT_USER = (Student) result;
@@ -89,7 +103,7 @@ public final class LoginView extends View {
                         } else{
                             System.out.println("Login at an invalid timeframe! Please log in later.");
                         }
-                    } else if (domain.equals("Admin") && result.getAccessLevel() == AccessLevel.ADMIN) {
+                    } else if (domain.equals("1") && result.getAccessLevel() == AccessLevel.ADMIN) {
                         try{
                             Database.CURRENT_USER = (Admin) result;
                             Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();

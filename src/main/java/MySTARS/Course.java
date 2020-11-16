@@ -2,6 +2,10 @@ package MySTARS;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormat;
+
 import java.io.*;
 
 /**
@@ -235,19 +239,33 @@ public final class Course implements Serializable {
 
         for(int i = 0; i < numIndices; i++) {
             System.out.print("Enter index number to add: ");
-            courseIndex = Helper.sc.nextLine();
+            courseIndex = Helper.readLine();
 
-            System.out.print("Enter number of vacancies: ");
-            vacancies = Helper.sc.nextInt();
-            Helper.sc.nextLine();           
+            while (true) {
+                try {
+                    System.out.print("Enter number of vacancies: ");
+                    vacancies = Integer.parseInt(Helper.readLine());
+                    break;
+                } catch (Exception e) {
+                    System.out.println("Please enter a number");
+                }
+            }
 
             if (!this.containsIndex(courseIndex)) {  
                 ArrayList<Lesson> lessons = new ArrayList<Lesson>();
                 do {
                     System.out.println("Setup for index no. " + courseIndex);
-                    System.out.print("Enter number of lessons: ");
-                    numLessons = Helper.sc.nextInt();
-                    Helper.sc.nextLine();
+
+                    while (true) {
+                        try {
+                            System.out.print("Enter number of lessons: ");
+                            numLessons = Integer.parseInt(Helper.readLine());
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("Please enter a number");
+                        }
+                    }
+                    
                     if (numLessons <= 0 || numLessons >= 5) {
                         System.out.println("Number of lessons for a particular index should be between 0 and 5");
                     }
@@ -264,21 +282,53 @@ public final class Course implements Serializable {
                     System.out.println("Enter details for lesson " + (j+1));
                     ClassType classType = Lesson.chooseClassType();
 
-                    //FIXME error checking!!!
-                    System.out.print("Enter day of week for lesson (1: Monday, 2: Tuesday, etc.): ");
-                    dayOfWeek = DayOfWeek.getDayOfWeek(Helper.sc.nextInt());
-                    Helper.sc.nextLine();
+                    while (true) {
+                        try {
+                            System.out.print("Enter day of week for lesson (1: Monday, 2: Tuesday, etc.): ");
+                            int num = Integer.parseInt(Helper.readLine());
+                            if (num < 1 || num > 7) {
+                                throw new Exception();
+                            }
+                            dayOfWeek = DayOfWeek.getDayOfWeek(num);
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("Please enter a valid number");
+                        }
+                    }
 
-                    System.out.print("Enter the class start time in 24h format (eg. 1430): ");
-                    startTime = Helper.sc.nextInt();
-                    Helper.sc.nextLine();
+                    while (true) {
+                        try {
+                            System.out.print("Enter the class start time in 24h format (eg. 1430): ");
+                            String time = Helper.readLine();
+                            if (LocalTime.parse(time, DateTimeFormat.forPattern("HHmm")) != null) {
+                                startTime = Integer.parseInt(time);
+                                break;
+                            } else {
+                                throw new Exception();
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Please enter a valid time");
+                        }
+                    }
 
-                    System.out.print("Enter the class end time in 24h format (eg. 1530): ");
-                    endTime = Helper.sc.nextInt();
-                    Helper.sc.nextLine();
+                    while (true) {
+                        try {
+                            System.out.print("Enter the class end time in 24h format (eg. 1530): ");
+                            endTime = Integer.parseInt(Helper.readLine());
+                            String time = Helper.readLine();
+                            if (LocalTime.parse(time, DateTimeFormat.forPattern("HHmm")) != null) {
+                                endTime = Integer.parseInt(time);
+                                break;
+                            } else {
+                                throw new Exception();
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Please enter a valid number");
+                        }
+                    }
 
                     System.out.print("Enter lesson location: ");
-                    location = Helper.sc.nextLine();
+                    location = Helper.readLine();
 
                     Lesson lesson = new Lesson(classType, dayOfWeek, startTime, endTime, location);
                     lessons.add(lesson);

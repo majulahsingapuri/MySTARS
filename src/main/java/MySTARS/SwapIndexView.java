@@ -15,7 +15,7 @@ public class SwapIndexView extends View {
         while (true) {
             CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
             System.out.print("Enter the course code to swap with a friend or Q to Quit: ");
-            String courseCode = Helper.sc.nextLine();
+            String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
             }
@@ -55,7 +55,7 @@ public class SwapIndexView extends View {
 
         while (true) {
             System.out.print("Enter Second User's username or Q to quit: ");
-            String username = Helper.sc.nextLine();
+            String username = Helper.readLine();
             if (username.equals("Q")) {
                 return null;
             }

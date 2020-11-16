@@ -30,11 +30,10 @@ public class UpdateCourseView extends View {
             
             try{
                 choice = Helper.sc.nextInt();
-                Helper.sc.nextLine();
-            }
-            catch (Exception e){
+                Helper.readLine();
+            } catch (Exception e) {
                 choice = -1;
-                Helper.sc.nextLine();
+                Helper.readLine();
             }
 
             switch (choice) {
@@ -81,7 +80,7 @@ public class UpdateCourseView extends View {
             CourseManager.printCourseList(CourseStatus.NONE);
 
             System.out.print("Enter the Course Code or Q to Quit: ");
-            String courseCode = Helper.sc.nextLine();
+            String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
             }
@@ -89,11 +88,11 @@ public class UpdateCourseView extends View {
             if (Database.COURSES.containsKey(courseCode)) {
 
                 System.out.print("Enter new Course Code: ");
-                String newCourseCode = Helper.sc.nextLine();
+                String newCourseCode = Helper.readLine();
 
                 System.out.print("The course code will be changed from " + courseCode + " to " + newCourseCode + "\n\nConfirm? y/n:");
-                String confirm = Helper.sc.nextLine();
-                if (confirm.equals("y")) {
+                String confirm = Helper.readLine();
+                if (confirm.equals("Y")) {
 
                     Course course = Database.COURSES.remove(courseCode);
                     course.setCourseCode(newCourseCode);
@@ -133,7 +132,7 @@ public class UpdateCourseView extends View {
             CourseManager.printCourseList(CourseStatus.NONE);
 
             System.out.print("Enter the Course Code or Q to Quit: ");
-            String courseCode = Helper.sc.nextLine();
+            String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
             }
@@ -142,11 +141,11 @@ public class UpdateCourseView extends View {
             if (course != null) {
                 
                 System.out.print("Enter new Course Description: ");
-                String newDescription = Helper.sc.nextLine();
+                String newDescription = Helper.readLine();
 
                 System.out.print("This Description will be added to Course " + course.getCourseCode() + ":\n" + newDescription + "\n\nConfirm? y/n:");
-                String confirm = Helper.sc.nextLine();
-                if (confirm.equals("y")) {
+                String confirm = Helper.readLine();
+                if (confirm.equals("Y")) {
                 
                     course.setDescription(newDescription);
 
@@ -181,7 +180,7 @@ public class UpdateCourseView extends View {
             CourseManager.printCourseList(CourseStatus.NONE);
 
             System.out.print("Enter the Course Code or Q to Quit: ");
-            String courseCode = Helper.sc.nextLine();
+            String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
             }
@@ -194,7 +193,7 @@ public class UpdateCourseView extends View {
                     CourseManager.printIndexList(course, true);
 
                     System.out.print("Enter the Course Index or Q to Quit: ");
-                    String index = Helper.sc.nextLine();
+                    String index = Helper.readLine();
                     if (index.equals("Q")) {
                         break;
                     }
@@ -202,26 +201,28 @@ public class UpdateCourseView extends View {
                     CourseIndex courseIndex = course.getIndex(index);
                     if (courseIndex != null) {
                         
-                        System.out.print("Enter new number of Vacancies: ");
-                        int newVacancies = Helper.sc.nextInt();
-                        Helper.sc.nextLine();
+                        try {
+                            System.out.print("Enter new number of Vacancies: ");
+                            int newVacancies = Integer.parseInt(Helper.readLine());
 
-                        if (newVacancies > courseIndex.getStudents().length) {
-                            
-                            System.out.print("The Vacancies for the Index " + courseIndex.getCourseIndex() + " will be changed from " + courseIndex.getVacancies() + " to " + newVacancies + "\n\nConfirm? y/n:");
-                            String confirm = Helper.sc.nextLine();
-                            if (confirm.equals("y")) {
-                            
-                                courseIndex.setVacancies(newVacancies);
-                                System.out.println("Course vacancies changed Successfully!");
-                                Helper.pause();
+                            if (newVacancies > courseIndex.getStudents().length) {
+                                
+                                System.out.print("The Vacancies for the Index " + courseIndex.getCourseIndex() + " will be changed from " + courseIndex.getVacancies() + " to " + newVacancies + "\n\nConfirm? y/n:");
+                                String confirm = Helper.readLine();
+                                if (confirm.equals("Y")) {
+                                
+                                    courseIndex.setVacancies(newVacancies);
+                                    System.out.println("Course Description changed Successfully!");
+                                } else {
+                                    System.out.println("Aborting");
+                                    Helper.pause();
+                                }
                             } else {
-                                System.out.println("Aborting");
+                                System.out.println("New Vacancies are lesser than Currently Enrolled Students!");
                                 Helper.pause();
                             }
-                        } else {
-                            System.out.println("New Vacancies are lesser than Currently Enrolled Students!");
-                            Helper.pause();
+                        } catch (Exception e) {
+                            System.out.println(e.getLocalizedMessage());
                         }
                     } else {
                         System.out.println("Course Index does not yet exist!");
@@ -247,7 +248,7 @@ public class UpdateCourseView extends View {
             CourseManager.printCourseList(CourseStatus.NONE);
 
             System.out.print("Enter the Course Code or Q to Quit: ");
-            String courseCode = Helper.sc.nextLine();
+            String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
             }
@@ -257,9 +258,19 @@ public class UpdateCourseView extends View {
                 
                 CourseManager.printIndexList(course, false);
 
-                System.out.print("Enter the number of indices to add: ");
-                int numIndices = Helper.sc.nextInt();
-                Helper.sc.nextLine();
+                int numIndices;                
+                while (true){
+                    try {
+                        System.out.print("Enter the number of indices (1 - 10 max) to add: ");
+                        numIndices = Integer.parseInt(Helper.readLine());
+                        if (numIndices < 0 || numIndices > 10 - course.getIndices().length) {
+                            throw new Exception();
+                        }
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("Please enter a valid number");
+                    }
+                }
 
                 //TODO: Confirm it works properly after error checking on Course Side.
                 course.addIndices(numIndices);
@@ -285,7 +296,7 @@ public class UpdateCourseView extends View {
             CourseManager.printCourseList(CourseStatus.NONE);
 
             System.out.print("Enter the Course Code or Q to Quit: ");
-            String courseCode = Helper.sc.nextLine();
+            String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
             }
@@ -298,7 +309,7 @@ public class UpdateCourseView extends View {
                     CourseManager.printIndexList(course, true);
 
                     System.out.print("Enter the Index whose location you want to change or Q to Quit: ");
-                    String index = Helper.sc.nextLine();
+                    String index = Helper.readLine();
                     if (index.equals("Q")) {
                         break;
                     }
@@ -311,7 +322,7 @@ public class UpdateCourseView extends View {
                             CourseManager.printLesson(courseIndex);
 
                             System.out.print("Enter the Lesson ID whose location you want to change or Q to Quit: ");
-                            String id = Helper.sc.nextLine();
+                            String id = Helper.readLine();
                             if (id.equals("Q")) {
                                 break;
                             }
@@ -324,11 +335,11 @@ public class UpdateCourseView extends View {
                                 if (lesson != null) {
 
                                     System.out.print("Enter the new lesson location: ");
-                                        String newLocation = Helper.sc.nextLine();
+                                        String newLocation = Helper.readLine();
 
                                         System.out.print("The location for the lesson will change from " + lesson.getLocation() + " to " + newLocation + "\n\nConfirm? y/n:");
-                                        String confirm = Helper.sc.nextLine();
-                                        if (confirm.equals("y")) {
+                                        String confirm = Helper.readLine();
+                                        if (confirm.equals("Y")) {
                                         
                                             lesson.setLocation(newLocation);
 

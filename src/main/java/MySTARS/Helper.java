@@ -121,10 +121,15 @@ public final class Helper {
 	 */
 	protected static boolean checkCourseCodeFormat(String courseCode) {
 
-		if(courseCode.matches("\\p{Alpha}\\p{Alpha}\\d{4}") || courseCode.equals("Q")) {
+		if(courseCode.matches("([A-Z]){2}\\d{4}") || courseCode.equals("Q")) {
 			return true;
 		} 
 		System.out.println("Invalid input. Course code must be two letters followed by four digits");
 		return false;
+	}
+
+	public static String readLine() {
+
+		return sc.nextLine().toUpperCase();
 	}
 }
