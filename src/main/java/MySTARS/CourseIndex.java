@@ -80,43 +80,6 @@ public final class CourseIndex implements Serializable {
         addLessons(lessons);
     }
 
-
-    /**
-     * Prompts user to choose a class type for the lesson.
-     * Choose from 5 options: Lecture, lab, tutorial, seminar, online. 
-     * @return ClassType enum corresponding to user's choice.
-     */
-    //FIXME delete? already implemented in Lesson class
-    public ClassType chooseClassType() {
-        
-        System.out.println("1. Lecture");
-        System.out.println("2. Lab");
-        System.out.println("3. Tutorial");
-        System.out.println("4. Seminar");
-        System.out.println("5. Online");
-        System.out.println("Enter the lesson type for this lesson:");
-
-        int classTypeChoice; 
-
-        do{
-            classTypeChoice = Helper.sc.nextInt();
-            switch (classTypeChoice) {
-                case 1: 
-                    return ClassType.LECTURE;
-                case 2:
-                    return ClassType.LAB;
-                case 3:
-                    return ClassType.TUTORIAL;
-                case 4:
-                    return ClassType.SEMINAR;
-                case 5:
-                    return ClassType.ONLINE;
-                default:
-                    System.out.println("Error, invalid input");
-            }
-        } while(true);
-    }
-
     /**
      * Set the number of vacancies
      * @param vacancies number of vacancies
