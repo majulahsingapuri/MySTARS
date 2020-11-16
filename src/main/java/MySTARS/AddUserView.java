@@ -24,11 +24,15 @@ public final class AddUserView extends View {
             if (!Database.USERS.containsKey(username)) {
                 String accessLevel;
                 do {
-                    System.out.print("Enter account type (Admin/Student): ");
                     accessLevel = Helper.sc.nextLine();
-                } while (!accessLevel.equals("Admin") && !accessLevel.equals("Student"));
+                    if(!accessLevel.equals("1") && !accessLevel.equals("2")) {
+                        System.out.println("Invalid input");
+                        System.out.print("Enter choice: ");
+                        accessLevel = Helper.sc.nextLine();
+                    }
+                } while (!accessLevel.equals("1") && !accessLevel.equals("2"));
 
-                if (accessLevel.equals("Admin")) {
+                if (accessLevel.equals("1")) { // if Admin
                     String password1, password2;
                     while (true) {
                         System.out.print("Enter the password: ");
@@ -43,14 +47,26 @@ public final class AddUserView extends View {
                     }
                     Admin admin = new Admin(username, password1);
                     Database.USERS.put(username, admin);
-                } else {
+
+                } else { // if student
 
                     System.out.print("Enter the Student's First Name: ");
                     String firstName = Helper.sc.nextLine();
+
                     System.out.print("Enter the Student's Last Name: ");
                     String lastName = Helper.sc.nextLine();
-                    System.out.print("Enter the Student's Gender (M/F/NB/PNTS): ");
-                    Gender gender = Gender.getGender(Helper.sc.nextLine());
+
+                    String genderChoice;
+                    Gender gender;
+                    do{
+                        System.out.print("Enter the Student's Gender (M/F/NB/PNTS): ");
+                        genderChoice = Helper.sc.nextLine();
+                        gender = Gender.getGender(genderChoice);
+                        if(!genderChoice.equals("M") && !genderChoice.equals("F") && !genderChoice.equals("NB") && !genderChoice.equals("PNTS")) {
+                            System.out.println("    Invalid input");
+                        }
+                    } while(!genderChoice.equals("M") && !genderChoice.equals("F") && !genderChoice.equals("NB") && !genderChoice.equals("PNTS"));
+
                     System.out.print("Enter the Student's Nationality: ");
                     String nationality = Helper.sc.nextLine();
                     
