@@ -12,7 +12,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-
 /**
  * A Helper Class with all properties and methods that are generally needed across the application.
  * @author Bhargav, Jia Hui
@@ -113,5 +112,14 @@ public final class Helper {
 			password = Helper.sc.nextLine();
 		}
 		return password;
+	}
+
+	protected static boolean checkCourseCodeFormat(String courseCode) {
+
+		if(courseCode.matches("\\p{Alpha}\\p{Alpha}\\d{4}") || courseCode.equals("Q")) {
+			return true;
+		} 
+		System.out.println("Invalid input. Course code must be two letters followed by four digits");
+		return false;
 	}
 }

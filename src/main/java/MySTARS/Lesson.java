@@ -1,6 +1,7 @@
 package MySTARS;
 
 import java.io.Serializable;
+import java.util.Random;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -49,6 +50,11 @@ public final class Lesson implements Serializable {
     private String remarks;
 
     /**
+     * Lesson ID, used to identify and update lessons.
+     */
+    private final Integer lessonID;
+
+    /**
      * For java serializable
      */
     private static final long serialVersionUID = 12L;
@@ -65,6 +71,7 @@ public final class Lesson implements Serializable {
      */
     protected Lesson(ClassType classType, DayOfWeek dayOfWeek, int startTime, int endTime, String location) {
 
+        this.lessonID = Integer.valueOf(10000 + new Random().nextInt(90000));
         this.classType = classType;
         this.startTime = new DateTime(2020, 1, dayOfWeek.value, startTime/100, startTime%100);
         this.endTime = new DateTime(2020, 1, dayOfWeek.value, endTime/100, endTime%100);
@@ -190,5 +197,14 @@ public final class Lesson implements Serializable {
     protected String getRemarks() {
 
         return this.remarks;
+    }
+
+    /**
+     * Returns Lesson ID for current lesson.
+     * @return lesson ID.
+     */
+    protected Integer getLessonID() {
+
+        return this.lessonID;
     }
 }
