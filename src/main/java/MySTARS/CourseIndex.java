@@ -30,27 +30,22 @@ public final class CourseIndex implements Serializable {
      */
     private String indexNumber;
 
-    // /**
-    //  * ArrayList of lessons associated with this index (update: this has been removed and changed to a hashmap)
-    //  */
-    //  private ArrayList<Lesson> lessons = new ArrayList<>();
-
     /**
-     * Hashmap of lessons, to be accessed using {@link lessonID}
+     * Hashmap of lessons, to be accessed using {@link Lesson}ID
      */
-    private HashMap<Integer, Lesson> lessons = new HashMap<>();
+    private HashMap<Integer, Lesson> lessons = new HashMap<Integer, Lesson>();
 
     /**
      * The current waitlist for the index.
      * Given as a {@code LinkedList<String>} of matriculation numbers.
      */
-    private LinkedList<String> waitlist = new LinkedList<>();
+    private LinkedList<String> waitlist = new LinkedList<String>();
 
     /**
      * Hashmap of currently enrolled students.
      * Matriculation numbers used as keys to access the respective Student objects
      */
-    private HashMap<String, Student> enrolledStudents = new HashMap<>();
+    private HashMap<String, Student> enrolledStudents = new HashMap<String, Student>();
 
     /**
      * For java serializable
@@ -77,12 +72,12 @@ public final class CourseIndex implements Serializable {
      * @param indexNumber index number of the index
      * @param lessons ArrayList of lessons to include in the index
      */
-    protected CourseIndex(int vacancies, String courseCode, String indexNumber, HashMap<Integer, Lesson> lessons) {
+    protected CourseIndex(int vacancies, String courseCode, String indexNumber, ArrayList<Lesson> lessons) {
 
         this.vacancies = vacancies; 
         this.courseCode = courseCode;
         this.indexNumber = indexNumber;
-        this.lessons = lessons;
+        addLessons(lessons);
     }
 
 
@@ -174,11 +169,9 @@ public final class CourseIndex implements Serializable {
      */
     protected void addLessons(ArrayList<Lesson> lessons) {
 
-        HashMap<Integer, Lesson> newLessons = new HashMap<>();
-        for(int i = 0; i < lessons.size(); i++) {
-            newLessons.put(lessons.get(i).getLessonID(), lessons.get(i));
+        for (Lesson lesson : lessons) {
+            this.lessons.put(lesson.getLessonID(), lesson);
         }
-        this.lessons.putAll(newLessons);
     }
 
     /**
@@ -188,7 +181,7 @@ public final class CourseIndex implements Serializable {
     protected ArrayList<Lesson> getLessons() {
 
         Collection<Lesson> values = this.lessons.values();
-        return new ArrayList<>(values);
+        return new ArrayList<Lesson>(values);
     }
 
     /**
@@ -323,6 +316,6 @@ public final class CourseIndex implements Serializable {
      */
     protected CourseIndex simpleCopy() {
 
-        return new CourseIndex(0, this.courseCode, this.indexNumber, this.lessons);
+        return new CourseIndex(0, this.courseCode, this.indexNumber, this.getLessons());
     }
 }

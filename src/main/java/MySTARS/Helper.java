@@ -11,8 +11,6 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.swing.event.SwingPropertyChangeSupport;
-
 
 /**
  * A Helper Class with all properties and methods that are generally needed across the application.

@@ -242,7 +242,7 @@ public final class Course implements Serializable {
             Helper.sc.nextLine();           
 
             if (!this.containsIndex(courseIndex)) {  
-                ArrayList<Lesson> lessons = new ArrayList<>();
+                ArrayList<Lesson> lessons = new ArrayList<Lesson>();
                 do {
                     System.out.println("Setup for index no. " + courseIndex);
                     System.out.print("Enter number of lessons: ");

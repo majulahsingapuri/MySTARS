@@ -26,7 +26,7 @@ public final class AdminMainView extends View {
             switch (choice) { 
 
                 case 1:
-                    addCourse();
+                    
                     break;
                 case 2:
                     updateCourse();
@@ -48,54 +48,6 @@ public final class AdminMainView extends View {
                     System.out.println("Please enter valid option.");
             }
         } while (true);
-    }
-
-
-    protected void addCourse() {
-
-        System.out.println("MySTARS adding course...");
-
-        while (true) {
-
-            // prompt admin to enter course code
-            String courseCode;
-            do {
-                System.out.print("Enter the course code or Q to quit: ");
-                courseCode = Helper.sc.nextLine().toUpperCase();
-            } while (!Helper.checkCourseCodeFormat(courseCode));
-            if (courseCode.equals("Q") || courseCode.equals("q")) {
-                break;
-            }
-
-            // only add course if it doesn't exist 
-            if (!Database.COURSES.containsKey(courseCode)) {
-                System.out.print("Enter course name: ");
-                String courseName = Helper.sc.nextLine();
-
-                // prompt to enter number of AUs
-                int au;
-                do {
-                    System.out.print("Enter no. of AUs: ");
-                    au = Helper.sc.nextInt();
-                    Helper.sc.nextLine();
-                } while (au < 1 || au > 5);
-                AU acadUnits = AU.getAU(au);
-
-                System.out.print("Enter course description: ");
-                String description = Helper.sc.nextLine();
-
-                Course course = new Course(courseCode, courseName, acadUnits, description);
-                System.out.print("Enter the number of indices in this course: ");
-                int numIndices = Helper.sc.nextInt();
-                Helper.sc.nextLine();
-                course.addIndices(numIndices);
-                
-                Database.COURSES.put(courseCode, course);
-                Database.serialise(FileType.COURSES);
-            } else {
-                System.out.println("Course already exists!");
-            }
-        }
     }
 
     protected void updateCourse() {
