@@ -203,7 +203,7 @@ public final class Lesson implements Serializable {
      * Returns Lesson ID for current lesson.
      * @return lesson ID.
      */
-    protected int getLessonID() {
+    protected Integer getLessonID() {
 
         return this.lessonID;
     }
