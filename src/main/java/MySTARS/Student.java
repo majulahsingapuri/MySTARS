@@ -38,7 +38,7 @@ public final class Student extends User implements Comparable<Student> {
     private HashMap<String, Course> courses = new HashMap<String, Course>();
 
     /**
-     * The student's gender.
+     * The student's {@link Gender}.
      */
     private Gender gender = Gender.PREFER_NOT_TO_SAY;
 
@@ -242,7 +242,7 @@ public final class Student extends User implements Comparable<Student> {
     }
 
     /**
-     * Adds the specified number of AUs to the student's registered AUs.
+     * Adds the specified number of {@link AU}s to the student's registered AUs.
      * @param acadUnits the number of AUs to be added
      */
     private void addAU(AU acadUnits) {
@@ -252,7 +252,7 @@ public final class Student extends User implements Comparable<Student> {
     }
 
     /**
-     * Removes the specified number of AUs from the student's registered AUs.
+     * Removes the specified number of {@link AU}s from the student's registered AUs.
      * @param acadUnits the number of AUs to be removed
      */
     private void removeAU(AU acadUnits) {
@@ -266,12 +266,12 @@ public final class Student extends User implements Comparable<Student> {
     }
 
     /**
-     * Adds a course to the student's timetable. If there is no timetbale clash, will try to register the course.
+     * Adds a course to the {@link Student}'s timetable. If there is no timetable clash, will try to register the course.
      * If the course has no vacancies, the student will be put on the waitlist.
-     * @param courseCode the course code of the desired course to be added, the student cannot be registered in the course nor on its waitlist
-     * @param courseIndex the couse index of the desired course to be added
-     * @return the course status that the course has been successfully added as
-     * @exception Exception if the courseCode does not exist or there is a timetable clash
+     * @param courseCode the {@link Course} code of the desired course to be added, the student cannot be registered in the course nor on its waitlist.
+     * @param courseIndex the couse index of the desired course to be added.
+     * @return the course status that the course has been successfully added as.
+     * @exception Exception if the courseCode does not exist or there is a timetable clash.
     */
     protected CourseStatus addCourse(String courseCode, String courseIndex) throws Exception {
         
