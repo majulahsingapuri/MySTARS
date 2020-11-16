@@ -15,7 +15,7 @@ public class ChangeIndexView extends View {
         while (true) {
             CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
             System.out.print("Enter the course code or Q to quit: ");
-            String courseCode = Helper.sc.nextLine();
+            String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
             }
@@ -26,7 +26,7 @@ public class ChangeIndexView extends View {
                 String curIndex = currentUser.getCourse(courseCode).getIndicesString()[0];
                 System.out.println("Your current index is: " + curIndex);
                 System.out.print("Enter the new index that you wish to change to: ");
-                String newIndex = Helper.sc.nextLine();
+                String newIndex = Helper.readLine();
                 if (newIndex.equals(curIndex)){
                     System.out.println("You are already in this index!");
                     Helper.pause();

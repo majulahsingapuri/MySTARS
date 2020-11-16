@@ -246,10 +246,10 @@ public final class CourseIndex implements Serializable {
             String answer;
             do {
                 System.out.print("Error: no more vacancies! do you want to be added to waitlist? y/n: ");
-                answer = Helper.sc.nextLine();
-            } while (answer.equals("y") || answer.equals("n"));
+                answer = Helper.readLine();
+            } while (answer.equals("Y") || answer.equals("N"));
 
-            if (answer.equals("y")) {
+            if (answer.equals("Y")) {
                 addToWaitlist(username);
             }
         }

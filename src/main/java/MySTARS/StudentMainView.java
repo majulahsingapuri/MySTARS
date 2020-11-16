@@ -34,11 +34,10 @@ public final class StudentMainView extends View {
 
             try{
                 choice = Helper.sc.nextInt();
-                Helper.sc.nextLine();
-            }
-            catch (Exception e){
+                Helper.readLine();
+            } catch (Exception e) {
                 choice = -1;
-                Helper.sc.nextLine();
+                Helper.readLine();
             }
 
             switch (choice) {
@@ -89,7 +88,7 @@ public final class StudentMainView extends View {
         while (true) {
             CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
             System.out.print("Enter the course code to drop or Q to quit: ");
-            String courseCode = Helper.sc.nextLine();
+            String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
             }

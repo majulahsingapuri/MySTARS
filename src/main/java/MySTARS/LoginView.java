@@ -61,34 +61,28 @@ public final class LoginView extends View {
         System.out.println("");
 
         while (true) {
-            // System.out.print("Enter the domain (Student or Admin): ");
-            // domain = Helper.sc.nextLine();
 
             System.out.println("Enter user domain: ");
             System.out.println("1. Admin");
             System.out.println("2. Student");
             System.out.print("Choice: ");
-            do {
-                domain = Helper.sc.nextLine();
+            while (true) {
+                domain = Helper.readLine();
+                
                 if (domain.equals("Q")) {
+                    return;
+                } else if (domain.equals("1")) {
+                    System.out.print("Enter admin username: ");
                     break;
-                }
-                else if(!domain.equals("1") && !domain.equals("2")) {
+                } else if (domain.equals("2")) {
+                    System.out.print("Enter student username: ");
+                    break;
+                } else {
                     System.out.print("Invalid input, enter choice again: ");
                 }
-            } while (!domain.equals("1") && !domain.equals("2"));
-
-            if (domain.equals("Q")) {
-                break;
-            }
-            
-            if (domain.equals("1")) {
-                System.out.print("Enter admin username: ");
-            } else {
-                System.out.print("Enter student username: ");
             }
 
-            username = Helper.sc.nextLine();
+            username = Helper.readLine();
             
             System.out.print("Enter password: ");
             password = Helper.getPasswordInput();
