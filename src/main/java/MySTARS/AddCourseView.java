@@ -116,6 +116,7 @@ public final class AddCourseView extends View {
                             Database.serialise(FileType.USERS);
                             Database.serialise(FileType.COURSES);
                             System.out.println(courseCode + " has been added successfully.");
+                            Helper.pause();
                             break;
                         } catch (Exception e) {
                             System.out.println(e.getLocalizedMessage());
@@ -131,7 +132,5 @@ public final class AddCourseView extends View {
                 Helper.pause();
             }
         }
-        
-        System.out.println("Going back to main menu...");
     }
 }

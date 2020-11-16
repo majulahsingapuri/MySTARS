@@ -65,6 +65,7 @@ public final class StudentMainView extends View {
                 case 6:
                     PrintTimeTableView timetableView = new PrintTimeTableView();
                     timetableView.print();
+                    Helper.pause();
                     break;
                 case 7:
                     clearScreen("Student Main > View Courses on Waitlist");
@@ -76,8 +77,8 @@ public final class StudentMainView extends View {
                     return;
                 default:
                     System.out.println("Please input correct choice number.");
+                    Helper.pause();
             }
-            Helper.pause();
         } while (true);
     }
 
@@ -99,14 +100,13 @@ public final class StudentMainView extends View {
                 Database.serialise(FileType.COURSES);
                 Database.serialise(FileType.USERS);
                 System.out.println(courseCode + " has been dropped successfully.");
+                Helper.pause();
                 break;
             } catch (Exception e) {
                 System.out.println(e.getLocalizedMessage());
                 Helper.pause();
             }
         }
-
-        System.out.println("Going back to main menu...");
     }
 
     /**
@@ -115,7 +115,7 @@ public final class StudentMainView extends View {
     protected void changePassword() {
         
         Database.CURRENT_USER.changePassword();
-        System.out.println("Going back to main menu...");
+        Helper.pause();
     } 
 
     /**
@@ -124,5 +124,6 @@ public final class StudentMainView extends View {
     protected void viewWaitlistedCourses() {
         Student currentUser = (Student) Database.CURRENT_USER;
         CourseManager.printCourseList(CourseStatus.WAITLIST, currentUser);
+        Helper.pause();
     }
 }
