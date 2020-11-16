@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Collection;
 
 /**
  * Represents one index of a particular course/module
@@ -171,18 +172,23 @@ public final class CourseIndex implements Serializable {
      * All lessons are added into the HashMap {@link lessons}.
      * @param lessons ArrayList containing lesson objects.
      */
-    protected void addLessons(HashMap<Integer, Lesson> lessons) {
+    protected void addLessons(ArrayList<Lesson> lessons) {
 
-        this.lessons.putAll(lessons);
+        HashMap<Integer, Lesson> newLessons = new HashMap<>();
+        for(int i = 0; i < lessons.size(); i++) {
+            newLessons.put(lessons.get(i).getLessonID(), lessons.get(i));
+        }
+        this.lessons.putAll(newLessons);
     }
 
     /**
      * Return all the lesson slots in the index.
-     * @return HashMap of all lesson slots in the index.
+     * @return ArrayList of all lesson slots in the index.
      */
-    protected HashMap<Integer, Lesson> getLessons() {
-        
-        return this.lessons;
+    protected ArrayList<Lesson> getLessons() {
+
+        Collection<Lesson> values = this.lessons.values();
+        return new ArrayList<>(values);
     }
 
     /**
