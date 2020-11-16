@@ -103,7 +103,6 @@ public final class AdminMainView extends View {
     protected void changePassword() {
 
         Database.CURRENT_USER.changePassword();
-        System.out.println("Going back to main menu...");
         Helper.pause();
     }
 }
