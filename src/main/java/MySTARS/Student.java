@@ -183,6 +183,25 @@ public final class Student extends User implements Comparable<Student> {
     }
 
     /**
+     * Removes a {@link Course} from the courses Hashmap.
+     * @param courseCode The code of the course to be removed
+     * @return a Course object that is removed from the Hashmap.
+     */
+    protected Course removeCourse(String courseCode) {
+
+        return this.courses.remove(courseCode);
+    }
+
+    /**
+     * Directly adds a {@link Course} to the Hashmap.
+     * @param course
+     */
+    protected void setCourse(Course course) {
+
+        this.courses.put(course.getCourseCode(), course);
+    }
+
+    /**
      * Returns a list of the student's course indices, based on the desired course status.
      * Eg. If courseStatus = CourseStatus.REGISTERED, then only registered course indices will be returned.
      * @param courseStatus defines the desried course status used to filter courses

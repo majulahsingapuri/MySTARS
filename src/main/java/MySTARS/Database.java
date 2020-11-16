@@ -150,6 +150,10 @@ public final class Database {
 
         DateTime startTime = (DateTime) Database.SETTINGS.get("loginStart");
         DateTime endTime = (DateTime) Database.SETTINGS.get("loginEnd");
-        LoginView.setLoginTime(startTime, endTime);
+        try {
+            LoginView.setLoginTime(startTime, endTime);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
     }
 }

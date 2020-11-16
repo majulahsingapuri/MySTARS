@@ -45,4 +45,15 @@ public enum ClassType {
     private ClassType(String label) {
         this.label = label;
     }
+
+    protected static ClassType getClassType(String type) {
+
+        for (ClassType classType : ClassType.values()) {
+            if (classType.label == type) {
+                return classType;
+            }
+        }
+
+        return ClassType.TUTORIAL;
+    }
 }

@@ -1,15 +1,22 @@
 package MySTARS;
 
+/**
+ * The main menu for the Student side of the Application. Extends View.
+ */
 public final class StudentMainView extends View {
+
+    /**
+     * Integer that keeps track of the choice that the User made.
+     */
     private int choice;
 
     /**
-     * Constructor method
+     * Constructor methodf for object.
      */
     public StudentMainView() {}
 
     /**
-     * Prints switch cases for the student to select from
+     * Prints menu options for the User to select from. Required method from View.
      */
     protected void print() {
 
@@ -74,10 +81,11 @@ public final class StudentMainView extends View {
             }
         } while (true);
     }
+
     /**
-     * For swopping index with peer, checks if peer's matriculation number is valid
-     * @param courseCode course code, e.g CZ2002
-     * @return Student object for the second user
+     * For swapping index with a peer, this method checks if peer is a valid user that is registered for the relevant course.
+     * @param courseCode {@link CourseCode}, e.g CZ2002
+     * @return {@link Student} object for the second user
      */
     private Student verifySecondUser(String courseCode) {
 
@@ -118,9 +126,8 @@ public final class StudentMainView extends View {
     }
 
     /**
-     * Adds the student into the selected course
+     * Method to add the {@link User} to a {@link Course} of the User's choice.
      */
-
     protected void addCourse() {
         Student currentUser = (Student) Database.CURRENT_USER;
         while (true) {
@@ -189,9 +196,8 @@ public final class StudentMainView extends View {
     }
 
     /**
-     * Removes the student from the selected course
+     * Removes the {@link User} from the selected {@link Course}.
      */
-
     protected void dropCourse() {
 
         while (true) {
@@ -218,9 +224,8 @@ public final class StudentMainView extends View {
     }
 
     /**
-     * Changes the index of the course selected by student 
+     * Changes the index of the {@link Course} selected by {@link User}. 
      */
-
     protected void changeIndex() {
 
         while (true) {
@@ -263,9 +268,8 @@ public final class StudentMainView extends View {
     }
 
     /**
-     * After verifying peer, swops index of selected course with peer's index
+     * Verifies a second {@link User} from {@link Database.USERS} and swaps the indices for both the Users.
      */
-
     protected void swapIndex() {
 
         while (true) {
@@ -304,15 +308,17 @@ public final class StudentMainView extends View {
     }
 
     /**
-     * Changes student's login password
+     * Changes the Password for the {@link Database.CURRENT_USER}.
      */
-
     protected void changePassword() {
         
         Database.CURRENT_USER.changePassword();
         System.out.println("Going back to main menu...");
     } 
 
+    /**
+     * Displays the {@link Course}s that are on {@link CourseStatus.WAITLIST}.
+     */
     protected void viewWaitlistedCourses() {
         Student currentUser = (Student) Database.CURRENT_USER;
         CourseManager.printCourseList(CourseStatus.WAITLIST, currentUser);

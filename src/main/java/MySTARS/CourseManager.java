@@ -87,13 +87,13 @@ public final class CourseManager {
     protected static void printLesson(CourseIndex index) {
 
         printLine();
-        System.out.println(String.format("Lesson Type ║ %-13.13s ║ Location", "Lesson Time"));
+        System.out.println(String.format("%-10s ║ Lesson Type ║ %-13.13s ║ Location", "Lesson ID.", "Lesson Time"));
         printLine();
 
         for (Lesson lesson : index.getLessons()) {
 
             String[] time = lesson.getTime().toString().split("[T:/]");
-            System.out.println(String.format("%11.11s ║ %2s:%2s - %2s:%2s ║ %-48.48s", lesson.getType().label, time[1], time[2], time[6], time[7], lesson.getLocation()));
+            System.out.println(String.format("%-10d ║ %11.11s ║ %2s:%2s - %2s:%2s ║ %-48.48s",lesson.getLessonID(), lesson.getType().label, time[1], time[2], time[6], time[7], lesson.getLocation()));
             printLine();
         }
     }
