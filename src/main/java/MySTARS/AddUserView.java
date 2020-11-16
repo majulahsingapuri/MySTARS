@@ -23,11 +23,15 @@ public final class AddUserView extends View {
             }
             if (!Database.USERS.containsKey(username)) {
                 String accessLevel;
+                System.out.println("Enter user domain: ");
+                System.out.println("    1. Admin");
+                System.out.println("    2. Student");
+                System.out.print("    Choice: ");
                 do {
                     accessLevel = Helper.sc.nextLine();
                     if(!accessLevel.equals("1") && !accessLevel.equals("2")) {
-                        System.out.println("Invalid input");
-                        System.out.print("Enter choice: ");
+                        System.out.println("    Invalid input");
+                        System.out.print("    Enter choice: ");
                         accessLevel = Helper.sc.nextLine();
                     }
                 } while (!accessLevel.equals("1") && !accessLevel.equals("2"));
