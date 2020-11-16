@@ -5,11 +5,12 @@ import org.joda.time.format.DateTimeFormatter;
 
 public final class AdminMainView extends View {
 
-    private int choice;
 
     public AdminMainView() {}
 
     protected void print() {
+        
+        int choice;
         clearScreen("AdminMainView");
         do {
             System.out.println("What would you like to do?");

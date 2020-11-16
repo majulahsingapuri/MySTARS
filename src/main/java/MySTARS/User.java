@@ -1,6 +1,7 @@
 package MySTARS;
 
 import java.io.Serializable;
+import java.util.Base64;
 
 /**
  * The superclass of all User classes in the application.
@@ -26,9 +27,9 @@ public class User implements Serializable {
     private AccessLevel accessLevel;
 
     /**
-     * The password of each user.
+     * The encrypted password of each user.
      */
-    private String password;
+    private byte[] password;
 
     /**
      * Initialiser for the User Class with a new username, password and {@link AccessLevel}.
@@ -38,7 +39,7 @@ public class User implements Serializable {
      */
     protected User(String username, String password, AccessLevel accessLevel) {
         this.username = username;
-        this.password = password;
+        this.password = encryptPassword(password);
         this.accessLevel = accessLevel;
     }
 
@@ -50,7 +51,7 @@ public class User implements Serializable {
     protected User(String username, AccessLevel accessLevel) {
         this.username = username;
         this.accessLevel = accessLevel;
-        this.password = "OODP1s7heB3st";
+        this.password = encryptPassword("OODP1s7heB3st");
     }
 
     /**
@@ -71,7 +72,7 @@ public class User implements Serializable {
                 System.out.print("Enter the new password again: ");
                 String newPassword2 = Helper.getPasswordInput();
                 if (newPassword1.equals(newPassword2)){
-                    this.password = newPassword1;
+                    this.password = encryptPassword(newPassword1);
                     Database.serialise(FileType.USERS);
                     System.out.println("Password updated successfully.");
                     return true;
@@ -88,12 +89,32 @@ public class User implements Serializable {
     }
 
     /**
+     * Encrypts the raw password string using the Base64 encoding scheme as specified in RFC 4648 and RFC 2045.
+     * @param rawString the raw password string
+     * @return the encoded bytes
+     */
+    private byte[] encryptPassword(String rawString){
+        byte[] encodedBytes = Base64.getEncoder().encode(rawString.getBytes());
+        return encodedBytes;
+    }
+
+    /**
+     * Decrypts the password stored as byte data, using the Base 64 encoding scheme as specified in RFC 4648 and RFC 2045.
+     * @return the raw password string
+     */
+    private String decryptPassword(){
+        byte[] bytes = Base64.getDecoder().decode(this.password);
+        return new String(bytes);
+    }
+
+    /**
      * Checks if the password entered by the User is the correct password.
      * @param input the password entered by the User.
      * @return {@code true} if the password is correct.
      */
     protected boolean checkPassword(String input) {
-        return input.equals(password);
+        String rawPassword = decryptPassword();
+        return input.equals(rawPassword);
     }
 
     /**
