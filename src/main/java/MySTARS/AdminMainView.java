@@ -50,23 +50,35 @@ public final class AdminMainView extends View {
         } while (true);
     }
 
+
     protected void addCourse() {
-        System.out.println("Adding course to MySTARS...");
+
+        System.out.println("MySTARS adding course...");
 
         while (true) {
-            System.out.print("Enter course code or Q to quit: ");
-            String courseCode = Helper.sc.nextLine();
-            if (courseCode.equals("Q")) {
+
+            // prompt admin to enter course code
+            String courseCode;
+            do {
+                System.out.print("Enter the course code or Q to quit: ");
+                courseCode = Helper.sc.nextLine().toUpperCase();
+            } while (!Helper.checkCourseCodeFormat(courseCode));
+            if (courseCode.equals("Q") || courseCode.equals("q")) {
                 break;
             }
 
+            // only add course if it doesn't exist 
             if (!Database.COURSES.containsKey(courseCode)) {
                 System.out.print("Enter course name: ");
                 String courseName = Helper.sc.nextLine();
 
-                System.out.print("Enter no. of AUs: ");
-                int au = Helper.sc.nextInt();
-                Helper.sc.nextLine();
+                // prompt to enter number of AUs
+                int au;
+                do {
+                    System.out.print("Enter no. of AUs: ");
+                    au = Helper.sc.nextInt();
+                    Helper.sc.nextLine();
+                } while (au < 1 || au > 5);
                 AU acadUnits = AU.getAU(au);
 
                 System.out.print("Enter course description: ");

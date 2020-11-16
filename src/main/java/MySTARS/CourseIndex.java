@@ -29,14 +29,19 @@ public final class CourseIndex implements Serializable {
      */
     private String indexNumber;
 
+    // /**
+    //  * ArrayList of lessons associated with this index (update: this has been removed and changed to a hashmap)
+    //  */
+    //  private ArrayList<Lesson> lessons = new ArrayList<>();
+
     /**
-     * ArrayList of lessons associated with this index
+     * Hashmap of lessons, to be accessed using {@link lessonID}
      */
-    private ArrayList<Lesson> lessons = new ArrayList<>();
+    private HashMap<Integer, Lesson> lessons = new HashMap<>();
 
     /**
      * The current waitlist for the index.
-     * Given as a {@code LinkedList<String>} of matriculation numbers
+     * Given as a {@code LinkedList<String>} of matriculation numbers.
      */
     private LinkedList<String> waitlist = new LinkedList<>();
 
@@ -71,7 +76,7 @@ public final class CourseIndex implements Serializable {
      * @param indexNumber index number of the index
      * @param lessons ArrayList of lessons to include in the index
      */
-    protected CourseIndex(int vacancies, String courseCode, String indexNumber, ArrayList<Lesson> lessons) {
+    protected CourseIndex(int vacancies, String courseCode, String indexNumber, HashMap<Integer, Lesson> lessons) {
 
         this.vacancies = vacancies; 
         this.courseCode = courseCode;
@@ -152,30 +157,30 @@ public final class CourseIndex implements Serializable {
     }
 
     /**
-     * Add a single lesson slot to the index.
-     * Lesson is added into the ArrayList lessons.
+     * Add a single lesson slot to the index, if it doesn't already exist.
+     * Lesson is added into the HashMap {@link lessons}.
      * @param lesson lesson object to be added.
      */
     protected void addLesson(Lesson lesson) {
 
-        this.lessons.add(lesson);
+        this.lessons.putIfAbsent(lesson.getLessonID(), lesson);
     }
 
     /**
      * Add multiple lessons to the index.
-     * All lessons are added into the ArrayList lessons.
+     * All lessons are added into the HashMap {@link lessons}.
      * @param lessons ArrayList containing lesson objects.
      */
-    protected void addLessons(ArrayList<Lesson> lessons) {
+    protected void addLessons(HashMap<Integer, Lesson> lessons) {
 
-        this.lessons.addAll(lessons);
+        this.lessons.putAll(lessons);
     }
 
     /**
      * Return all the lesson slots in the index.
-     * @return ArrayList of all lesson slots in the index.
+     * @return HashMap of all lesson slots in the index.
      */
-    protected ArrayList<Lesson> getLessons() {
+    protected HashMap<Integer, Lesson> getLessons() {
         
         return this.lessons;
     }
@@ -260,7 +265,9 @@ public final class CourseIndex implements Serializable {
         } else {
             System.out.println(username + " removed from " + this.getCourseCode() + " course register");
             this.vacancies += 1;
-            enrollNextInWaitlist();
+            if(!this.waitlist.isEmpty()) {
+                enrollNextInWaitlist();
+            }
         }
     }
 
