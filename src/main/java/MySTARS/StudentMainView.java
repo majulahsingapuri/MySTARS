@@ -8,7 +8,6 @@ public final class StudentMainView extends View {
         do {
             clearScreen("Student Main");
             System.out.println("What would you like to do? Choose one of the options below: ");
-            //Add a show student info option that prints all the student's information (rn, nationality and registered AUs are never shown)
             System.out.println("1. Add a new course");
             System.out.println("2. Drop a course");
             System.out.println("3. Change index of one of your current courses");
