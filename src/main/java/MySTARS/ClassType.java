@@ -46,10 +46,10 @@ public enum ClassType {
         this.label = label;
     }
 
-    protected static ClassType getClassType(String type) {
+    public static ClassType getClassType(String type) {
 
         for (ClassType classType : ClassType.values()) {
-            if (classType.label == type) {
+            if (classType.label.equals(type)) {
                 return classType;
             }
         }

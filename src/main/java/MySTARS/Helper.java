@@ -23,12 +23,12 @@ public final class Helper {
 	/**
 	 * A single Scanner item that reads input from console so that memory resources are efficiently used.
 	 */
-    protected static Scanner sc = new Scanner(System.in);
+    public static Scanner sc = new Scanner(System.in);
 
 	/**
 	 * A load function that prints progress bars across the screen at 500ms intervals.
 	 */
-    protected static void load() {
+    public static void load() {
 
         System.out.printf("║║║║║║║║║║║║");
         try {
@@ -40,7 +40,7 @@ public final class Helper {
 	/**
 	 * A pause function that waits for the user to press the Enter key to proceed on with the next task.
 	 */
-	protected static void pause(){
+	public static void pause(){
 		System.out.print("Press <Enter> to continue... ");
 		sc.nextLine();
 	}
@@ -52,7 +52,7 @@ public final class Helper {
 	 * @param minute The minutes of the hour.
 	 * @return A DateTime Object.
 	 */
-    protected static DateTime formatTime(DayOfWeek day, int hour_24, int minute) {
+    public static DateTime formatTime(DayOfWeek day, int hour_24, int minute) {
 
         String dateStr = "2020-06-0" + day.value + "T" + hour_24 + ":" + minute + ":00";
 
@@ -64,7 +64,7 @@ public final class Helper {
 	 * @param receipient The network username of the student.
 	 * @param course The String value of the course that they have been successfully registered for.
 	 */
-    protected static void sendMailNotification(Student receipient, String course) {
+    public static void sendMailNotification(Student receipient, String course) {
         String username = "MySTARSApp1";
         String password = "Il0veOOODP";
 
@@ -102,7 +102,7 @@ public final class Helper {
 	 * A method to read passowords from Console without displaying the characters on the screen.
 	 * @return A String representing the password that was keyed in.
 	 */
-    protected static String getPasswordInput(){
+    public static String getPasswordInput(){
 		Console console = System.console();
 		String password = null;
 		try {
@@ -119,7 +119,7 @@ public final class Helper {
 	 * @param courseCode The String value of the course code.
 	 * @return {@code true} if the course code matches the specified pattern.
 	 */
-	protected static boolean checkCourseCodeFormat(String courseCode) {
+	public static boolean checkCourseCodeFormat(String courseCode) {
 
 		if(courseCode.matches("([A-Z]){2}\\d{4}") || courseCode.equals("Q")) {
 			return true;

@@ -11,7 +11,7 @@ public abstract class View {
     /**
      * Necessary print functions that will be used as the start point of every view.
      */
-    protected abstract void print();
+    public abstract void print();
 
     /**
      * ClearScreen function that prints a header as well as the current view that the User is in.

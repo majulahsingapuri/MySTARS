@@ -11,7 +11,7 @@ public final class AddUserView extends View {
     /**
      * Required method from View. Prints prompts for the user to input so that all key information to create {@link Student} or {@link Admin} is present.
      */
-    protected void print() {
+    public void print() {
         
         clearScreen("AdminMain > Add User");
 

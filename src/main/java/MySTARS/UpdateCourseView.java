@@ -16,7 +16,7 @@ public class UpdateCourseView extends View {
     /**
      * Prints prompts for the User to key in so that the relevant information to update a {@link Course} is keyed in. Required method from View.
      */
-    protected void print() {
+    public void print() {
 
         do {
             clearScreen("Admin Main > Update Course");
@@ -71,7 +71,7 @@ public class UpdateCourseView extends View {
     /**
      * Changes the Course code for {@link Course}s in the {@link Database} and {@link Student} objects.
      */
-    protected void changeCourseCode() {
+    private void changeCourseCode() {
 
         clearScreen("Admin Main > Update Course > Change Course Code");
 
@@ -123,7 +123,7 @@ public class UpdateCourseView extends View {
     /**
      * Changes the Course Description for {@link Course}s in the {@link Database} and {@link Student} objects.
      */
-    protected void changeCourseDescription() {
+    private void changeCourseDescription() {
 
         clearScreen("Admin Main > Update Course > Change Course Description");
 
@@ -171,7 +171,7 @@ public class UpdateCourseView extends View {
     /**
      * Changes the Course vacancies for {@link Course}s in the {@link Database} objects.
      */
-    protected void changeCourseVacancies() {
+    private void changeCourseVacancies() {
 
         clearScreen("Admin Main > Update Course > Change Course Vacancies");
 
@@ -239,7 +239,7 @@ public class UpdateCourseView extends View {
     /**
      * Adds {@link CourseIndex}s to already existing {@link Course}s.
      */
-    protected void addIndices() {
+    private void addIndices() {
 
         clearScreen("Admin Main > Update Course > Add indices");
 
@@ -287,7 +287,7 @@ public class UpdateCourseView extends View {
     /**
      * Changes the location for a class.
      */
-    protected void changeClassLocation() {
+    private void changeClassLocation() {
 
         clearScreen("Admin Main > Update Course > Change Class Location");
 

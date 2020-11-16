@@ -11,7 +11,7 @@ public final class AddCourseView extends View {
     /**
      * Required method from View.
      */
-    protected void print() {
+    public void print() {
         
         if (Database.CURRENT_ACCESS_LEVEL == AccessLevel.ADMIN) {
             addAdminCourse();
@@ -25,7 +25,7 @@ public final class AddCourseView extends View {
     /**
      * Prints prompts for the User to key in so that the relevant information for a new {@link Course} is keyed in. 
      */
-    protected void addAdminCourse() {
+    private void addAdminCourse() {
         
         clearScreen("Admin Main > Add Course");
 
@@ -92,7 +92,7 @@ public final class AddCourseView extends View {
     /**
      * Method to add the {@link User} to a {@link Course} of the User's choice.
      */
-    protected void addStudentCourse() {
+    private void addStudentCourse() {
 
         clearScreen("Student Main > Add Course");
         

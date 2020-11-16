@@ -20,7 +20,7 @@ public final class AdminMainView extends View {
     /**
      * Prints menu options for the User to select from. Required method from View.
      */
-    protected void print() {
+    public void print() {
         
         int choice;
         do {
@@ -71,7 +71,7 @@ public final class AdminMainView extends View {
      * Changes MySTARS access start and end dates and times
      * @throws Exception If unable to parse to {@link org.joda.time.DateTime} from String.
      */
-    protected void changeEntryTiming() {
+    private void changeEntryTiming() {
         
         System.out.println("Changing entry timing for Students");
         DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
@@ -94,7 +94,7 @@ public final class AdminMainView extends View {
     /**
      * Changes the Password for the {@link Database.CURRENT_USER}.
      */
-    protected void changePassword() {
+    private void changePassword() {
 
         Database.CURRENT_USER.changePassword();
         Helper.pause();

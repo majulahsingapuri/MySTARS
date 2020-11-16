@@ -15,7 +15,7 @@ public final class CourseManager {
      * Prints a list of courses based on the {@link CourseStatus} from {@link Database}.
      * @param status The desired CourseStatus.
      */
-    protected static void printCourseList(CourseStatus status) {
+    public static void printCourseList(CourseStatus status) {
 
         printLine();
         System.out.println(" Course Code ║ Course Name");
@@ -37,7 +37,7 @@ public final class CourseManager {
      * @param status The desired CourseStatus.
      * @param student The Student whose courses are to be printed.
      */
-    protected static void printCourseList(CourseStatus status, Student student) {
+    public static void printCourseList(CourseStatus status, Student student) {
 
         printLine();
         System.out.println(String.format("%12.12s ║ %-30.30s ║ %-23.23s", "Course Code", "Course Name", "Course Description"));
@@ -57,7 +57,7 @@ public final class CourseManager {
      * @param course The desired Course to print the values from.
      * @param printVacancies Indication to print the number of vacancies.
      */
-    protected static void printIndexList(Course course, boolean printVacancies) {
+    public static void printIndexList(Course course, boolean printVacancies) {
 
         printLine();
         System.out.print("Course Index");
@@ -84,7 +84,7 @@ public final class CourseManager {
      * Prints a list of lessons for a given {@link CourseIndex}.
      * @param index The CourseIndex whose Lessons need printing.
      */
-    protected static void printLesson(CourseIndex index) {
+    public static void printLesson(CourseIndex index) {
 
         printLine();
         System.out.println(String.format("%-10s ║ Lesson Type ║ %-13.13s ║ Location", "Lesson ID.", "Lesson Time"));
@@ -103,7 +103,7 @@ public final class CourseManager {
      * @param course The Course from which to print the list of Students.
      * @param sorted The option to sort the Students by name.
      */
-    protected static void printStudentListByCourse(Course course, boolean sorted) {
+    public static void printStudentListByCourse(Course course, boolean sorted) {
 
         for (CourseIndex courseIndex : course.getIndices()) {
             printStudentListByIndex(courseIndex, sorted);
@@ -116,7 +116,7 @@ public final class CourseManager {
      * @param courseIndex The CourseIndex from which to print the list of Students.
      * @param sorted The option to sort the Students by name.
      */
-    protected static void printStudentListByIndex(CourseIndex courseIndex, boolean sorted) {
+    public static void printStudentListByIndex(CourseIndex courseIndex, boolean sorted) {
 
         Student[] studentsArray = courseIndex.getStudents();
 

@@ -31,7 +31,7 @@ public final class LoginView extends View {
      * Getter method for the currently set log in start time.
      * @return date in dd/MM/yyyy, time in HH:mm:ss.
      */
-    protected DateTime getStartTime() {
+    public DateTime getStartTime() {
         
         return LoginView.loginStart;
     }
@@ -40,7 +40,7 @@ public final class LoginView extends View {
      * Getter method for the currently set log in end time.
      * @return date in dd/MM/yyyy, time in hh:mm:ss.
      */
-    protected DateTime getEndTime() {
+    public DateTime getEndTime() {
         
         return LoginView.loginEnd;
     }
@@ -48,7 +48,7 @@ public final class LoginView extends View {
     /**
      * Displays Login view for {@link User}, checks the credentials and then logs in the User if the credentials are valid.
      */
-    protected void print() {
+    public void print() {
 
         clearScreen("Login");
 
@@ -131,7 +131,7 @@ public final class LoginView extends View {
      * @param end logout time in {@link org.joda.time.DateTime} format.
      * @throws Exception Exception if Start time is after end time.
      */
-    protected static void setLoginTime(DateTime start, DateTime end) throws Exception {
+    public static void setLoginTime(DateTime start, DateTime end) throws Exception {
 
         if (end.isBefore(start)) {
             throw new Exception("Start time is after End time");

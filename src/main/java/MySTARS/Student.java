@@ -55,7 +55,7 @@ public final class Student extends User implements Comparable<Student> {
     /**
      * The maximum number of AUs that a Student can take.
      */
-    protected static final int maxAUs = 21;
+    public static final int maxAUs = 21;
 
     /**
      * The constructor with the minimum required number of parameters.
@@ -66,7 +66,7 @@ public final class Student extends User implements Comparable<Student> {
      * @param gender the student's gender
      * @param nationality the student's nationality
     */
-    protected Student(String userName, String matricNumber, String firstName, String lastName, Gender gender, String nationality) {
+    public Student(String userName, String matricNumber, String firstName, String lastName, Gender gender, String nationality) {
 
         super(userName, AccessLevel.STUDENT);
         this.matricNumber = matricNumber;
@@ -86,7 +86,7 @@ public final class Student extends User implements Comparable<Student> {
      * @param gender the student's gender
      * @param nationality the student's nationality
     */
-    protected Student(String userName, String matricNumber, String firstName, String lastName, String password, Gender gender, String nationality) {
+    public Student(String userName, String matricNumber, String firstName, String lastName, String password, Gender gender, String nationality) {
 
         super(userName, password, AccessLevel.STUDENT);
         this.matricNumber = matricNumber;
@@ -101,7 +101,7 @@ public final class Student extends User implements Comparable<Student> {
      * @param matricNo the string you are testing
      * @return returns whether the passed in value is in a valid matriculation number format
     */
-    protected static boolean isValidMatricNo(String matricNo) {
+    public static boolean isValidMatricNo(String matricNo) {
 
         //has to have 9 characters
         if (matricNo.length() != 9) {return false;}
@@ -128,7 +128,7 @@ public final class Student extends User implements Comparable<Student> {
      * @param matricNo the string you are testing
      * @return returns whether the passed in value is in a valid matriculation number format and has not been used yet
     */
-    protected static boolean isValidNewMatricNo(String matricNo) {
+    public static boolean isValidNewMatricNo(String matricNo) {
 
         if (!Student.isValidMatricNo(matricNo)) {return false;}
 
@@ -150,7 +150,7 @@ public final class Student extends User implements Comparable<Student> {
      * Returns the student's matriculation number.
      * @return the student's unique matriculation number
     */
-    protected String getMatricNumber() {
+    public String getMatricNumber() {
 
         return this.matricNumber;
     }
@@ -159,7 +159,7 @@ public final class Student extends User implements Comparable<Student> {
      * Returns the student's first name.
      * @return the student's first name
     */
-    protected String getFirstName() {
+    public String getFirstName() {
         return this.firstName;
     }
 
@@ -167,7 +167,7 @@ public final class Student extends User implements Comparable<Student> {
      * Returns the student's last name.
      * @return the student's last name
     */
-    protected String getLastName() {
+    public String getLastName() {
 
         return this.lastName;
     }
@@ -176,7 +176,7 @@ public final class Student extends User implements Comparable<Student> {
      * Returns the student's gender.
      * @return the student's gender
     */
-    protected Gender getGender() {
+    public Gender getGender() {
 
         return this.gender;
     }
@@ -185,7 +185,7 @@ public final class Student extends User implements Comparable<Student> {
      * Returns the student's nationality.
      * @return the student's nationality
     */
-    protected String getNationality() {
+    public String getNationality() {
 
         return this.nationality;
     }
@@ -195,7 +195,7 @@ public final class Student extends User implements Comparable<Student> {
      * @param courseCode The String value of the course.
      * @return A Course Object.
      */
-	protected Course getCourse(String courseCode) {
+	public Course getCourse(String courseCode) {
 
         return courses.get(courseCode);
     }
@@ -206,7 +206,7 @@ public final class Student extends User implements Comparable<Student> {
      * @param courseStatus defines the desried course status used to filter courses
      * @return a list of the student's courses that have the desired course status
     */
-    protected Course[] getCourses(CourseStatus courseStatus) {
+    public Course[] getCourses(CourseStatus courseStatus) {
 
         ArrayList<Course> courseIDs = new ArrayList<Course>();
         for (Course course : courses.values()) {
@@ -219,7 +219,7 @@ public final class Student extends User implements Comparable<Student> {
     }
 
     /**
-     * Removes a {@link Course} from the courses Hashmap.
+     * Directly removes a {@link Course} from the courses Hashmap.
      * @param courseCode The code of the course to be removed
      * @return a Course object that is removed from the Hashmap.
      */
@@ -243,7 +243,7 @@ public final class Student extends User implements Comparable<Student> {
      * @param courseStatus defines the desried course status used to filter courses.
      * @return a list of the student's course indices that have the desired course status.
     */
-    protected CourseIndex[] getIndices(CourseStatus courseStatus) {
+    public CourseIndex[] getIndices(CourseStatus courseStatus) {
 
         ArrayList<CourseIndex> courseInds = new ArrayList<CourseIndex>();
         for (Course course : courses.values()) {
@@ -260,7 +260,7 @@ public final class Student extends User implements Comparable<Student> {
      * Returns the student's current number of registered Academic Units (AUs).
      * @return the student's current number of registered Academic Units (AUs)
     */
-    protected int getAU() {
+    public int getAU() {
 
         return this.registeredAUs;
     }
@@ -297,7 +297,7 @@ public final class Student extends User implements Comparable<Student> {
      * @return the course status that the course has been successfully added as.
      * @exception Exception if the courseCode does not exist or there is a timetable clash.
     */
-    protected CourseStatus addCourse(String courseCode, String courseIndex) throws Exception {
+    public CourseStatus addCourse(String courseCode, String courseIndex) throws Exception {
         
         Database.deserialise(FileType.COURSES);
         if (!Database.COURSES.containsKey(courseCode)) {
@@ -336,7 +336,7 @@ public final class Student extends User implements Comparable<Student> {
      * @param courseCode the course code of the desired course to be dropped
      * @exception Exception if the courseCode does not exist has not been added by the student
     */
-    protected void dropCourse(String courseCode) throws Exception {
+    public void dropCourse(String courseCode) throws Exception {
 
         Database.deserialise(FileType.COURSES);
 
@@ -376,7 +376,7 @@ public final class Student extends User implements Comparable<Student> {
      * @exception Exception if the indices are not part of the course or the student is not registered in currentInd
      * @exception Exception if the new index clashes with the student's timetable or the new index has no vancancies
     */
-    protected void changeIndex(String code, String currentInd, String newInd) throws Exception {
+    public void changeIndex(String code, String currentInd, String newInd) throws Exception {
 
         Database.deserialise(FileType.COURSES);
 
@@ -415,7 +415,7 @@ public final class Student extends User implements Comparable<Student> {
      * @param index the couse index to be checked
      * @return true if a clash is found, false if there are no clashes
     */
-    protected boolean clashes(String courseCode, String index) {
+    public boolean clashes(String courseCode, String index) {
 
         CourseIndex addCourseIndex = Database.COURSES.get(courseCode).getIndex(index);
 
@@ -441,7 +441,7 @@ public final class Student extends User implements Comparable<Student> {
      * @return true if registered successfully, false otherwise
      * @exception Exception from the {@link #dropCourse(String)} and {@link #addCourse(String, String)} methods
     */
-	protected boolean addCourseFromWaitlist(CourseIndex courseIndex) throws Exception {
+	public boolean addCourseFromWaitlist(CourseIndex courseIndex) throws Exception {
         String courseCode = courseIndex.getCourseCode();
         Course myCourse = this.courses.get(courseCode);
 
@@ -471,7 +471,7 @@ public final class Student extends User implements Comparable<Student> {
      * @param courseCode the course code of the course to be updated
      * @param newIndex the course index to be swapped to
     */
-	protected void swapIndex(String courseCode, CourseIndex newIndex) {
+	public void swapIndex(String courseCode, CourseIndex newIndex) {
 
         Course course = Database.COURSES.get(courseCode);
 
@@ -490,7 +490,7 @@ public final class Student extends User implements Comparable<Student> {
      * Used in CourseIndex objects to store tjust the necessary student information.
      * @return a stripped down copy of this student object
     */
-    protected Student simpleCopy() {
+    public Student simpleCopy() {
 
         return new Student(this.getUsername(), this.matricNumber, this.firstName, this.lastName, this.gender, this.nationality);
     }

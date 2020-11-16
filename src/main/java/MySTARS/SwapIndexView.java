@@ -8,7 +8,7 @@ public class SwapIndexView extends View {
     /**
      * Required method from View. Prints prompts necessary to swap the indices of 2 Students.
      */
-    protected void print() {
+    public void print() {
 
         clearScreen("Student Main > Swap Index with Peer");
 
