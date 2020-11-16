@@ -1,7 +1,18 @@
 package MySTARS;
 
+/**
+ * The main menu for the Student side of the Application. Extends View.
+ */
 public final class StudentMainView extends View {
 
+    /**
+     * Constructor methodf for object.
+     */
+    public StudentMainView() {}
+
+    /**
+     * Prints menu options for the User to select from. Required method from View.
+     */
     protected void print() {
 
         int choice;
@@ -29,8 +40,8 @@ public final class StudentMainView extends View {
 
             switch (choice) {
                 case 1:
-                    clearScreen("Student Main > Add Course");
-                    addCourse();
+                    AddCourseView addCourseView = new AddCourseView();
+                    addCourseView.print();
                     break;
                 case 2:
                     clearScreen("Student Main > Drop Course");
@@ -67,6 +78,11 @@ public final class StudentMainView extends View {
         } while (true);
     }
 
+    /**
+     * For swapping index with a peer, this method checks if peer is a valid user that is registered for the relevant course.
+     * @param courseCode {@link CourseCode}, e.g CZ2002
+     * @return {@link Student} object for the second user
+     */
     private Student verifySecondUser(String courseCode) {
 
         while (true) {
@@ -105,73 +121,9 @@ public final class StudentMainView extends View {
         }
     }
 
-    protected void addCourse() {
-        Student currentUser = (Student) Database.CURRENT_USER;
-        while (true) {
-            CourseManager.printCourseList(CourseStatus.NONE);
-            System.out.print("Enter the course code or Q to quit: ");
-            String courseCode = Helper.sc.nextLine();
-            if (courseCode.equals("Q")) {
-                break;
-            }
-
-            Course course = Database.COURSES.get(courseCode);
-            if (course != null) {
-                for (Course studentCourse : currentUser.getCourses(CourseStatus.NONE)){
-                    if (studentCourse.getCourseCode().equals(courseCode)){
-                        if (studentCourse.getStatus() == CourseStatus.REGISTERED){
-                            System.out.println("You are already registered in this course!");
-                        } else {
-                            System.out.println("You are already on the waitlist for this course!");
-                        }
-                        courseCode = "Q";
-                        break;
-                    }
-                }
-
-                if (courseCode.equals("Q")){
-                    break;
-                }
-
-                CourseManager.printIndexList(course, true);
-                System.out.print("Enter the course index that you wish to add or Q to quit: ");
-                String courseIndex = Helper.sc.nextLine();
-                if (courseIndex.equals("Q")) {
-                    break;
-                }
-
-                CourseIndex index = course.getIndex(courseIndex);
-                if (index != null) {
-                    System.out.println();
-                    CourseManager.printLesson(index);
-                    System.out.print("These lesson timings will be added to your timetable. Confirm? y/n: ");
-                    String answer = Helper.sc.nextLine();
-
-                    if (answer.equals("y")) {
-                        try {
-                            currentUser.addCourse(courseCode,courseIndex);
-                            Database.serialise(FileType.USERS);
-                            Database.serialise(FileType.COURSES);
-                            System.out.println(courseCode + " has been added successfully.");
-                            break;
-                        } catch (Exception e) {
-                            System.out.println(e.getLocalizedMessage());
-                            Helper.pause();
-                        }
-                    }
-                } else {
-                    System.out.println("The course index that you have entered is invalid!");
-                    Helper.pause();
-                }
-            } else {
-                System.out.println("The course code you entered is invalid!");
-                Helper.pause();
-            }
-        }
-        
-        System.out.println("Going back to main menu...");
-    }
-
+    /**
+     * Removes the {@link User} from the selected {@link Course}.
+     */
     protected void dropCourse() {
 
         while (true) {
@@ -197,6 +149,9 @@ public final class StudentMainView extends View {
         System.out.println("Going back to main menu...");
     }
 
+    /**
+     * Changes the index of the {@link Course} selected by {@link User}. 
+     */
     protected void changeIndex() {
 
         while (true) {
@@ -238,6 +193,9 @@ public final class StudentMainView extends View {
         System.out.println("Going back to main menu...");
     }
 
+    /**
+     * Verifies a second {@link User} from {@link Database.USERS} and swaps the indices for both the Users.
+     */
     protected void swapIndex() {
 
         while (true) {
@@ -275,12 +233,18 @@ public final class StudentMainView extends View {
         System.out.println("Going back to main menu...");
     }
 
+    /**
+     * Changes the Password for the {@link Database.CURRENT_USER}.
+     */
     protected void changePassword() {
         
         Database.CURRENT_USER.changePassword();
         System.out.println("Going back to main menu...");
     } 
 
+    /**
+     * Displays the {@link Course}s that are on {@link CourseStatus.WAITLIST}.
+     */
     protected void viewWaitlistedCourses() {
         Student currentUser = (Student) Database.CURRENT_USER;
         CourseManager.printCourseList(CourseStatus.WAITLIST, currentUser);

@@ -1,9 +1,18 @@
 package MySTARS;
 
+/**
+ * The log out page before being redirected to the {@link LoginView}.
+ */
 public final class LogoutView extends View {
-    
+
+    /**
+     * Constructor method
+     */
     public LogoutView() {}
-   
+
+    /**
+     * Required method from View. Logs out the {@link Database.CURRENT_USER} and redirects user back to the log in page.
+     */
     protected void print() {
     clearScreen("Logout");
 
@@ -29,8 +38,5 @@ public final class LogoutView extends View {
         System.out.println("\n");
 
         clearScreen("Login");
-
     }
-
-
 }
