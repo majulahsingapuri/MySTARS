@@ -32,6 +32,7 @@ public class SwapIndexView extends View {
                         currentUser.swapIndex(courseCode, secondUserIndex);
                         secondUser.swapIndex(courseCode, currentUserIndex);
                         System.out.println("Swapped successfully.");
+                        Helper.pause();
                         break;
                     } else {
                         System.out.println("There is a clash of index!");
@@ -43,8 +44,6 @@ public class SwapIndexView extends View {
                 Helper.pause();
             }
         }
-
-        System.out.println("Going back to main menu...");
     }
 
     /**

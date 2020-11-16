@@ -43,6 +43,8 @@ public final class AddUserView extends View {
                     }
                     Admin admin = new Admin(username, password1);
                     Database.USERS.put(username, admin);
+                    System.out.println("New admin added successfully.");
+                    Helper.pause();
                 } else {
 
                     System.out.print("Enter the Student's First Name: ");
@@ -50,6 +52,7 @@ public final class AddUserView extends View {
                     System.out.print("Enter the Student's Last Name: ");
                     String lastName = Helper.sc.nextLine();
                     System.out.print("Enter the Student's Gender (M/F/NB/PNTS): ");
+                    //FIXME error check gender
                     Gender gender = Gender.getGender(Helper.sc.nextLine());
                     System.out.print("Enter the Student's Nationality: ");
                     String nationality = Helper.sc.nextLine();
@@ -78,12 +81,14 @@ public final class AddUserView extends View {
                         Student student = new Student(username, matricNumber, firstName, lastName, gender, nationality);
                         Database.USERS.put(username, student);
                         Database.serialise(FileType.USERS);
+                        System.out.println("New student added successfully.");
+                        Helper.pause();
                     } else {
                         System.out.println("Aborting");
                     }
                 }
             } else {
-                System.out.println("User has already been added");
+                System.out.println("User has already been added!");
             }
         }
     }

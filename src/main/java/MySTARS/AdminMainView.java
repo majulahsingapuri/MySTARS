@@ -23,8 +23,8 @@ public final class AdminMainView extends View {
     protected void print() {
         
         int choice;
-        clearScreen("AdminMainView");
         do {
+            clearScreen("AdminMainView");
             System.out.println("What would you like to do?");
             System.out.println("1: Add course to MySTARS"); 
             System.out.println("2: Update course in MySTARS"); 
@@ -32,8 +32,15 @@ public final class AdminMainView extends View {
             System.out.println("4: Add new user to MySTARS");
             System.out.println("5: Change Password");
             System.out.println("6: Logout");
-            choice = Helper.sc.nextInt();
-            Helper.sc.nextLine();
+
+            try{
+                choice = Helper.sc.nextInt();
+                Helper.sc.nextLine();
+            }
+            catch (Exception e){
+                choice = -1;
+                Helper.sc.nextLine();
+            }
 
             switch (choice) { 
 
@@ -61,6 +68,7 @@ public final class AdminMainView extends View {
                     return;
                 default:
                     System.out.println("Please enter valid option.");
+                    Helper.pause();
             }
         } while (true);
     }
@@ -81,8 +89,11 @@ public final class AdminMainView extends View {
 
         try {
             LoginView.setLoginTime(formatter.parseDateTime(startDateString), formatter.parseDateTime(endDateString));
+            System.out.println("Entry time updated succesfully.");
+            Helper.pause();
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
+            Helper.pause();
         }    
     }
 
@@ -93,5 +104,6 @@ public final class AdminMainView extends View {
 
         Database.CURRENT_USER.changePassword();
         System.out.println("Going back to main menu...");
+        Helper.pause();
     }
 }

@@ -36,6 +36,7 @@ public class ChangeIndexView extends View {
                         Database.serialise(FileType.USERS);
                         Database.serialise(FileType.COURSES);
                         System.out.println("Changed " + courseCode + " to index " + newIndex + " succesfully.");
+                        Helper.pause();
                         break;
                     } catch (Exception e) {
                         System.out.println(e.getLocalizedMessage());
@@ -47,7 +48,5 @@ public class ChangeIndexView extends View {
                 Helper.pause();
             }
         }
-
-        System.out.println("Going back to main menu...");
     }    
 }

@@ -18,9 +18,9 @@ public class UpdateCourseView extends View {
      */
     protected void print() {
 
-        clearScreen("Admin Main > Update Course");
-
         do {
+            clearScreen("Admin Main > Update Course");
+
             System.out.println("1: Change course code.");
             System.out.println("2: Change course description.");
             System.out.println("3: Change course vacancies.");
@@ -28,8 +28,14 @@ public class UpdateCourseView extends View {
             System.out.println("5: Change Class location.");
             System.out.println("6: Return to AdminMain");
             
-            choice = Helper.sc.nextInt();
-            Helper.sc.nextLine();
+            try{
+                choice = Helper.sc.nextInt();
+                Helper.sc.nextLine();
+            }
+            catch (Exception e){
+                choice = -1;
+                Helper.sc.nextLine();
+            }
 
             switch (choice) {
 
@@ -55,6 +61,10 @@ public class UpdateCourseView extends View {
 
                 case 6:
                     return;
+                
+                default:
+                    System.out.println("Please enter valid option.");
+                    Helper.pause();
             }
         } while (true);
     }
@@ -99,6 +109,7 @@ public class UpdateCourseView extends View {
                     }
 
                     System.out.println("Course Code changed Successfully!");
+                    Helper.pause();
                 } else {
                     System.out.println("Aborting");
                     Helper.pause();
@@ -202,7 +213,8 @@ public class UpdateCourseView extends View {
                             if (confirm.equals("y")) {
                             
                                 courseIndex.setVacancies(newVacancies);
-                                System.out.println("Course Description changed Successfully!");
+                                System.out.println("Course vacancies changed Successfully!");
+                                Helper.pause();
                             } else {
                                 System.out.println("Aborting");
                                 Helper.pause();
@@ -251,6 +263,7 @@ public class UpdateCourseView extends View {
 
                 //TODO: Confirm it works properly after error checking on Course Side.
                 course.addIndices(numIndices);
+                Helper.pause();
             } else {
                 System.out.println("Course does not yet exist!");
                 Helper.pause();
@@ -336,7 +349,8 @@ public class UpdateCourseView extends View {
                                     Helper.pause();
                                 }
                             } catch (Exception e) {
-                                System.out.println(e.getLocalizedMessage());
+                                System.out.println("Please enter a valid Lesson ID!");
+                                Helper.pause();
                             }
                         }
                     } else {
