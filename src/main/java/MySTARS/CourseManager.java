@@ -1,5 +1,6 @@
 package MySTARS;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -53,6 +54,32 @@ public final class CourseManager {
     }
 
     /**
+     * Prints the full details of a course.
+     * @param course The course to be printed
+     */
+    public static void printCourseDetails(Course course) {
+
+        printLine();
+        System.out.println(String.format("%6s ║ %-50s ║ %2s ║ %5s ║ %10s ║ %4s ║ %3s ║ %-13s ║ %-10s ║ %-22s", "Course", "Title", "AU", "Index", "Class Size", "Type", "Day", "Time", "Venue", "Remark"));
+        printLine();
+
+        for (CourseIndex courseIndex : course.getIndices()) {
+            ArrayList<Lesson> lessons = courseIndex.getLessons();
+            for (int i = 0; i < lessons.size(); i++) {
+                Lesson lesson = lessons.get(i);
+                DayOfWeek day = DayOfWeek.getDayOfWeek(lesson.getTime().getStart().getDayOfWeek());
+                String[] time = lesson.getTime().toString().split("[T:/]");
+                if (i == 0) {
+                    System.out.println(String.format("%6s ║ %-50.50s ║ %2s ║ %5s ║ %10s ║ %4s ║ %3s ║ %2s:%2s - %2s:%2s ║ %-10.10s ║ %-22s", course.getCourseCode(), course.getCourseName(), course.getCourseAU().value, courseIndex.getCourseIndex(), courseIndex.getClassSize(), lesson.getType().label, day.label, time[1], time[2], time[6], time[7], lesson.getLocation(), lesson.getRemarks()));
+                } else {
+                    System.out.println(String.format("%85s ║ %4s ║ %3s ║ %2s:%2s - %2s:%2s ║ %-10.10s ║ %-22s", "", lesson.getType().label, day.label, time[1], time[2], time[6], time[7], lesson.getLocation(), lesson.getRemarks()));
+                }
+                printLine();
+            }
+        }        
+    }
+
+    /**
      * Prints a list of indices for a particular {@link Course} with the option to print the number of vacanices.
      * @param course The desired Course to print the values from.
      * @param printVacancies Indication to print the number of vacancies.
@@ -87,13 +114,13 @@ public final class CourseManager {
     public static void printLesson(CourseIndex index) {
 
         printLine();
-        System.out.println(String.format("%-10s ║ Lesson Type ║ %-13.13s ║ Location", "Lesson ID.", "Lesson Time"));
+        System.out.println(String.format("%-10s ║ Lesson Type ║ Class Size ║ %-13.13s ║ Location", "Lesson ID.", "Lesson Time"));
         printLine();
 
         for (Lesson lesson : index.getLessons()) {
 
             String[] time = lesson.getTime().toString().split("[T:/]");
-            System.out.println(String.format("%-10d ║ %-11.11s ║ %2s:%2s - %2s:%2s ║ %-48.48s",lesson.getLessonID(), lesson.getType().label, time[1], time[2], time[6], time[7], lesson.getLocation()));
+            System.out.println(String.format("%-10d ║ %-11.11s ║ %-10.10s ║ %2s:%2s - %2s:%2s ║ %-48.48s",lesson.getLessonID(), lesson.getType().label, index.getClassSize(), time[1], time[2], time[6], time[7], lesson.getLocation()));
             printLine();
         }
     }

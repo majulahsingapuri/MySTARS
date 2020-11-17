@@ -9,28 +9,14 @@ package MySTARS;
 public final class AddCourseView extends View {
 
     /**
-     * Required method from View.
+     * Prints prompts for the User to key in so that the relevant information for a new {@link Course} is keyed in. Required method from View.
      */
     public void print() {
-        
-        if (Database.CURRENT_ACCESS_LEVEL == AccessLevel.ADMIN) {
-            addAdminCourse();
-        } else if (Database.CURRENT_ACCESS_LEVEL == AccessLevel.STUDENT) {
-            addStudentCourse();
-        } else {
-            System.out.println("Invalid AddCourse option.");
-        }
-    }
-
-    /**
-     * Prints prompts for the User to key in so that the relevant information for a new {@link Course} is keyed in. 
-     */
-    private void addAdminCourse() {
         
         clearScreen("Admin Main > Add Course");
 
         while (true) {
-            System.out.print(String.format("%-50s: ", "Enter course code or Q to quit"));
+            System.out.print(String.format("%-50s: ", "Enter new course code or Q to quit"));
             String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
@@ -99,77 +85,6 @@ public final class AddCourseView extends View {
                 }
             } else {
                 System.out.println("Invalid course code format");
-            }
-        }
-    }
-
-    /**
-     * Method to add the {@link User} to a {@link Course} of the User's choice.
-     */
-    private void addStudentCourse() {
-
-        clearScreen("Student Main > Add Course");
-        
-        Student currentUser = (Student) Database.CURRENT_USER;
-        while (true) {
-            CourseManager.printCourseList(CourseStatus.NONE);
-            System.out.print(String.format("%-50s: ", "Enter the course code or Q to quit"));
-            String courseCode = Helper.readLine();
-            if (courseCode.equals("Q")) {
-                break;
-            }
-
-            Course course = Database.COURSES.get(courseCode);
-            if (course != null) {
-                Course studentCourse = currentUser.getCourse(courseCode);
-                if (studentCourse != null){
-                    if (studentCourse.getStatus() == CourseStatus.REGISTERED) {
-                        System.out.println("You are already registered in this course!");
-                        break;
-                    } else if (studentCourse.getStatus() == CourseStatus.WAITLIST) {
-                        System.out.println("You are already on the waitlist for this course!");
-                        break;
-                    }
-                }
-
-                Helper.printSmallSpace();
-
-                CourseManager.printIndexList(course, true);
-                System.out.print(String.format("%-50s: ", "Enter the course index or Q to quit"));
-                String courseIndex = Helper.readLine();
-                if (courseIndex.equals("Q")) {
-                    break;
-                }
-
-                CourseIndex index = course.getIndex(courseIndex);
-                if (index != null) {
-                    Helper.printSmallSpace();
-                    CourseManager.printLesson(index);
-                    System.out.print(String.format("%-50s: ", "Add these lesson timings to your timetable? y/n"));
-                    String answer = Helper.readLine();
-
-                    if (answer.equals("Y")) {
-                        try {
-                            currentUser.addCourse(courseCode,courseIndex);
-                            Database.serialise(FileType.USERS);
-                            Database.serialise(FileType.COURSES);
-                            System.out.println(courseCode + " has been added successfully.");
-                            Helper.pause();
-                            break;
-                        } catch (Exception e) {
-                            System.out.println(e.getLocalizedMessage());
-                            Helper.pause();
-                        }
-                    } else {
-                        Helper.printMediumSpace();
-                    }
-                } else {
-                    System.out.println("The course index that you have entered is invalid!");
-                    Helper.pause();
-                }
-            } else {
-                System.out.println("The course code you entered is invalid!");
-                Helper.pause();
             }
         }
     }

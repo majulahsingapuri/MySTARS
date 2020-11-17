@@ -22,7 +22,7 @@ public final class StudentMainView extends View {
         do {
             clearScreen("Student Main");
             System.out.println("What would you like to do? Choose one of the options below: ");
-            System.out.println("1. Add a new course");
+            System.out.println("1. Check Vacancies");
             System.out.println("2. Drop a course");
             System.out.println("3. Change index of one of your current courses");
             System.out.println("4. Swap index of one of your current courses with a peer");
@@ -42,8 +42,8 @@ public final class StudentMainView extends View {
 
             switch (choice) {
                 case 1:
-                    AddCourseView addCourseView = new AddCourseView();
-                    addCourseView.print();
+                    VacanciesView vacanciesView = new VacanciesView();
+                    vacanciesView.print();
                     break;
                 case 2:
                     clearScreen("Student Main > Drop Course");
@@ -96,7 +96,7 @@ public final class StudentMainView extends View {
             Student currentUser = (Student) Database.CURRENT_USER;
 
             while (true) {
-                System.out.println(String.format("%-50s: ", "Enter Password to confirm"));
+                System.out.print(String.format("%-50s: ", "Enter Password to confirm"));
                 if (currentUser.checkPassword(Helper.getPasswordInput())) {
                     try {
                         currentUser.dropCourse(courseCode);

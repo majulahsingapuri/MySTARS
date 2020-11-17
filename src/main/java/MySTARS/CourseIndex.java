@@ -225,16 +225,12 @@ public final class CourseIndex implements Serializable {
             this.vacancies -= 1;
         } else {
             String answer;
-            while (true) {
-                System.out.print("Error: no more vacancies! do you want to be added to waitlist? y/n: ");
-                answer = Helper.readLine();
-                if (answer.equals("Y")) {
-                    addToWaitlist(username);
-                    Database.serialise(FileType.COURSES);
-                    Database.serialise(FileType.USERS);
-                } else {
-                    break;
-                }
+            System.out.print("Error: no more vacancies! do you want to be added to waitlist? y/n: ");
+            answer = Helper.readLine();
+            if (answer.equals("Y")) {
+                addToWaitlist(username);
+                Database.serialise(FileType.COURSES);
+                Database.serialise(FileType.USERS);
             }
         }
     }
@@ -267,7 +263,7 @@ public final class CourseIndex implements Serializable {
      */
     public void enrollNextInWaitlist() {
 
-        if(this.vacancies != 0 && waitlist.size()>0) {
+        if(this.vacancies > 0 && waitlist.size() > 0) {
             String username = waitlist.removeFirst();
             System.out.println("removed first student in waitlist");
             
@@ -277,6 +273,8 @@ public final class CourseIndex implements Serializable {
                     if (student.addCourseFromWaitlist(this)){
                         enrolledStudents.put(username, student.simpleCopy());
                         this.vacancies -= 1;
+                        Database.serialise(FileType.COURSES);
+                        Database.serialise(FileType.USERS);
                     } else {
                         enrollNextInWaitlist();
                     }

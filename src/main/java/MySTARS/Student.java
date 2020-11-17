@@ -324,7 +324,7 @@ public final class Student extends User implements Comparable<Student> {
         } else {
 
             this.courses.put(courseCode, course.simpleCopy(CourseStatus.WAITLIST, courseInd.simpleCopy()));
-            courseInd.addToWaitlist(this.matricNumber);
+            courseInd.addToWaitlist(this.getUsername());
             Database.serialise(FileType.USERS);
             Database.serialise(FileType.COURSES);
             return CourseStatus.WAITLIST;
@@ -357,7 +357,7 @@ public final class Student extends User implements Comparable<Student> {
             Database.serialise(FileType.COURSES);
             Database.serialise(FileType.USERS);
         } else if (courseStatus == CourseStatus.WAITLIST) {
-            courseInd.removeFromWaitlist(this.matricNumber);
+            courseInd.removeFromWaitlist(this.getUsername());
             this.courses.remove(courseCode);
             Database.serialise(FileType.COURSES);
             Database.serialise(FileType.USERS);
@@ -454,9 +454,8 @@ public final class Student extends User implements Comparable<Student> {
             return false;
         }
     
-        if (!clashes(courseCode, myIndex.getCourseIndex())) {
-            dropCourse(courseCode);
-            addCourse(courseCode, myIndex.getCourseIndex());
+        if (!clashes(courseCode, myIndex.getCourseIndex()) && myCourse.getCourseAU().value + this.registeredAUs <= Student.maxAUs) {
+            myCourse.setStatus(CourseStatus.REGISTERED);
             Helper.sendMailNotification(this, courseCode);
             Database.serialise(FileType.COURSES);
             Database.serialise(FileType.USERS);

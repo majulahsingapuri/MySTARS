@@ -23,9 +23,9 @@ public class PrintStudentListView extends View {
                 
                 int choice;
                 System.out.println("Print by:\n1. Course\n2. Index");
-                System.out.print(String.format("%-50s: ", "Choice"));
                 while (true) {
                     try {
+                        System.out.print(String.format("%-50s: ", "Choice"));
                         choice = Integer.parseInt(Helper.readLine());
                         if (choice == 1 || choice == 2) {
                             break;

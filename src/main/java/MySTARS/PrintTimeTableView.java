@@ -23,7 +23,24 @@ public final class PrintTimeTableView extends View {
 
         Student currentUser = (Student) Database.CURRENT_USER;
 
-        for (Course course : currentUser.getCourses(CourseStatus.REGISTERED)) {
+        printInformation(CourseStatus.REGISTERED, currentUser);
+        printInformation(CourseStatus.WAITLIST, currentUser);
+
+        System.out.println("Student Information:");
+        System.out.println(String.format("%-30s : %s\n%-30s : %s\n%-30s : %s\n%-30s : %s\n%-30s : %s\n%-30s : %s\n",
+                                        "First Name", currentUser.getFirstName(),
+                                        "Last Name", currentUser.getLastName(), 
+                                        "Matric No.", currentUser.getMatricNumber(),
+                                        "Gender:", currentUser.getGender().label,
+                                        "Nationality", currentUser.getNationality(),
+                                        "Registered AUs", currentUser.getAU()));
+        
+        return;
+    }
+
+    private void printInformation(CourseStatus courseStatus, Student currentUser) {
+
+        for (Course course : currentUser.getCourses(courseStatus)) {
 
             CourseIndex courseIndex = course.getIndices()[0];
             ArrayList<Lesson> lessons = courseIndex.getLessons();
@@ -39,17 +56,6 @@ public final class PrintTimeTableView extends View {
                 printLine();
             }
         }
-
-        System.out.println("Student Information:");
-        System.out.println(String.format("%-30s : %s\n%-30s : %s\n%-30s : %s\n%-30s : %s\n%-30s : %s\n%-30s : %s\n",
-                                        "First Name", currentUser.getFirstName(),
-                                        "Last Name", currentUser.getLastName(), 
-                                        "Matric No.", currentUser.getMatricNumber(),
-                                        "Gender:", currentUser.getGender().label,
-                                        "Nationality", currentUser.getNationality(),
-                                        "Registered AUs", currentUser.getAU()));
-        
-        return;
     }
 
     /**

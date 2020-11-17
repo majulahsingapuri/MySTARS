@@ -190,6 +190,8 @@ public class UpdateCourseView extends View {
                 break;
             }
 
+            Helper.printSmallSpace();
+
             Course course = Database.COURSES.get(courseCode);
             if (course != null) {
                 
@@ -203,16 +205,19 @@ public class UpdateCourseView extends View {
                         break;
                     }
 
+                    Helper.printSmallSpace();
+
                     CourseIndex courseIndex = course.getIndex(index);
                     if (courseIndex != null) {
                         
                         try {
-                            System.out.print("Enter new Class Size: ");
+                            System.out.print(String.format("%-50s: ", "Enter new Class Size"));
                             int newClassSize = Integer.parseInt(Helper.readLine());
 
-                            if (newClassSize < courseIndex.getStudents().length) {
+                            if (newClassSize >= courseIndex.getStudents().length) {
                                 
-                                System.out.print("The Class Size for the Index " + courseIndex.getCourseIndex() + " will be changed from " + courseIndex.getClassSize() + " to " + newClassSize + "\n\nConfirm? y/n:");
+                                System.out.println("The Class Size for the Index " + courseIndex.getCourseIndex() + " will be changed from " + courseIndex.getClassSize() + " to " + newClassSize);
+                                System.out.println(String.format("%-50s: ", "Confirm? y/n"));
                                 String confirm = Helper.readLine();
                                 if (confirm.equals("Y")) {
                                 
@@ -270,7 +275,7 @@ public class UpdateCourseView extends View {
                 int numIndices;                
                 while (true){
                     try {
-                        System.out.print("Enter the number of indices (1 - 10 max) to add: ");
+                        System.out.print(String.format("%-50s: ", "Enter the number of indices (1 - 10 max) to add"));
                         numIndices = Integer.parseInt(Helper.readLine());
                         if (numIndices < 0 || numIndices > 10 - course.getIndices().length) {
                             throw new Exception();
@@ -304,7 +309,7 @@ public class UpdateCourseView extends View {
 
             CourseManager.printCourseList(CourseStatus.NONE);
 
-            System.out.print("Enter the Course Code or Q to Quit: ");
+            System.out.print(String.format("%-50s: ", "Enter the Course Code or Q to Quit"));
             String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
@@ -317,7 +322,7 @@ public class UpdateCourseView extends View {
                     
                     CourseManager.printIndexList(course, true);
 
-                    System.out.print("Enter the Index whose location you want to change or Q to Quit: ");
+                    System.out.print(String.format("%-50s: ", "Enter the Index or Q to Quit"));
                     String index = Helper.readLine();
                     if (index.equals("Q")) {
                         break;
@@ -330,7 +335,7 @@ public class UpdateCourseView extends View {
                             
                             CourseManager.printLesson(courseIndex);
 
-                            System.out.print("Enter the Lesson ID whose location you want to change or Q to Quit: ");
+                            System.out.print(String.format("%-50s: ", "Enter the Lesson ID or Q to Quit"));
                             String id = Helper.readLine();
                             if (id.equals("Q")) {
                                 break;
@@ -343,10 +348,11 @@ public class UpdateCourseView extends View {
                                 Lesson lesson = courseIndex.getLesson(lessonID);
                                 if (lesson != null) {
 
-                                    System.out.print("Enter the new lesson location: ");
+                                    System.out.print(String.format("%-50s: ", "Enter the new lesson location"));
                                         String newLocation = Helper.readLine();
 
-                                        System.out.print("The location for the lesson will change from " + lesson.getLocation() + " to " + newLocation + "\n\nConfirm? y/n:");
+                                        System.out.println("The location for the lesson will change from " + lesson.getLocation() + " to " + newLocation);
+                                        System.out.println(String.format("%-50s: ", "Confirm? y/n"));
                                         String confirm = Helper.readLine();
                                         if (confirm.equals("Y")) {
                                         

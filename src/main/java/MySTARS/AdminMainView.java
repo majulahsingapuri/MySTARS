@@ -52,7 +52,8 @@ public final class AdminMainView extends View {
                         updateCourseView.print();
                         break;
                     case 3:
-                        checkCourseVacancies();
+                        VacanciesView vacanciesView = new VacanciesView();
+                        vacanciesView.print();
                         break;
                     case 4:
                         PrintStudentListView printStudentListView = new PrintStudentListView();
@@ -79,48 +80,6 @@ public final class AdminMainView extends View {
                 System.out.println(e.getLocalizedMessage());
             }
         } while (true);
-    }
-
-    /**
-     * Gives the Admin the ability to check vacancies in a {@link Course}.
-     */
-    public void checkCourseVacancies() {
-        clearScreen("Admin Main > Check Course Vacanices");
-
-        while (true) {
-            CourseManager.printCourseList(CourseStatus.NONE);
-            System.out.print(String.format("%-50s: ", "Enter the course code or Q to quit"));
-            String courseCode = Helper.readLine();
-            if (courseCode.equals("Q")) {
-                break;
-            }
-
-            Course course = Database.COURSES.get(courseCode);
-            if (course != null) {
-
-                Helper.printSmallSpace();
-
-                CourseManager.printIndexList(course, true);
-                System.out.print(String.format("%-50s: ", "Enter the course index or Q to quit"));
-                String courseIndex = Helper.readLine();
-                if (courseIndex.equals("Q")) {
-                    break;
-                }
-
-                CourseIndex index = course.getIndex(courseIndex);
-                if (index != null) {
-                    Helper.printSmallSpace();
-                    CourseManager.printLesson(index);
-                    Helper.pause();
-                } else {
-                    System.out.println("The course index that you have entered is invalid!");
-                    Helper.pause();
-                }
-            } else {
-                System.out.println("The course code you entered is invalid!");
-                Helper.pause();
-            }
-        }
     }
 
     /**

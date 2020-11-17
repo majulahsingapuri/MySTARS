@@ -19,10 +19,14 @@ public class ChangeIndexView extends View {
             if (courseCode.equals("Q")) {
                 break;
             }
+
             Student currentUser = (Student) Database.CURRENT_USER;
             if (currentUser.getCourse(courseCode) != null) {
+                
                 Course course = Database.COURSES.get(courseCode);
+                Helper.printSmallSpace();
                 CourseManager.printIndexList(course, true);
+
                 String curIndex = currentUser.getCourse(courseCode).getIndicesString()[0];
                 System.out.println(String.format("%-50s: %s", "Your current index is", curIndex));
                 System.out.print(String.format("%-50s: ", "Enter the new index that you wish to change to"));

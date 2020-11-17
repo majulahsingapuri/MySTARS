@@ -11,6 +11,7 @@ MySTARS/UpdateCourseView.class
 MySTARS/Gender.class
 MySTARS/MySTARSApp.class
 MySTARS/AdminMainView.class
+MySTARS/PrintStudentListView.class
 MySTARS/Helper.class
 MySTARS/AddCourseView.class
 MySTARS/StudentMainView.class
@@ -23,6 +24,7 @@ MySTARS/LoginView.class
 MySTARS/Database.class
 MySTARS/Student.class
 MySTARS/CourseStatus.class
+MySTARS/VacanciesView.class
 MySTARS/View.class
 MySTARS/LogoutView.class
 MySTARS/User.class

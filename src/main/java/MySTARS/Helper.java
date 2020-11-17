@@ -169,6 +169,7 @@ public final class Helper {
 
 	/**
      * Method that prints a horizontal line across the screen.
+	 * @param size The length of the line to print
      */
     public static void printLine(int size) {
         String line = String.format("%" + size + "s", "").replace(" ", "═");

@@ -238,7 +238,7 @@ public final class Course implements Serializable {
         for(int i = 0; i < numIndices; i++) {
             
             System.out.println("Setup for index no. " + (i + 1));
-            Helper.printLine(74);
+            Helper.printLine(150);
 
             while (true) {
                 System.out.print(String.format("%-50s: ", "Enter index number"));
@@ -375,7 +375,7 @@ public final class Course implements Serializable {
             CourseIndex index = new CourseIndex(classSize, this.courseCode, courseIndex, lessons);
             courseIndices.put(courseIndex, index);
             Database.serialise(FileType.COURSES);
-            CourseManager.printLesson(index);
+            CourseManager.printCourseDetails(this);
             System.out.println(courseIndex + " added to courseIndices!");
             Helper.printMediumSpace();
         }
