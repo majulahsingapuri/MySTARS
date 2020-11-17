@@ -289,7 +289,7 @@ public final class Course implements Serializable {
                     LocalTime startLocalTime, endLocalTime;
                 
                     System.out.println("Enter details for lesson " + (j+1));
-                    Helper.printLine(74);
+                    Helper.printLine(150);
                     
                     ClassType classType = Lesson.chooseClassType();
 
@@ -359,6 +359,7 @@ public final class Course implements Serializable {
                         String choice = Helper.readLine();
                         if (choice.equals("Y")){
                             lessons.add(lesson);
+                            Helper.printSmallSpace();
                             break;
                         } else {
                             System.out.println("The lesson was not added.");

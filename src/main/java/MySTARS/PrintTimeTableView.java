@@ -18,7 +18,7 @@ public final class PrintTimeTableView extends View {
         clearScreen("Student Main > Print Timetable");
 
         printLine();
-        System.out.println(String.format("%6s ║ %-20s ║ %2s ║ %5s ║ %6s ║ %4s ║ %3s ║ %-13s ║ %-10s ║ %-26s", "Course", "Title", "AU", "Index", "Status", "Type", "Day", "Time", "Venue", "Remark"));
+        System.out.println(String.format("%6s ║ %-50s ║ %2s ║ %5s ║ %6s ║ %4s ║ %3s ║ %-13s ║ %-10s ║ %-26s", "Course", "Title", "AU", "Index", "Status", "Type", "Day", "Time", "Venue", "Remark"));
         printLine();
 
         Student currentUser = (Student) Database.CURRENT_USER;
@@ -32,7 +32,7 @@ public final class PrintTimeTableView extends View {
                 DayOfWeek day = DayOfWeek.getDayOfWeek(lesson.getTime().getStart().getDayOfWeek());
                 String[] time = lesson.getTime().toString().split("[T:/]");
                 if (i == 0) {
-                    System.out.println(String.format("%6s ║ %-50.500s ║ %2s ║ %5s ║ %6s ║ %4s ║ %3s ║ %2s:%2s - %2s:%2s ║ %-10.10s ║ %-26s", course.getCourseCode(), course.getCourseName(), course.getCourseAU().value, courseIndex.getCourseIndex(), course.getStatus().label, lesson.getType().label, day.label, time[1], time[2], time[6], time[7], lesson.getLocation(), lesson.getRemarks()));
+                    System.out.println(String.format("%6s ║ %-50.50s ║ %2s ║ %5s ║ %6s ║ %4s ║ %3s ║ %2s:%2s - %2s:%2s ║ %-10.10s ║ %-26s", course.getCourseCode(), course.getCourseName(), course.getCourseAU().value, courseIndex.getCourseIndex(), course.getStatus().label, lesson.getType().label, day.label, time[1], time[2], time[6], time[7], lesson.getLocation(), lesson.getRemarks()));
                 } else {
                     System.out.println(String.format("%81s ║ %4s ║ %3s ║ %2s:%2s - %2s:%2s ║ %-10s ║ %-26s", "", lesson.getType().label, day.label, time[1], time[2], time[6], time[7], lesson.getLocation(), lesson.getRemarks()));
                 }

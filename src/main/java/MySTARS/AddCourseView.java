@@ -76,7 +76,7 @@ public final class AddCourseView extends View {
                             try {
                                 System.out.print(String.format("%-50s: ", "Enter the number of indices (1 - 10)"));
                                 numIndices = Integer.parseInt(Helper.readLine());
-                                if (numIndices < 0 || numIndices > 10) {
+                                if (numIndices < 1 || numIndices > 10) {
                                     throw new Exception();
                                 }
                                 break;
@@ -121,21 +121,15 @@ public final class AddCourseView extends View {
 
             Course course = Database.COURSES.get(courseCode);
             if (course != null) {
-                for (Course studentCourse : currentUser.getCourses(CourseStatus.NONE)){
-                    if (studentCourse.getCourseCode().equals(courseCode)){
-                        if (studentCourse.getStatus() == CourseStatus.REGISTERED){
-                            System.out.println("You are already registered in this course!");
-                        } else {
-                            System.out.println("You are already on the waitlist for this course!");
-                        }
-                        courseCode = "Q";
-                        Helper.pause();
+                Course studentCourse = currentUser.getCourse(courseCode);
+                if (studentCourse != null){
+                    if (studentCourse.getStatus() == CourseStatus.REGISTERED) {
+                        System.out.println("You are already registered in this course!");
+                        break;
+                    } else if (studentCourse.getStatus() == CourseStatus.WAITLIST) {
+                        System.out.println("You are already on the waitlist for this course!");
                         break;
                     }
-                }
-
-                if (courseCode.equals("Q")){
-                    break;
                 }
 
                 Helper.printSmallSpace();
@@ -166,6 +160,8 @@ public final class AddCourseView extends View {
                             System.out.println(e.getLocalizedMessage());
                             Helper.pause();
                         }
+                    } else {
+                        Helper.printMediumSpace();
                     }
                 } else {
                     System.out.println("The course index that you have entered is invalid!");

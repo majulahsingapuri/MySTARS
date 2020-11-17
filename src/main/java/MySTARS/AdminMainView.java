@@ -1,5 +1,6 @@
 package MySTARS;
 
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -31,11 +32,12 @@ public final class AdminMainView extends View {
                 System.out.println("What would you like to do?");
                 System.out.println("1: Add course to MySTARS"); 
                 System.out.println("2: Update course in MySTARS");
-                System.out.println("3: Print Students list"); 
-                System.out.println("4: Change student's entry timing to MySTARS"); 
-                System.out.println("5: Add new user to MySTARS");
-                System.out.println("6: Change Password");
-                System.out.println("7: Logout");
+                System.out.println("3: Check Course Vacanices");
+                System.out.println("4: Print Students list"); 
+                System.out.println("5: Change student's entry timing to MySTARS"); 
+                System.out.println("6: Add new user to MySTARS");
+                System.out.println("7: Change Password");
+                System.out.println("8: Logout");
                 System.out.print(String.format("%-50s: ", "Choice"));
                 choice = Integer.parseInt(Helper.readLine());
 
@@ -50,19 +52,23 @@ public final class AdminMainView extends View {
                         updateCourseView.print();
                         break;
                     case 3:
-                        printStudentsList();
+                        checkCourseVacancies();
                         break;
                     case 4:
-                        changeEntryTiming();
+                        PrintStudentListView printStudentListView = new PrintStudentListView();
+                        printStudentListView.print();
                         break;
                     case 5:
+                        changeEntryTiming();
+                        break;
+                    case 6:
                         AddUserView addUserView = new AddUserView();
                         addUserView.print();
                         break;
-                    case 6:
+                    case 7:
                         changePassword();
                         break;
-                    case 7:
+                    case 8:
                         LogoutView logoutView = new LogoutView();
                         logoutView.print();
                         return;
@@ -75,59 +81,44 @@ public final class AdminMainView extends View {
         } while (true);
     }
 
-    public void printStudentsList() {
+    /**
+     * Gives the Admin the ability to check vacancies in a {@link Course}.
+     */
+    public void checkCourseVacancies() {
+        clearScreen("Admin Main > Check Course Vacanices");
 
         while (true) {
-
-            System.out.print(String.format("%-50s: ", "Enter course code or Q to quit: "));
+            CourseManager.printCourseList(CourseStatus.NONE);
+            System.out.print(String.format("%-50s: ", "Enter the course code or Q to quit"));
             String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
             }
 
-            if (Database.COURSES.containsKey(courseCode)) {
-                
-                Course course = Database.COURSES.get(courseCode);
-                
-                int choice;
-                System.out.println("Print by:\n1. Course\n2.Index");
-                System.out.print(String.format("%-50s: ", "Choice"));
-                while (true) {
-                    try {
-                        choice = Integer.parseInt(Helper.readLine());
-                        if (choice == 1 || choice == 2) {
-                            break;
-                        } else {
-                            throw new Exception();
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Please enter a valid number");
-                    }
+            Course course = Database.COURSES.get(courseCode);
+            if (course != null) {
+
+                Helper.printSmallSpace();
+
+                CourseManager.printIndexList(course, true);
+                System.out.print(String.format("%-50s: ", "Enter the course index or Q to quit"));
+                String courseIndex = Helper.readLine();
+                if (courseIndex.equals("Q")) {
+                    break;
                 }
 
-                if (choice == 1) {
-                    CourseManager.printStudentListByCourse(course, true);
+                CourseIndex index = course.getIndex(courseIndex);
+                if (index != null) {
+                    Helper.printSmallSpace();
+                    CourseManager.printLesson(index);
+                    Helper.pause();
                 } else {
-                    CourseManager.printIndexList(course, false);
-
-                    String courseIndex;
-                    System.out.print(String.format("%-50s: ", "Enter Index Number"));
-                    while (true) {
-                        try {
-                            courseIndex = Helper.readLine();
-                            if (course.containsIndex(courseIndex)) {
-                                CourseManager.printStudentListByIndex(course.getIndex(courseIndex), false);
-                                break;
-                            } else {
-                                throw new Exception();
-                            }
-                        } catch (Exception e) {
-                            System.out.println("Please enter a valid number");
-                        }
-                    }
+                    System.out.println("The course index that you have entered is invalid!");
+                    Helper.pause();
                 }
             } else {
-                System.out.println("The course code does not exist.");
+                System.out.println("The course code you entered is invalid!");
+                Helper.pause();
             }
         }
     }
@@ -139,20 +130,44 @@ public final class AdminMainView extends View {
         
         System.out.println("Changing entry timing for Students");
         DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
+        DateTime startTime, endTime;
 
-        System.out.print("Enter the start date and time in the format (dd/MM/yyyy HH:mm:ss): ");
-        String startDateString = Helper.readLine();
-        System.out.print("Enter the end date and time in the format (dd/MM/yyyy HH:mm:ss): ");
-        String endDateString = Helper.readLine();
-
-        try {
-            LoginView.setLoginTime(formatter.parseDateTime(startDateString), formatter.parseDateTime(endDateString));
-            System.out.println("Entry time updated succesfully.");
-            Helper.pause();
-        } catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
-            Helper.pause();
-        }    
+        while (true) {
+            while (true) {
+                try {
+                    System.out.print("Enter the start date and time in the format (dd/MM/yyyy HH:mm:ss): ");
+                    startTime = formatter.parseDateTime(Helper.readLine());
+                    if (startTime.isAfter(DateTime.now().minusYears(1))) {
+                        break;
+                    } else {
+                        System.out.println("Please enter a valid date and time");
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getLocalizedMessage());
+                }
+            }
+            while (true) {
+                try {
+                    System.out.print("Enter the end date and time in the format (dd/MM/yyyy HH:mm:ss): ");
+                    endTime = formatter.parseDateTime(Helper.readLine());
+                    if (endTime.isBefore(DateTime.now().plusYears(1))) {
+                        break;
+                    } else {
+                        System.out.println("Please enter a valid date and time");
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getLocalizedMessage());
+                }
+            }
+            try {
+                LoginView.setLoginTime(startTime, endTime);
+                System.out.println("Entry time updated succesfully.");
+                Helper.pause();
+            } catch (Exception e) {
+                System.out.println(e.getLocalizedMessage());
+                Helper.pause();
+            }
+        }
     }
 
     /**
