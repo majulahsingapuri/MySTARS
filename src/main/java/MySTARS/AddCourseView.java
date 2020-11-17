@@ -30,7 +30,7 @@ public final class AddCourseView extends View {
         clearScreen("Admin Main > Add Course");
 
         while (true) {
-            System.out.print("Enter course code or Q to quit: ");
+            System.out.print(String.format("%-50s: ", "Enter course code or Q to quit"));
             String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
@@ -42,7 +42,7 @@ public final class AddCourseView extends View {
                         
                         String courseName;
                         while (true) {
-                            System.out.print("Enter course name: ");
+                            System.out.print(String.format("%-50s: ", "Enter course name"));
                             courseName = Helper.readLine();
                             if (courseName.length() <= 50) {
                                 break;
@@ -50,11 +50,11 @@ public final class AddCourseView extends View {
                                 System.out.println("Course Name is too long!");
                             }
                         }
-                        
+
                         AU acadUnits;
                         while (true) {
                             try {
-                                System.out.print("Enter no. of AUs: ");
+                                System.out.print(String.format("%-50s: ", "Enter no. of AUs"));
                                 int au = Integer.parseInt(Helper.readLine());
                                 if (au < 1 || au > 4) {
                                     throw new Exception();
@@ -66,7 +66,7 @@ public final class AddCourseView extends View {
                             }
                         }
     
-                        System.out.print("Enter course description: ");
+                        System.out.print(String.format("%-50s: ", "Enter course description"));
                         String description = Helper.readLine();
     
                         Course course = new Course(courseCode, courseName, acadUnits, description);
@@ -74,7 +74,7 @@ public final class AddCourseView extends View {
                         int numIndices;
                         while (true) {
                             try {
-                                System.out.print("Enter the number of indices (1 - 10) in this course: ");
+                                System.out.print(String.format("%-50s: ", "Enter the number of indices (1 - 10)"));
                                 numIndices = Integer.parseInt(Helper.readLine());
                                 if (numIndices < 0 || numIndices > 10) {
                                     throw new Exception();
@@ -84,6 +84,8 @@ public final class AddCourseView extends View {
                                 System.out.println("Please enter valid number.");
                             }
                         }
+
+                        Helper.printSmallSpace();
 
                         course.addIndices(numIndices);
                         
@@ -111,7 +113,7 @@ public final class AddCourseView extends View {
         Student currentUser = (Student) Database.CURRENT_USER;
         while (true) {
             CourseManager.printCourseList(CourseStatus.NONE);
-            System.out.print("Enter the course code or Q to quit: ");
+            System.out.print(String.format("%-50s: ", "Enter the course code or Q to quit"));
             String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
@@ -127,6 +129,7 @@ public final class AddCourseView extends View {
                             System.out.println("You are already on the waitlist for this course!");
                         }
                         courseCode = "Q";
+                        Helper.pause();
                         break;
                     }
                 }
@@ -135,8 +138,10 @@ public final class AddCourseView extends View {
                     break;
                 }
 
+                Helper.printSmallSpace();
+
                 CourseManager.printIndexList(course, true);
-                System.out.print("Enter the course index that you wish to add or Q to quit: ");
+                System.out.print(String.format("%-50s: ", "Enter the course index or Q to quit"));
                 String courseIndex = Helper.readLine();
                 if (courseIndex.equals("Q")) {
                     break;
@@ -144,9 +149,9 @@ public final class AddCourseView extends View {
 
                 CourseIndex index = course.getIndex(courseIndex);
                 if (index != null) {
-                    System.out.println();
+                    Helper.printSmallSpace();
                     CourseManager.printLesson(index);
-                    System.out.print("These lesson timings will be added to your timetable. Confirm? y/n: ");
+                    System.out.print(String.format("%-50s: ", "Add these lesson timings to your timetable? y/n"));
                     String answer = Helper.readLine();
 
                     if (answer.equals("Y")) {

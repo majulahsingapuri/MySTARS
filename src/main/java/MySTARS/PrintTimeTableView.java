@@ -56,7 +56,6 @@ public final class PrintTimeTableView extends View {
      * Method that prints a horizontal line across the screen.
      */
     private static void printLine() {
-        String line = String.format("%" + 150 + "s", "").replace(" ", "═");
-        System.out.println(line);
+        Helper.printLine(150);
     }
 }

@@ -2,7 +2,6 @@ package MySTARS;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 
@@ -234,26 +233,30 @@ public final class Course implements Serializable {
     public void addIndices(int numIndices) {
         
         String courseIndex;
-        int vacancies;
-        int numLessons;
+        int classSize, numLessons;
 
         for(int i = 0; i < numIndices; i++) {
             
+            System.out.println("Setup for index no. " + (i + 1));
+            Helper.printLine(74);
+
             while (true) {
-                System.out.print("Enter index number: ");
+                System.out.print(String.format("%-50s: ", "Enter index number"));
                 courseIndex = Helper.readLine();
-                if (courseIndex.length() == 5 && courseIndex.matches("(^\\d{5}$)")) {
+                if (courseIndex.length() == 5 && courseIndex.matches("(^\\d{5}$)") && !this.containsIndex(courseIndex)) {
                     break;
                 } else {
                     System.out.println("Enter a valid index number.");
                 }
             }
 
+            ArrayList<Lesson> lessons = new ArrayList<Lesson>();
+
             while (true) {
                 try {
-                    System.out.print("Enter number of vacancies: ");
-                    vacancies = Integer.parseInt(Helper.readLine());
-                    if (vacancies < 0 || vacancies > 50) {
+                    System.out.print(String.format("%-50s: ", "Enter the class size"));
+                    classSize = Integer.parseInt(Helper.readLine());
+                    if (classSize < 1 || classSize > 50) {
                         throw new Exception();
                     }
                     break;
@@ -261,55 +264,57 @@ public final class Course implements Serializable {
                     System.out.println("Please enter a number");
                 }
             }
+            
+            while (true) {
+                try {
+                    System.out.print(String.format("%-50s: ", "Enter number of lessons"));
+                    numLessons = Integer.parseInt(Helper.readLine());
+                    if (numLessons < 1 || numLessons > 5) {
+                        throw new Exception();
+                    }
+                    break;
+                } catch (Exception e) {
+                    System.out.println("Please enter a number between 1 and 5");
+                }
+            }
 
-            if (!this.containsIndex(courseIndex)) {  
-                ArrayList<Lesson> lessons = new ArrayList<Lesson>();
+            Helper.printSmallSpace();
+
+            for (int j = 0; j < numLessons; j++) {
+
+                while (true) {
+                    String location;
+                    DayOfWeek dayOfWeek;
+                    int startTime, endTime;
+                    LocalTime startLocalTime, endLocalTime;
                 
-                    System.out.println("Setup for index no. " + courseIndex);
+                    System.out.println("Enter details for lesson " + (j+1));
+                    Helper.printLine(74);
+                    
+                    ClassType classType = Lesson.chooseClassType();
+
                     while (true) {
                         try {
-                            System.out.print("Enter number of lessons: ");
-                            numLessons = Integer.parseInt(Helper.readLine());
-                            if (numLessons < 0 || numLessons > 5) {
+                            System.out.print(String.format("%-50s: ", "Enter day of week (1: Monday, etc.)"));
+                            int num = Integer.parseInt(Helper.readLine());
+                            if (num < 1 || num > 7) {
                                 throw new Exception();
                             }
+                            dayOfWeek = DayOfWeek.getDayOfWeek(num);
                             break;
                         } catch (Exception e) {
-                            System.out.println("Please enter a number between 0 and 5");
+                            System.out.println("Please enter a valid number");
                         }
                     }
 
-                for (int j = 0; j < numLessons; j++) {
-
                     while (true) {
-                        String location;
-                        DayOfWeek dayOfWeek;
-                        int startTime;
-                        int endTime;
-                    
-                        System.out.println("Enter details for lesson " + (j+1));
-                        ClassType classType = Lesson.chooseClassType();
-
                         while (true) {
                             try {
-                                System.out.print("Enter day of week for lesson (1: Monday, 2: Tuesday, etc.): ");
-                                int num = Integer.parseInt(Helper.readLine());
-                                if (num < 1 || num > 7) {
-                                    throw new Exception();
-                                }
-                                dayOfWeek = DayOfWeek.getDayOfWeek(num);
-                                break;
-                            } catch (Exception e) {
-                                System.out.println("Please enter a valid number");
-                            }
-                        }
-
-                        while (true) {
-                            try {
-                                System.out.print("Enter the class start time in 24h format (eg. 1430): ");
-                                String time = Helper.readLine();
-                                if (LocalTime.parse(time, DateTimeFormat.forPattern("HHmm")) != null) {
-                                    startTime = Integer.parseInt(time);
+                                System.out.print(String.format("%-50s: ", "Enter start time in 24h format (eg 1430)"));
+                                String stime = Helper.readLine();
+                                startLocalTime = LocalTime.parse(stime, DateTimeFormat.forPattern("HHmm"));
+                                if (startLocalTime != null) {
+                                    startTime = Integer.parseInt(stime);
                                     break;
                                 } else {
                                     throw new Exception();
@@ -321,37 +326,57 @@ public final class Course implements Serializable {
 
                         while (true) {
                             try {
-                                System.out.print("Enter the class end time in 24h format (eg. 1530): ");
-                                String time = Helper.readLine();
-                                if (LocalTime.parse(time, DateTimeFormat.forPattern("HHmm")) != null) {
-                                    endTime = Integer.parseInt(time);
+                                System.out.print(String.format("%-50s: ", "Enter end time in 24h format (eg 1530)"));
+                                String etime = Helper.readLine();
+                                endLocalTime = LocalTime.parse(etime, DateTimeFormat.forPattern("HHmm"));
+                                if (endLocalTime != null) {
+                                    endTime = Integer.parseInt(etime);
                                     break;
                                 } else {
                                     throw new Exception();
                                 }
                             } catch (Exception e) {
-                                System.out.println("Please enter a valid number");
+                                System.out.println("Please enter a valid time");
                             }
                         }
 
-                        System.out.print("Enter lesson location: ");
-                        location = Helper.readLine();
+                        //TODO: check if this expression evaluates correctly
+                        if (endLocalTime.isAfter(startLocalTime) && !startLocalTime.isEqual(endLocalTime)) {
+                            break;
+                        } else {
+                            System.out.println("Start time must be before end time!");
+                        }
+                    }
 
-                        Lesson lesson = new Lesson(classType, dayOfWeek, startTime, endTime, location);
-                        if (!lesson.clashes(lessons)) {
+                    System.out.print(String.format("%-50s: ", "Enter lesson location"));
+                    location = Helper.readLine();
+
+                    Lesson lesson = new Lesson(classType, dayOfWeek, startTime, endTime, location);
+                    if (!lesson.clashes(lessons)) {
+                        
+                        CourseManager.printLesson(lesson);
+                        System.out.print(String.format("%-50s: ", "This lesson will be added to " + courseIndex + " confirm? y/n"));
+                        String choice = Helper.readLine();
+                        if (choice.equals("Y")){
                             lessons.add(lesson);
                             break;
                         } else {
-                            System.out.println("This lesson clashes with the other lessons in the course!");
-                            Helper.pause();
+                            System.out.println("The lesson was not added.");
                         }
+                    } else {
+                        System.out.println("This lesson clashes with the other lessons in the course!");
+                        Helper.pause();
                     }
+
+                    Helper.printSmallSpace();
                 }
-                CourseIndex index = new CourseIndex(vacancies, this.courseCode, courseIndex, lessons);
-                courseIndices.put(courseIndex, index);
-                Database.serialise(FileType.COURSES);
             }
+            CourseIndex index = new CourseIndex(classSize, this.courseCode, courseIndex, lessons);
+            courseIndices.put(courseIndex, index);
+            Database.serialise(FileType.COURSES);
+            CourseManager.printLesson(index);
             System.out.println(courseIndex + " added to courseIndices!");
+            Helper.printMediumSpace();
         }
     }
 

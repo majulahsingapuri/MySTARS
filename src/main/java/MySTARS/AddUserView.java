@@ -23,26 +23,26 @@ public final class AddUserView extends View {
             }
             if (!Database.USERS.containsKey(username) || !username.matches("(^\\p{Alnum}+$)")) {
                 String accessLevel;
-                System.out.println("Enter user domain: ");
+                System.out.println("Enter user domain");
                 System.out.println("1. Admin");
                 System.out.println("2. Student");
-                System.out.print("Choice: ");
                 while (true) {
+                    System.out.print(String.format("%-50s: ", "Choice"));
                     accessLevel = Helper.readLine();
                     
                     if (accessLevel.equals("1") || accessLevel.equals("2")) {
                         break;
                     } else {
-                        System.out.print("Invalid input, enter choice again: ");
+                        System.out.println("Invalid input");
                     }
                 }
 
                 if (accessLevel.equals("1")) {
                     String password1, password2;
                     while (true) {
-                        System.out.print("Enter the password: ");
+                        System.out.print(String.format("%-50s: ", "Enter the password"));
                         password1 = Helper.getPasswordInput();
-                        System.out.print("Enter the password again: ");
+                        System.out.print(String.format("%-50s: ", "Enter the password again"));
                         password2 = Helper.getPasswordInput();
                         if (password1.equals(password2)) {
                             break;
@@ -57,10 +57,10 @@ public final class AddUserView extends View {
                     Helper.pause();
                 } else {
 
-                    System.out.print("Enter the Student's First Name: ");
+                    System.out.print(String.format("%-50s: ", "Enter the Student's First Name"));
                     String firstName = Helper.readLine();
 
-                    System.out.print("Enter the Student's Last Name: ");
+                    System.out.print(String.format("%-50s: ", "Enter the Student's Last Name"));
                     String lastName = Helper.readLine();
 
                     int genderChoice;
@@ -68,7 +68,8 @@ public final class AddUserView extends View {
                     
                     while (true) {
                         try {
-                            System.out.print("Enter the Student's Gender \n1. F\n2. M\n3. NB\n4. PNTS\nDefault (PNTS): ");
+                            System.out.println("Enter the Student's Gender\n1. F\n2. M\n3. NB\n4. PNTS");
+                            System.out.print(String.format("%-50s: ", "Default (PNTS)"));
                             genderChoice = Integer.parseInt(Helper.readLine());
                             if (genderChoice < 1 || genderChoice > 4) {
                                 throw new Exception();
@@ -80,12 +81,12 @@ public final class AddUserView extends View {
                         }
                     }
 
-                    System.out.print("Enter the Student's Nationality: ");
+                    System.out.print(String.format("%-50s: ", "Enter the Student's Nationality"));
                     String nationality = Helper.readLine();
                     
                     String matricNumber;
                     while (true) {
-                        System.out.print("Enter the Student's Matric number: ");
+                        System.out.print(String.format("%-50s: ", "Enter the Student's Matric number"));
                         matricNumber = Helper.readLine();
                         if (Student.isValidNewMatricNo(matricNumber)) {
                             break;
@@ -94,14 +95,16 @@ public final class AddUserView extends View {
                         }
                     }
 
-                    System.out.println("\n\nNew Student Details:");
-                    System.out.println(String.format("%-20s:", "Name") + firstName + " " + lastName);
-                    System.out.println(String.format("%-20s:", "Network Username") + username);
-                    System.out.println(String.format("%-20s:", "Matric No.") + matricNumber);
-                    System.out.println(String.format("%-20s:", "Gender") + gender.label);
-                    System.out.println(String.format("%-20s:", "Nationality") + nationality);
+                    Helper.printLine(74);
 
-                    System.out.print("\nConfirm? y/n: ");
+                    System.out.println("\n\nNew Student Details:");
+                    System.out.println(String.format("%-50s: ", "Name") + firstName + " " + lastName);
+                    System.out.println(String.format("%-50s: ", "Network Username") + username);
+                    System.out.println(String.format("%-50s: ", "Matric No.") + matricNumber);
+                    System.out.println(String.format("%-50s: ", "Gender") + gender.label);
+                    System.out.println(String.format("%-50s: ", "Nationality") + nationality);
+
+                    System.out.print(String.format("\n%-50s: ", "Confirm? y/n"));
                     String confirm = Helper.readLine();
                     if (confirm.equals("Y")) {
                         Student student = new Student(username, matricNumber, firstName, lastName, gender, nationality);

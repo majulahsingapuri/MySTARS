@@ -18,7 +18,7 @@ public final class CourseManager {
     public static void printCourseList(CourseStatus status) {
 
         printLine();
-        System.out.println(" Course Code ║ Course Name");
+        System.out.println(String.format("%12.12s ║ %-50.50s ║ %-82.82s", "Course Code", "Course Name", "Course Description"));
         printLine();
 
         for (HashMap.Entry<String, Course> courseEntry : Database.COURSES.entrySet()) {
@@ -26,7 +26,7 @@ public final class CourseManager {
             Course course = courseEntry.getValue();
 
             if (course.getStatus() == status) {
-                System.out.println(String.format("%12.12s", course.getCourseCode()) + " ║ " + String.format("%-56.56s", course.getCourseName()));
+                System.out.println(String.format("%12.12s ║ %-50.50s ║ %-82.82s", course.getCourseCode(), course.getCourseName(), course.getDescription()));
                 printLine();
             }
         }
@@ -40,13 +40,13 @@ public final class CourseManager {
     public static void printCourseList(CourseStatus status, Student student) {
 
         printLine();
-        System.out.println(String.format("%12.12s ║ %-30.30s ║ %-23.23s", "Course Code", "Course Name", "Course Description"));
+        System.out.println(String.format("%12.12s ║ %-50.50s ║ %-82.82s", "Course Code", "Course Name", "Course Description"));
         printLine();
 
         for (Course course: student.getCourses(status)) {
 
             if (course.getStatus() == status) {
-                System.out.println(String.format("%12.12s ║ %-30.30s ║ %-23.23s", course.getCourseCode(), course.getCourseName(), course.getDescription()));   
+                System.out.println(String.format("%12.12s ║ %-50.50s ║ %-82.82s", course.getCourseCode(), course.getCourseName(), course.getDescription()));   
             }
             printLine();
         }
@@ -93,9 +93,25 @@ public final class CourseManager {
         for (Lesson lesson : index.getLessons()) {
 
             String[] time = lesson.getTime().toString().split("[T:/]");
-            System.out.println(String.format("%-10d ║ %11.11s ║ %2s:%2s - %2s:%2s ║ %-48.48s",lesson.getLessonID(), lesson.getType().label, time[1], time[2], time[6], time[7], lesson.getLocation()));
+            System.out.println(String.format("%-10d ║ %-11.11s ║ %2s:%2s - %2s:%2s ║ %-48.48s",lesson.getLessonID(), lesson.getType().label, time[1], time[2], time[6], time[7], lesson.getLocation()));
             printLine();
         }
+    }
+
+    /**
+     * Prints a lesson information for a given {@link Lesson}.
+     * @param lesson The Lesson that needs printing.
+     */
+    public static void printLesson(Lesson lesson) {
+
+        printLine();
+        System.out.println(String.format("%-10s ║ Lesson Type ║ %-13.13s ║ Location", "Lesson ID.", "Lesson Time"));
+        printLine();
+
+        String[] time = lesson.getTime().toString().split("[T:/]");
+        System.out.println(String.format("%-10d ║ %-11.11s ║ %2s:%2s - %2s:%2s ║ %-48.48s",lesson.getLessonID(), lesson.getType().label, time[1], time[2], time[6], time[7], lesson.getLocation()));
+        printLine();
+        
     }
 
     /**
@@ -126,11 +142,11 @@ public final class CourseManager {
 
         System.out.println("Index Number: " + courseIndex.getCourseIndex());
         printLine();
-        System.out.println("Matric No. ║ " + String.format("%-49.49s ║ %6.6s", "First Name", "Gender"));
+        System.out.println("Matric No. ║ " + String.format("%-80.80s ║ %6.6s", "Name", "Gender"));
         printLine();
 
         for (Student student : studentsArray) {
-            System.out.println(String.format("%10.10s ║ %-20.20s %29.29s ║ %6.6s", student.getMatricNumber(), student.getFirstName(), student.getLastName(), student.getGender().label));
+            System.out.println(String.format("%10.10s ║ %-80.80s ║ %6.6s", student.getMatricNumber(), student.getFirstName() + " " + student.getLastName(), student.getGender().label));
             printLine();
         }
     }
@@ -139,7 +155,6 @@ public final class CourseManager {
      * Prints a horizontal line across the screen.
      */
     private static void printLine() {
-        String line = String.format("%" + 74 + "s", "").replace(" ", "═");
-        System.out.println(line);
+        Helper.printLine(150);
     }
 }

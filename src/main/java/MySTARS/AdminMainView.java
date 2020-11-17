@@ -36,6 +36,7 @@ public final class AdminMainView extends View {
                 System.out.println("5: Add new user to MySTARS");
                 System.out.println("6: Change Password");
                 System.out.println("7: Logout");
+                System.out.print(String.format("%-50s: ", "Choice"));
                 choice = Integer.parseInt(Helper.readLine());
 
                 switch (choice) { 
@@ -78,7 +79,7 @@ public final class AdminMainView extends View {
 
         while (true) {
 
-            System.out.print("Enter course code or Q to quit: ");
+            System.out.print(String.format("%-50s: ", "Enter course code or Q to quit: "));
             String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
@@ -89,7 +90,8 @@ public final class AdminMainView extends View {
                 Course course = Database.COURSES.get(courseCode);
                 
                 int choice;
-                System.out.print("Print by:\n1. Course\n2.Index\nChoice: ");
+                System.out.println("Print by:\n1. Course\n2.Index");
+                System.out.print(String.format("%-50s: ", "Choice"));
                 while (true) {
                     try {
                         choice = Integer.parseInt(Helper.readLine());
@@ -109,7 +111,7 @@ public final class AdminMainView extends View {
                     CourseManager.printIndexList(course, false);
 
                     String courseIndex;
-                    System.out.print("Enter Index Number: ");
+                    System.out.print(String.format("%-50s: ", "Enter Index Number"));
                     while (true) {
                         try {
                             courseIndex = Helper.readLine();

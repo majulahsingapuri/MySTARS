@@ -30,7 +30,7 @@ public final class StudentMainView extends View {
             System.out.println("6. Show timetable");
             System.out.println("7. Show courses on waitlist");
             System.out.println("8. Logout");
-            System.out.print("Enter the number of your choice: ");
+            System.out.print(String.format("%-50s: ", "Choice"));
 
             try{
                 choice = Helper.sc.nextInt();
@@ -88,22 +88,30 @@ public final class StudentMainView extends View {
 
         while (true) {
             CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
-            System.out.print("Enter the course code to drop or Q to quit: ");
+            System.out.print(String.format("%-50s: ", "Enter the course code or Q to quit"));
             String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
             }
             Student currentUser = (Student) Database.CURRENT_USER;
-            try {
-                currentUser.dropCourse(courseCode);
-                Database.serialise(FileType.COURSES);
-                Database.serialise(FileType.USERS);
-                System.out.println(courseCode + " has been dropped successfully.");
-                Helper.pause();
-                break;
-            } catch (Exception e) {
-                System.out.println(e.getLocalizedMessage());
-                Helper.pause();
+
+            while (true) {
+                System.out.println(String.format("%-50s: ", "Enter Password to confirm"));
+                if (currentUser.checkPassword(Helper.getPasswordInput())) {
+                    try {
+                        currentUser.dropCourse(courseCode);
+                        Database.serialise(FileType.COURSES);
+                        Database.serialise(FileType.USERS);
+                        System.out.println(courseCode + " has been dropped successfully.");
+                        Helper.pause();
+                        break;
+                    } catch (Exception e) {
+                        System.out.println(e.getLocalizedMessage());
+                        Helper.pause();
+                    }
+                } else {
+                    System.out.println("Incorrect password!");
+                }
             }
         }
     }

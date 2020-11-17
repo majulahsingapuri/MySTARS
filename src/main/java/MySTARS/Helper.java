@@ -128,8 +128,50 @@ public final class Helper {
 		return false;
 	}
 
+	/**
+	 * Reads standard input using the Scanner.
+	 * @return The read input in capitalised form.
+	 */
 	public static String readLine() {
 
 		return sc.nextLine().toUpperCase();
 	}
+
+	/**
+	 * Prints 3 lines of space
+	 */
+	public static void printSmallSpace() {
+
+		for (int i = 0; i < 3; i++) {
+			System.out.println();
+		}
+	}
+
+	/**
+	 * Prints 5 lines of space
+	 */
+	public static void printMediumSpace() {
+
+		for (int i = 0; i < 5; i++) {
+			System.out.println();
+		}
+	}
+
+	/**
+	 * Prints 7 lines of space
+	 */
+	public static void printLargeSpace() {
+
+		for (int i = 0; i < 7; i++) {
+			System.out.println();
+		}
+	}
+
+	/**
+     * Method that prints a horizontal line across the screen.
+     */
+    public static void printLine(int size) {
+        String line = String.format("%" + size + "s", "").replace(" ", "═");
+        System.out.println(line);
+    }
 }

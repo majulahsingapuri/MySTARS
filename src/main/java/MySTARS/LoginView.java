@@ -62,10 +62,10 @@ public final class LoginView extends View {
 
         while (true) {
 
-            System.out.println("Enter user domain: ");
+            System.out.println("Enter user domain");
             System.out.println("1. Admin");
             System.out.println("2. Student");
-            System.out.print("Choice: ");
+            System.out.print(String.format("%-50s: ", "Choice"));
             while (true) {
                 domain = Helper.readLine();
                 
@@ -135,6 +135,10 @@ public final class LoginView extends View {
 
         if (end.isBefore(start)) {
             throw new Exception("Start time is after End time");
+        } else if (start.isBefore(DateTime.now().minusYears(1))) {
+            throw new Exception("Start time is too early");
+        } else if (end.isAfter(DateTime.now().plusYears(1))) {
+            throw new Exception("End time is too late");
         }
         LoginView.loginStart = start;
         LoginView.loginEnd = end;

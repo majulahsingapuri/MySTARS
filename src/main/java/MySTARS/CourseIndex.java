@@ -59,28 +59,29 @@ public final class CourseIndex implements Serializable {
 
     /**
      * Constructor for course index, with no lessons at the start.
-     * @param vacancies number of vacancies for the index
+     * @param classSize the class size for the index
      * @param courseCode course code of the course
      * @param indexNumber index number of the index
      */
-    public CourseIndex(int vacancies, String courseCode, String indexNumber) {
+    public CourseIndex(int classSize, String courseCode, String indexNumber) {
 
-        this.vacancies = vacancies;
-        this.classSize = vacancies;
+        this.vacancies = classSize;
+        this.classSize = classSize;
         this.courseCode = courseCode;
         this.indexNumber = indexNumber;
     }
     
     /**
      * Constructor for the course index, and including already existing lessons inside.
-     * @param vacancies number of vacancies for the index
+     * @param classSize the class size for the index
      * @param courseCode course code of the course
      * @param indexNumber index number of the index
      * @param lessons ArrayList of lessons to include in the index
      */
-    public CourseIndex(int vacancies, String courseCode, String indexNumber, ArrayList<Lesson> lessons) {
+    public CourseIndex(int classSize, String courseCode, String indexNumber, ArrayList<Lesson> lessons) {
 
-        this.vacancies = vacancies; 
+        this.vacancies = classSize; 
+        this.classSize = classSize;
         this.courseCode = courseCode;
         this.indexNumber = indexNumber;
         addLessons(lessons);
@@ -289,7 +290,7 @@ public final class CourseIndex implements Serializable {
     }
 
     /**
-     * Directly adds a {@link Student} to the CourseIndex and bypasses all checks. Used when 2 peers are swapping indices.
+     * Directly adds a {@link Student} to the CourseIndex and bypasses all checks.
      * @param student {@link Student} to be added to the Index.
      */
     protected void addStudent(Student student) {

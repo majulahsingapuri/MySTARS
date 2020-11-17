@@ -92,7 +92,7 @@ public final class Lesson implements Serializable {
         System.out.println("3. Tutorial");
         System.out.println("4. Seminar");
         System.out.println("5. Online");
-        System.out.println("Enter the lesson type for this lesson:");
+        System.out.print(String.format("%-40s: ", "Enter the lesson type for this lesson"));
 
         int classTypeChoice; 
 

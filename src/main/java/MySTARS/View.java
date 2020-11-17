@@ -18,19 +18,7 @@ public abstract class View {
      * @param directory The path of the current view that the user is in.
      */
     protected void clearScreen(String directory) {
-        try {
-            final String os = System.getProperty("os.name");
-        
-            if (os.contains("Windows")) {
-                //FIXME check if this new version works
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            }
-            else {
-                Runtime.getRuntime().exec("clear");
-            }
-        } catch (final Exception e) {
-            System.err.println(e);
-        }
+        Helper.printLargeSpace();
                
         String spaces = String.format("%" + (71 - directory.length()) + "s", "");
 

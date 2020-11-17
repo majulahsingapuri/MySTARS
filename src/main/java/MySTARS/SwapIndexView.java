@@ -14,7 +14,7 @@ public class SwapIndexView extends View {
 
         while (true) {
             CourseManager.printCourseList(CourseStatus.REGISTERED, (Student) Database.CURRENT_USER);
-            System.out.print("Enter the course code to swap with a friend or Q to Quit: ");
+            System.out.print(String.format("%-50s: ", "Enter the course code or Q to Quit"));
             String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
                 break;
@@ -56,7 +56,7 @@ public class SwapIndexView extends View {
     private Student verifySecondUser(String courseCode) {
 
         while (true) {
-            System.out.print("Enter Second User's username or Q to quit: ");
+            System.out.print(String.format("%-50s: ", "Enter Second User's username or Q to quit"));
             String username = Helper.readLine();
             if (username.equals("Q")) {
                 return null;
@@ -66,7 +66,7 @@ public class SwapIndexView extends View {
                 System.out.println(username + " does not exist!");
                 Helper.pause();
             } else {
-                System.out.print("Enter password: ");
+                System.out.print(String.format("%-50s: ", "Enter password"));
                 String password = Helper.getPasswordInput();
                 User result = Database.USERS.get(username);
                 if (result.checkPassword(password)) {
