@@ -39,14 +39,26 @@ public final class AddCourseView extends View {
             if (Helper.checkCourseCodeFormat(courseCode)) {
                 if (!Database.COURSES.containsKey(courseCode)) {
                     try {
-                        System.out.print("Enter course name: ");
-                        String courseName = Helper.readLine();
+                        
+                        String courseName;
+                        while (true) {
+                            System.out.print("Enter course name: ");
+                            courseName = Helper.readLine();
+                            if (courseName.length() <= 50) {
+                                break;
+                            } else {
+                                System.out.println("Course Name is too long!");
+                            }
+                        }
                         
                         AU acadUnits;
                         while (true) {
                             try {
-                                System.out.print("Enter no. of AUs, default 1: ");
+                                System.out.print("Enter no. of AUs: ");
                                 int au = Integer.parseInt(Helper.readLine());
+                                if (au < 1 || au > 4) {
+                                    throw new Exception();
+                                }
                                 acadUnits = AU.getAU(au);
                                 break;
                             } catch (Exception e) {

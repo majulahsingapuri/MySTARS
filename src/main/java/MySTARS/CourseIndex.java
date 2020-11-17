@@ -21,6 +21,11 @@ public final class CourseIndex implements Serializable {
     private int vacancies = 0;
 
     /**
+     * The total enrolment of the class.
+     */
+    private int classSize = 0;
+
+    /**
      * The course code for associated course (eg. CZ2002)
      */
     private String courseCode;
@@ -60,7 +65,8 @@ public final class CourseIndex implements Serializable {
      */
     public CourseIndex(int vacancies, String courseCode, String indexNumber) {
 
-        this.vacancies = vacancies; 
+        this.vacancies = vacancies;
+        this.classSize = vacancies;
         this.courseCode = courseCode;
         this.indexNumber = indexNumber;
     }
@@ -81,12 +87,22 @@ public final class CourseIndex implements Serializable {
     }
 
     /**
-     * Set the number of vacancies
-     * @param vacancies number of vacancies
+     * Set the classSize
+     * @param classSize total enrolment of the class.
+     * @throws Exception if class size is smaller than already registered students.
      */
-    public void setVacancies(int vacancies) {
+    public void setClassSize(int classSize) throws Exception {
 
-        this.vacancies = vacancies;
+        if (classSize < this.enrolledStudents.size()) {
+            throw new Exception("The new Class Size is too small.");
+        }
+        this.classSize = classSize;
+        this.vacancies = classSize - this.enrolledStudents.size();
+    }
+
+    public int getClassSize() {
+
+        return this.classSize;
     }
 
     /**
@@ -208,13 +224,16 @@ public final class CourseIndex implements Serializable {
             this.vacancies -= 1;
         } else {
             String answer;
-            do {
+            while (true) {
                 System.out.print("Error: no more vacancies! do you want to be added to waitlist? y/n: ");
                 answer = Helper.readLine();
-            } while (answer.equals("Y") || answer.equals("N"));
-
-            if (answer.equals("Y")) {
-                addToWaitlist(username);
+                if (answer.equals("Y")) {
+                    addToWaitlist(username);
+                    Database.serialise(FileType.COURSES);
+                    Database.serialise(FileType.USERS);
+                } else {
+                    break;
+                }
             }
         }
     }
@@ -236,6 +255,8 @@ public final class CourseIndex implements Serializable {
             if(!this.waitlist.isEmpty()) {
                 enrollNextInWaitlist();
             }
+            Database.serialise(FileType.COURSES);
+            Database.serialise(FileType.USERS);
         }
     }
 
@@ -255,15 +276,13 @@ public final class CourseIndex implements Serializable {
                     if (student.addCourseFromWaitlist(this)){
                         enrolledStudents.put(username, student.simpleCopy());
                         this.vacancies -= 1;
-                    }
-                    else{
+                    } else {
                         enrollNextInWaitlist();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-            else{
+            } else {
                 enrollNextInWaitlist();
             }
         }

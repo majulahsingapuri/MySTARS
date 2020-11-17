@@ -121,7 +121,7 @@ public final class Helper {
 	 */
 	public static boolean checkCourseCodeFormat(String courseCode) {
 
-		if(courseCode.matches("([A-Z]){2}\\d{4}") || courseCode.equals("Q")) {
+		if(courseCode.matches("\\p{Upper}{2}\\d{4}") || courseCode.equals("Q")) {
 			return true;
 		} 
 		System.out.println("Invalid input. Course code must be two letters followed by four digits");

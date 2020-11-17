@@ -458,6 +458,8 @@ public final class Student extends User implements Comparable<Student> {
             dropCourse(courseCode);
             addCourse(courseCode, myIndex.getCourseIndex());
             Helper.sendMailNotification(this, courseCode);
+            Database.serialise(FileType.COURSES);
+            Database.serialise(FileType.USERS);
             return true;
         } else{
             return false;

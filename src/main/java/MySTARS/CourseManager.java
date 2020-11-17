@@ -62,7 +62,7 @@ public final class CourseManager {
         printLine();
         System.out.print("Course Index");
         if (printVacancies) {
-            System.out.print(" ║ Vacancies");
+            System.out.print(" ║ Vacancies ║ Class Size");
         }
         System.out.println();
         printLine();
@@ -72,7 +72,7 @@ public final class CourseManager {
             System.out.print(String.format("%12.12s", courseIndex.getCourseIndex()));
 
             if (printVacancies) {
-                System.out.print(" ║ " + String.format("%4d", courseIndex.getVacancies()));
+                System.out.print(" ║ " + String.format("%-9d ║ %-4d", courseIndex.getVacancies(), courseIndex.getClassSize()));
             }
 
             System.out.println();

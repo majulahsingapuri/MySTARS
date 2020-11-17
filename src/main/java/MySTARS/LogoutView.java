@@ -38,6 +38,9 @@ public final class LogoutView extends View {
             Helper.load();
         }
 
+        Database.serialise(FileType.COURSES);
+        Database.serialise(FileType.USERS);
+
         System.out.println("\n");
 
         clearScreen("Login");

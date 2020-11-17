@@ -31,6 +31,8 @@ public class SwapIndexView extends View {
                     if (!currentUser.clashes(courseCode, secondUserIndex.getCourseIndex()) && !secondUser.clashes(courseCode, currentUserIndex.getCourseIndex())) {
                         currentUser.swapIndex(courseCode, secondUserIndex);
                         secondUser.swapIndex(courseCode, currentUserIndex);
+                        Database.serialise(FileType.COURSES);
+                        Database.serialise(FileType.USERS);
                         System.out.println("Swapped successfully.");
                         Helper.pause();
                         break;

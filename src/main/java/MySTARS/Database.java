@@ -12,6 +12,10 @@ import org.joda.time.DateTime;
  */
 public final class Database {
     
+    //TODO Change directory before submission
+    // private static String filePath = "src/main/java/Files/";
+    private static String filePath = "";
+
     /**
      * A {@code Hashmap<String, Course>} that stores all {@link Course}s and its contained information.
      */
@@ -58,8 +62,8 @@ public final class Database {
     protected static boolean deserialise(FileType fileType) {
         
         try {
-            //TODO Change directory before submission
-            FileInputStream fileInput = new FileInputStream("./src/main/java/Files/" + fileType.fileName + ".dsai");
+
+            FileInputStream fileInput = new FileInputStream("./" + filePath + fileType.fileName + ".dsai");
             ObjectInputStream objectInput = new ObjectInputStream(fileInput);
             Object object = objectInput.readObject();
 
@@ -84,7 +88,7 @@ public final class Database {
         } catch (Exception e) {
             
             try {
-                new FileOutputStream("./src/main/java/Files/" + fileType.fileName + ".dsai", true).close();
+                new FileOutputStream("./" + filePath + fileType.fileName + ".dsai", true).close();
             } catch (Exception f) {
                 System.out.println("Failed to write file with exception" + f.getLocalizedMessage());
                 return false;
@@ -101,8 +105,8 @@ public final class Database {
     protected static boolean serialise(FileType fileType) {
         
         try {
-            //TODO Change directory before submission
-            FileOutputStream fileOutput = new FileOutputStream("./src/main/java/Files/" + fileType.fileName + ".dsai");
+
+            FileOutputStream fileOutput = new FileOutputStream("./" + filePath + fileType.fileName + ".dsai");
             ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput);
 
             if (fileType == FileType.COURSES) {
@@ -135,12 +139,12 @@ public final class Database {
      * Resets Admin users if they have been deleted.
      */
     private void resetUsers() {
-        USERS.put("Admin", new Admin("Admin", "AdminPassword"));
-        USERS.put("Bhargav", new Admin("Bhargav", "OODPisgood"));
-        USERS.put("Timothy", new Admin("Timothy", "IloveOODP"));
-        USERS.put("Esther", new Admin("Esther", "JavaForLife"));
-        USERS.put("Nicolette", new Admin("Nicolette", "this.isBest"));
-        USERS.put("JiaHui", new Admin("JiaHui", "return"));
+        USERS.put("ADMIN", new Admin("ADMIN", "AdminPassword"));
+        USERS.put("BHARGAV", new Admin("BHARGAV", "OODPisgood"));
+        USERS.put("TIMOTHY", new Admin("TIMOTHY", "IloveOODP"));
+        USERS.put("ESTHER", new Admin("ESTHER", "JavaForLife"));
+        USERS.put("NICOLETTE", new Admin("NICOLETTE", "this.isBest"));
+        USERS.put("JIAHUI", new Admin("JIAHUI", "return"));
     }
 
     /**
@@ -150,10 +154,12 @@ public final class Database {
 
         DateTime startTime = (DateTime) Database.SETTINGS.get("loginStart");
         DateTime endTime = (DateTime) Database.SETTINGS.get("loginEnd");
-        try {
-            LoginView.setLoginTime(startTime, endTime);
-        } catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
+        if (startTime != null && endTime != null) {
+            try {
+                LoginView.setLoginTime(startTime, endTime);
+            } catch (Exception e) {
+                System.out.println(e.getLocalizedMessage());
+            }
         }
     }
 }

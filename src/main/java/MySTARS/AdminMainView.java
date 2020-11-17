@@ -25,13 +25,17 @@ public final class AdminMainView extends View {
         int choice;
         do {
             try {
+
+                clearScreen("Admin Main");
+
                 System.out.println("What would you like to do?");
                 System.out.println("1: Add course to MySTARS"); 
-                System.out.println("2: Update course in MySTARS"); 
-                System.out.println("3: Change student's entry timing to MySTARS"); 
-                System.out.println("4: Add new user to MySTARS");
-                System.out.println("5: Change Password");
-                System.out.println("6: Logout");
+                System.out.println("2: Update course in MySTARS");
+                System.out.println("3: Print Students list"); 
+                System.out.println("4: Change student's entry timing to MySTARS"); 
+                System.out.println("5: Add new user to MySTARS");
+                System.out.println("6: Change Password");
+                System.out.println("7: Logout");
                 choice = Integer.parseInt(Helper.readLine());
 
                 switch (choice) { 
@@ -45,16 +49,19 @@ public final class AdminMainView extends View {
                         updateCourseView.print();
                         break;
                     case 3:
-                        changeEntryTiming();
+                        printStudentsList();
                         break;
                     case 4:
+                        changeEntryTiming();
+                        break;
+                    case 5:
                         AddUserView addUserView = new AddUserView();
                         addUserView.print();
                         break;
-                    case 5:
+                    case 6:
                         changePassword();
                         break;
-                    case 6:
+                    case 7:
                         LogoutView logoutView = new LogoutView();
                         logoutView.print();
                         return;
@@ -65,6 +72,62 @@ public final class AdminMainView extends View {
                 System.out.println(e.getLocalizedMessage());
             }
         } while (true);
+    }
+
+    public void printStudentsList() {
+
+        while (true) {
+
+            System.out.print("Enter course code or Q to quit: ");
+            String courseCode = Helper.readLine();
+            if (courseCode.equals("Q")) {
+                break;
+            }
+
+            if (Database.COURSES.containsKey(courseCode)) {
+                
+                Course course = Database.COURSES.get(courseCode);
+                
+                int choice;
+                System.out.print("Print by:\n1. Course\n2.Index\nChoice: ");
+                while (true) {
+                    try {
+                        choice = Integer.parseInt(Helper.readLine());
+                        if (choice == 1 || choice == 2) {
+                            break;
+                        } else {
+                            throw new Exception();
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Please enter a valid number");
+                    }
+                }
+
+                if (choice == 1) {
+                    CourseManager.printStudentListByCourse(course, true);
+                } else {
+                    CourseManager.printIndexList(course, false);
+
+                    String courseIndex;
+                    System.out.print("Enter Index Number: ");
+                    while (true) {
+                        try {
+                            courseIndex = Helper.readLine();
+                            if (course.containsIndex(courseIndex)) {
+                                CourseManager.printStudentListByIndex(course.getIndex(courseIndex), false);
+                                break;
+                            } else {
+                                throw new Exception();
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Please enter a valid number");
+                        }
+                    }
+                }
+            } else {
+                System.out.println("The course code does not exist.");
+            }
+        }
     }
 
     /**

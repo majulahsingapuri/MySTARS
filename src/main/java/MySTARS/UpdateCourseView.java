@@ -29,8 +29,7 @@ public class UpdateCourseView extends View {
             System.out.println("6: Return to AdminMain");
             
             try{
-                choice = Helper.sc.nextInt();
-                Helper.readLine();
+                choice = Integer.parseInt(Helper.readLine());
             } catch (Exception e) {
                 choice = -1;
                 Helper.readLine();
@@ -47,7 +46,7 @@ public class UpdateCourseView extends View {
                     break;
 
                 case 3:
-                    changeCourseVacancies();
+                    changeClassSize();
                     break;
 
                 case 4:
@@ -107,6 +106,9 @@ public class UpdateCourseView extends View {
                         }
                     }
 
+                    Database.serialise(FileType.COURSES);
+                    Database.serialise(FileType.USERS);
+
                     System.out.println("Course Code changed Successfully!");
                     Helper.pause();
                 } else {
@@ -156,6 +158,9 @@ public class UpdateCourseView extends View {
                         }
                     }
 
+                    Database.serialise(FileType.COURSES);
+                    Database.serialise(FileType.USERS);
+
                     System.out.println("Course Description changed Successfully!");
                 } else {
                     System.out.println("Aborting");
@@ -171,7 +176,7 @@ public class UpdateCourseView extends View {
     /**
      * Changes the Course vacancies for {@link Course}s in the {@link Database} objects.
      */
-    private void changeCourseVacancies() {
+    private void changeClassSize() {
 
         clearScreen("Admin Main > Update Course > Change Course Vacancies");
 
@@ -202,17 +207,21 @@ public class UpdateCourseView extends View {
                     if (courseIndex != null) {
                         
                         try {
-                            System.out.print("Enter new number of Vacancies: ");
-                            int newVacancies = Integer.parseInt(Helper.readLine());
+                            System.out.print("Enter new Class Size: ");
+                            int newClassSize = Integer.parseInt(Helper.readLine());
 
-                            if (newVacancies > courseIndex.getStudents().length) {
+                            if (newClassSize < courseIndex.getStudents().length) {
                                 
-                                System.out.print("The Vacancies for the Index " + courseIndex.getCourseIndex() + " will be changed from " + courseIndex.getVacancies() + " to " + newVacancies + "\n\nConfirm? y/n:");
+                                System.out.print("The Class Size for the Index " + courseIndex.getCourseIndex() + " will be changed from " + courseIndex.getClassSize() + " to " + newClassSize + "\n\nConfirm? y/n:");
                                 String confirm = Helper.readLine();
                                 if (confirm.equals("Y")) {
                                 
-                                    courseIndex.setVacancies(newVacancies);
-                                    System.out.println("Course Description changed Successfully!");
+                                    courseIndex.setClassSize(newClassSize);
+
+                                    Database.serialise(FileType.COURSES);
+                                    Database.serialise(FileType.USERS);
+
+                                    System.out.println("Class Size changed successfully!");
                                 } else {
                                     System.out.println("Aborting");
                                     Helper.pause();
@@ -274,6 +283,8 @@ public class UpdateCourseView extends View {
 
                 //TODO: Confirm it works properly after error checking on Course Side.
                 course.addIndices(numIndices);
+                Database.serialise(FileType.COURSES);
+                Database.serialise(FileType.USERS);
                 Helper.pause();
             } else {
                 System.out.println("Course does not yet exist!");
@@ -282,8 +293,6 @@ public class UpdateCourseView extends View {
         }
     }
 
-    //TODO: check if this works properly.
-    // - What if there are multiple of the same lesson type? do we need a lesson ID number?
     /**
      * Changes the location for a class.
      */
@@ -327,7 +336,7 @@ public class UpdateCourseView extends View {
                                 break;
                             }
 
-                            Integer lessonID;
+                            int lessonID;
                             try {
                                 lessonID = Integer.parseInt(id);
 
@@ -349,6 +358,9 @@ public class UpdateCourseView extends View {
                                                     databaseStudent.getCourse(courseCode).getIndex(index).getLesson(lessonID).setLocation(newLocation);    
                                                 }
                                             }
+
+                                            Database.serialise(FileType.COURSES);
+                                            Database.serialise(FileType.USERS);
 
                                             System.out.println("Lesson location changed Successfully!");
                                         } else {

@@ -21,7 +21,7 @@ public final class AddUserView extends View {
             if (username.equals("Q")) {
                 break;
             }
-            if (!Database.USERS.containsKey(username)) {
+            if (!Database.USERS.containsKey(username) || !username.matches("(^\\p{Alnum}+$)")) {
                 String accessLevel;
                 System.out.println("Enter user domain: ");
                 System.out.println("1. Admin");
@@ -52,6 +52,7 @@ public final class AddUserView extends View {
                     }
                     Admin admin = new Admin(username, password1);
                     Database.USERS.put(username, admin);
+                    Database.serialise(FileType.USERS);
                     System.out.println("New admin added successfully.");
                     Helper.pause();
                 } else {

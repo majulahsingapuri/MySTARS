@@ -1,6 +1,7 @@
 package MySTARS;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -96,7 +97,7 @@ public final class Lesson implements Serializable {
         int classTypeChoice; 
 
         do{
-            classTypeChoice = Helper.sc.nextInt();
+            classTypeChoice = Integer.parseInt(Helper.readLine());
             switch (classTypeChoice) {
                 case 1: 
                     return ClassType.LECTURE;
@@ -205,5 +206,16 @@ public final class Lesson implements Serializable {
     public Integer getLessonID() {
 
         return this.lessonID;
+    }
+
+    public boolean clashes(ArrayList<Lesson> lessons) {
+
+        for (Lesson lesson : lessons) {
+            if (this.time.overlaps(lesson.time) || this.location.equals(lesson.location)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
