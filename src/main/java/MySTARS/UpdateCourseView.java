@@ -286,7 +286,6 @@ public class UpdateCourseView extends View {
                     }
                 }
 
-                //TODO: Confirm it works properly after error checking on Course Side.
                 course.addIndices(numIndices);
                 Database.serialise(FileType.COURSES);
                 Database.serialise(FileType.USERS);
@@ -352,7 +351,7 @@ public class UpdateCourseView extends View {
                                         String newLocation = Helper.readLine();
 
                                         System.out.println("The location for the lesson will change from " + lesson.getLocation() + " to " + newLocation);
-                                        System.out.println(String.format("%-50s: ", "Confirm? y/n"));
+                                        System.out.print(String.format("%-50s: ", "Confirm? y/n"));
                                         String confirm = Helper.readLine();
                                         if (confirm.equals("Y")) {
                                         

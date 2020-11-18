@@ -8,7 +8,7 @@ import org.joda.time.format.DateTimeFormat;
 import java.io.*;
 
 /**
- * Represents one course
+ * Represents one course/module
  * @author Timothy
  * @version 1.0
  * @since 2020-11-1
@@ -224,7 +224,6 @@ public final class Course implements Serializable {
         return null != courseIndices.get(courseIndex);
     }
 
-
     /**
      * Add a User defined number of CourseIndices to the course.
      * Includes prompts for the User to enter all relevant details for each CourseIndex and Lesson.
@@ -419,6 +418,19 @@ public final class Course implements Serializable {
         return courseIndices.values().toArray(new CourseIndex[courseIndices.size()]);
     }
 
+	/**
+	 * A method to check the Course code to verify it matches a fixed pattern.
+	 * @param courseCode The String value of the course code.
+	 * @return {@code true} if the course code matches the specified pattern.
+	 */
+	public static boolean checkCourseCodeFormat(String courseCode) {
+
+		if(courseCode.matches("\\p{Upper}{2}\\d{4}") || courseCode.equals("Q")) {
+			return true;
+		} 
+		System.out.println("Invalid input. Course code must be two letters followed by four digits");
+		return false;
+	}
     /**
      * Make a simple copy of the course to be stored under the {@link Student} object.
      * @param status The current status of the Course.

@@ -39,7 +39,13 @@ public final class PrintTimeTableView extends View {
         return;
     }
 
-    private void printInformation(CourseStatus courseStatus, Student currentUser) {
+    //FIXME: the same exact method in AddCourseView. Remove one of these, or put the method in a more general class
+    /**
+     * Displays all the relevant information for courses that are of a particular {@link courseStatus} for a {@link Student}.
+     * @param courseStatus status of the course with respect to the student.
+     * @param currentUser the current user (is a {@link Student}).
+     */
+    protected static void printInformation(CourseStatus courseStatus, Student currentUser) {
 
         for (Course course : currentUser.getCourses(courseStatus)) {
 

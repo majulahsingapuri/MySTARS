@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 /**
  * Create new {@link Course} object and fills in necessary information.
- * 
  * @author Bhargav
  * @version 1.0
  * @since 2020-11-1
@@ -35,7 +34,7 @@ public final class AddCourseView extends View {
     }
 
     /**
-     * Prints prompts for the User to key in so that the relevant information for a new {@link Course} is keyed in. 
+     * Prints prompts for the admin user to key in so that the relevant information for a new {@link Course} is keyed in. 
      */
     public void adminAddCourse() {
 
@@ -46,7 +45,7 @@ public final class AddCourseView extends View {
                 break;
             }
 
-            if (Helper.checkCourseCodeFormat(courseCode)) {
+            if (Course.checkCourseCodeFormat(courseCode)) {
                 if (!Database.COURSES.containsKey(courseCode)) {
                     try {
                         
@@ -113,6 +112,10 @@ public final class AddCourseView extends View {
         }
     }
 
+    /**
+     * Displays all available course information. 
+     * Prompts student user to select a course to add to their own timetable.
+     */
     public void studentAddCourse() {
 
         Student currentUser = (Student) Database.CURRENT_USER;
@@ -122,7 +125,7 @@ public final class AddCourseView extends View {
             Helper.printLine(150);
             System.out.println(String.format("%6s ║ %-50s ║ %2s ║ %5s ║ %6s ║ %4s ║ %3s ║ %-13s ║ %-10s ║ %-26s", "Course", "Title", "AU", "Index", "Status", "Type", "Day", "Time", "Venue", "Remark"));
             Helper.printLine(150);
-            printInformation(CourseStatus.NOT_REGISTERED, currentUser);
+            PrintTimeTableView.printInformation(CourseStatus.NOT_REGISTERED, currentUser);
             Helper.printMediumSpace();
 
             if (currentUser.getCourses(CourseStatus.NOT_REGISTERED).length != 0) {
@@ -160,27 +163,6 @@ public final class AddCourseView extends View {
                 System.out.println("Please add courses to your plan from Check Vacancies!");
                 Helper.pause();
                 break;
-            }
-
-        }
-    }
-
-    private void printInformation(CourseStatus courseStatus, Student currentUser) {
-
-        for (Course course : currentUser.getCourses(courseStatus)) {
-
-            CourseIndex courseIndex = course.getIndices()[0];
-            ArrayList<Lesson> lessons = courseIndex.getLessons();
-            for (int i = 0; i < lessons.size(); i++) {
-                Lesson lesson = lessons.get(i);
-                DayOfWeek day = DayOfWeek.getDayOfWeek(lesson.getTime().getStart().getDayOfWeek());
-                String[] time = lesson.getTime().toString().split("[T:/]");
-                if (i == 0) {
-                    System.out.println(String.format("%6s ║ %-50.50s ║ %2s ║ %5s ║ %6s ║ %4s ║ %3s ║ %2s:%2s - %2s:%2s ║ %-10.10s ║ %-26s", course.getCourseCode(), course.getCourseName(), course.getCourseAU().value, courseIndex.getCourseIndex(), course.getStatus().label, lesson.getType().label, day.label, time[1], time[2], time[6], time[7], lesson.getLocation(), lesson.getRemarks()));
-                } else {
-                    System.out.println(String.format("%81s ║ %4s ║ %3s ║ %2s:%2s - %2s:%2s ║ %-10s ║ %-26s", "", lesson.getType().label, day.label, time[1], time[2], time[6], time[7], lesson.getLocation(), lesson.getRemarks()));
-                }
-                Helper.printLine(150);
             }
         }
     }

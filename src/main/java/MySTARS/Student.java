@@ -98,35 +98,24 @@ public final class Student extends User implements Comparable<Student> {
 
     /**
      * Checks if a String can be used as a matriculation number.
-     * @param matricNo the string you are testing
-     * @return returns whether the passed in value is in a valid matriculation number format
+     * @param matricNo the matriculation number.
+     * @return whether the passed in value is in a valid matriculation number format.
     */
     public static boolean isValidMatricNo(String matricNo) {
 
-        //has to have 9 characters
-        if (matricNo.length() != 9) {return false;}
-
-        //the first character has to be an uppercase letter
-        if (matricNo.charAt(0) < 'A' || matricNo.charAt(0) > 'Z') {return false;}
-
-        //the next 7 characters have to be digits
-        for (int i = 1; i < 8; i++){
-            if (matricNo.charAt(i) < '0' || matricNo.charAt(i) > '9'){
-                return false;
-            }
+        // should be two upper case letters with 7 lower case letter in between
+        if(matricNo.matches("\\p{Upper}\\d{7}\\p{Upper}")) {
+            return true;
+        } else {
+            return false;
         }
-
-        //the last character has to be an uppercase letter
-        if (matricNo.charAt(8) < 'A' || matricNo.charAt(8) > 'Z') {return false;}
-
-        //all conditions have been passed
-        return true;
     }
+
 
     /**
      * Checks if a String can be used as a new matriculation number.
-     * @param matricNo the string you are testing
-     * @return returns whether the passed in value is in a valid matriculation number format and has not been used yet
+     * @param matricNo the matriculation number.
+     * @return returns whether the passed in value is in a valid matriculation number format and has not been used yet.
     */
     public static boolean isValidNewMatricNo(String matricNo) {
 
@@ -141,7 +130,6 @@ public final class Student extends User implements Comparable<Student> {
                 }
             }
         }
-
         //all conditions have been passed
         return true;
     }

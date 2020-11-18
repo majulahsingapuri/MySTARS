@@ -1,12 +1,19 @@
 package MySTARS;
 
-    /**
-     * Gives the {@link User} the ability to check vacancies in a {@link Course}.
-     */
-    
+/**
+ * Gives the {@link User} the ability to check vacancies in a {@link Course}.
+ * Users can also add a {@link CourseIndex} to their own timetable.
+ * @author Bhargav
+ * @version 1.0
+ * @since 2020-11-1
+ */
 public class VacanciesView extends View {
     
     
+    /**
+     * Displays the number of vacancies in a particular {@link Course} or {@link CourseIndex} to the user.
+     * {@link User} is prompted to choose a {@link Course} and {@link CourseIndex}, and can choose to add it to their timetable.
+     */
     public void print() {
 
         if (Database.CURRENT_ACCESS_LEVEL == AccessLevel.ADMIN) {

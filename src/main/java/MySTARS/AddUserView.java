@@ -1,7 +1,7 @@
 package MySTARS;
 
 /**
- * Ads a new {@link Student} or {@link Admin} to the {@link Database}.
+ * Adds a new {@link Student} or {@link Admin} to the {@link Database}.
  * @author Bhargav
  * @version 1.0
  * @since 2020-11-1
@@ -9,7 +9,8 @@ package MySTARS;
 public final class AddUserView extends View {
 
     /**
-     * Required method from View. Prints prompts for the user to input so that all key information to create {@link Student} or {@link Admin} is present.
+     * Required method from View. 
+     * Prints prompts for the user to input so that all key information to create {@link Student} or {@link Admin} is present.
      */
     public void print() {
         
@@ -117,7 +118,7 @@ public final class AddUserView extends View {
                     }
                 }
             } else {
-                System.out.println("Please enter a valid username!");
+                System.out.println("Please enter a valid username (must be a letter followed by three digits)");
             }
         }
     }

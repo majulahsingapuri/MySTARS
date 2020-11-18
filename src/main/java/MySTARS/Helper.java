@@ -14,14 +14,14 @@ import javax.mail.internet.MimeMessage;
 
 /**
  * A Helper Class with all properties and methods that are generally needed across the application.
- * @author Bhargav, Jia Hui, Timothy Kah Ee
+ * @author Bhargav, Jia Hui, Timothy, Kah Ee
  * @version 1.0
  * @since 2020-11-1
  */
 public final class Helper {
 	
 	/**
-	 * A single Scanner item that reads input from console so that memory resources are efficiently used.
+	 * A single Scanner object that reads input from console so that memory resources are efficiently used.
 	 */
     public static Scanner sc = new Scanner(System.in);
 
@@ -47,8 +47,8 @@ public final class Helper {
 
 	/**
 	 * A date formatter that takes in the current day and time and returns a {@link org.joda.time.DateTime} object.
-	 * @param day A DayOfWeek Enum corresponding to the day of the week.
-	 * @param hour_24 The Hour in 24 hour format.
+	 * @param day A {@link DayOfWeek} Enum corresponding to the day of the week.
+	 * @param hour_24 The hour in 24 hour format.
 	 * @param minute The minutes of the hour.
 	 * @return A DateTime Object.
 	 */
@@ -99,7 +99,7 @@ public final class Helper {
     }
 
 	/**
-	 * A method to read passowords from Console without displaying the characters on the screen.
+	 * A method to read passwords from Console without displaying the characters on the screen.
 	 * @return A String representing the password that was keyed in.
 	 */
     public static String getPasswordInput(){
@@ -112,20 +112,6 @@ public final class Helper {
 			password = Helper.sc.nextLine();
 		}
 		return password;
-	}
-
-	/**
-	 * A method to check the Course code to verify it matches a fixed pattern.
-	 * @param courseCode The String value of the course code.
-	 * @return {@code true} if the course code matches the specified pattern.
-	 */
-	public static boolean checkCourseCodeFormat(String courseCode) {
-
-		if(courseCode.matches("\\p{Upper}{2}\\d{4}") || courseCode.equals("Q")) {
-			return true;
-		} 
-		System.out.println("Invalid input. Course code must be two letters followed by four digits");
-		return false;
 	}
 
 	/**
