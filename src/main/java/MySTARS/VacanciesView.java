@@ -10,7 +10,7 @@ public class VacanciesView extends View {
     public void print() {
 
         if (Database.CURRENT_ACCESS_LEVEL == AccessLevel.ADMIN) {
-            clearScreen("Admin Main > Check Course Vacanices");
+            clearScreen("Admin Main > Check Course Vacancies");
         } else if (Database.CURRENT_ACCESS_LEVEL == AccessLevel.STUDENT) {
             clearScreen("Student Main > Check Course Vacancies");
         }

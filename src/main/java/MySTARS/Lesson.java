@@ -211,7 +211,7 @@ public final class Lesson implements Serializable {
     public boolean clashes(ArrayList<Lesson> lessons) {
 
         for (Lesson lesson : lessons) {
-            if (this.time.overlaps(lesson.time) || this.location.equals(lesson.location)) {
+            if (this.time.overlaps(lesson.time)) {
                 return true;
             }
         }

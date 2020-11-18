@@ -1,8 +1,11 @@
 package MySTARS;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * Ads a new {@link Student} or {@link Admin} to the {@link Database}.
- * @author Bhargav
+ * @author Bhargav, Jia Hui
  * @version 1.0
  * @since 2020-11-1
  */
@@ -112,6 +115,10 @@ public final class AddUserView extends View {
                         Database.serialise(FileType.USERS);
                         System.out.println("New student added successfully.");
                         Helper.pause();
+
+                        Helper.printSmallSpace();
+                        printAllStudents();
+                        Helper.pause();
                     } else {
                         System.out.println("Aborting");
                     }
@@ -119,6 +126,32 @@ public final class AddUserView extends View {
             } else {
                 System.out.println("Please enter a valid username!");
             }
+        }
+    }
+
+    /**
+     * Prints a list of students in the {@link Database}.
+     */
+    private void printAllStudents(){
+        ArrayList<Student> studentsArray = new ArrayList<Student>();
+
+        for (User u : Database.USERS.values()){
+            if (u.getAccessLevel() == AccessLevel.STUDENT){
+                Student stu = (Student) u;
+                studentsArray.add(stu);
+            }
+        }
+
+        Collections.sort(studentsArray);
+
+        System.out.println("All Students in Database: \n");
+        System.out.println(String.format("%-10.10s ║ %-10.10s ║ %-70.70s ║ %-6.6s", "Username", "Matric No.","Name", "Gender"));
+
+        Helper.printLine(150);
+
+        for (Student student : studentsArray) {
+            System.out.println(String.format("%-10.10s ║ %-10.10s ║ %-70.70s ║ %-6.6s", student.getUsername(),student.getMatricNumber(), student.getFirstName() + " " + student.getLastName(), student.getGender().label));
+            Helper.printLine(150);
         }
     }
 }

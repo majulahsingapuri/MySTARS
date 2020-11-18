@@ -19,7 +19,7 @@ public final class CourseManager {
     public static void printCourseList(CourseStatus status) {
 
         printLine();
-        System.out.println(String.format("%12.12s ║ %-50.50s ║ %-82.82s", "Course Code", "Course Name", "Course Description"));
+        System.out.println(String.format("%12.12s ║ %-35.35s ║ %-15.15s ║ %-82.82s", "Course Code", "Course Name", "Course School", "Course Description"));
         printLine();
 
         for (HashMap.Entry<String, Course> courseEntry : Database.COURSES.entrySet()) {
@@ -27,7 +27,7 @@ public final class CourseManager {
             Course course = courseEntry.getValue();
 
             if (course.getStatus() == status) {
-                System.out.println(String.format("%12.12s ║ %-50.50s ║ %-82.82s", course.getCourseCode(), course.getCourseName(), course.getDescription()));
+                System.out.println(String.format("%12.12s ║ %-35.35s ║ %-15.15s ║ %-82.82s", course.getCourseCode(), course.getCourseName(), course.getSchool(), course.getDescription()));
                 printLine();
             }
         }
@@ -41,13 +41,13 @@ public final class CourseManager {
     public static void printCourseList(CourseStatus status, Student student) {
 
         printLine();
-        System.out.println(String.format("%12.12s ║ %-50.50s ║ %-82.82s", "Course Code", "Course Name", "Course Description"));
+        System.out.println(String.format("%12.12s ║ %-35.35s ║ %-15.15s ║ %-82.82s", "Course Code", "Course Name", "Course School", "Course Description"));
         printLine();
 
         for (Course course: student.getCourses(status)) {
 
             if (course.getStatus() == status) {
-                System.out.println(String.format("%12.12s ║ %-50.50s ║ %-82.82s", course.getCourseCode(), course.getCourseName(), course.getDescription()));   
+                System.out.println(String.format("%12.12s ║ %-35.35s ║ %-15.15s ║ %-82.82s", course.getCourseCode(), course.getCourseName(), course.getSchool(), course.getDescription()));   
             }
             printLine();
         }
@@ -67,7 +67,7 @@ public final class CourseManager {
             ArrayList<Lesson> lessons = courseIndex.getLessons();
             for (int i = 0; i < lessons.size(); i++) {
                 Lesson lesson = lessons.get(i);
-                DayOfWeek day = DayOfWeek.getDayOfWeek(lesson.getTime().getStart().getDayOfWeek());
+                DayOfWeek day = DayOfWeek.getDayOfWeek(lesson.getTime().getStart().getDayOfMonth());
                 String[] time = lesson.getTime().toString().split("[T:/]");
                 if (i == 0) {
                     System.out.println(String.format("%6s ║ %-50.50s ║ %2s ║ %5s ║ %10s ║ %4s ║ %3s ║ %2s:%2s - %2s:%2s ║ %-10.10s ║ %-22s", course.getCourseCode(), course.getCourseName(), course.getCourseAU().value, courseIndex.getCourseIndex(), courseIndex.getClassSize(), lesson.getType().label, day.label, time[1], time[2], time[6], time[7], lesson.getLocation(), lesson.getRemarks()));
@@ -114,13 +114,14 @@ public final class CourseManager {
     public static void printLesson(CourseIndex index) {
 
         printLine();
-        System.out.println(String.format("%-10s ║ Lesson Type ║ Class Size ║ %-13.13s ║ Location", "Lesson ID.", "Lesson Time"));
+        System.out.println(String.format("%-10s ║ Lesson Type ║ Class Size ║ Day ║ %-13.13s ║ Location", "Lesson ID.", "Lesson Time"));
         printLine();
 
         for (Lesson lesson : index.getLessons()) {
-
+            
+            DayOfWeek day = DayOfWeek.getDayOfWeek(lesson.getTime().getStart().getDayOfMonth());
             String[] time = lesson.getTime().toString().split("[T:/]");
-            System.out.println(String.format("%-10d ║ %-11.11s ║ %-10.10s ║ %2s:%2s - %2s:%2s ║ %-48.48s",lesson.getLessonID(), lesson.getType().label, index.getClassSize(), time[1], time[2], time[6], time[7], lesson.getLocation()));
+            System.out.println(String.format("%-10d ║ %-11.11s ║ %-10.10s ║ %-3.3s ║ %2s:%2s - %2s:%2s ║ %-48.48s",lesson.getLessonID(), lesson.getType().label, index.getClassSize(), day.label,time[1], time[2], time[6], time[7], lesson.getLocation()));
             printLine();
         }
     }
@@ -132,11 +133,12 @@ public final class CourseManager {
     public static void printLesson(Lesson lesson) {
 
         printLine();
-        System.out.println(String.format("%-10s ║ Lesson Type ║ %-13.13s ║ Location", "Lesson ID.", "Lesson Time"));
+        System.out.println(String.format("%-10s ║ Lesson Type ║ Day ║ %-13.13s ║ Location", "Lesson ID.", "Lesson Time"));
         printLine();
 
+        DayOfWeek day = DayOfWeek.getDayOfWeek(lesson.getTime().getStart().getDayOfMonth());
         String[] time = lesson.getTime().toString().split("[T:/]");
-        System.out.println(String.format("%-10d ║ %-11.11s ║ %2s:%2s - %2s:%2s ║ %-48.48s",lesson.getLessonID(), lesson.getType().label, time[1], time[2], time[6], time[7], lesson.getLocation()));
+        System.out.println(String.format("%-10d ║ %-11.11s ║ %-3.3s ║ %2s:%2s - %2s:%2s ║ %-48.48s",lesson.getLessonID(), lesson.getType().label, day.label,time[1], time[2], time[6], time[7], lesson.getLocation()));
         printLine();
         
     }
@@ -167,7 +169,7 @@ public final class CourseManager {
             Collections.sort(studentsArray);
         }
 
-        System.out.println("Index Number: " + courseIndex.getCourseIndex());
+        System.out.println("Index Number: " + courseIndex.getCourseIndex() + "");
         printLine();
         System.out.println(String.format("Matric No. ║ %-70.70s ║ %-6.6s ║ %-10.10s", "Name", "Gender", "Status"));
         printLine();

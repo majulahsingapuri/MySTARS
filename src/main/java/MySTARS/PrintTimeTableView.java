@@ -47,7 +47,7 @@ public final class PrintTimeTableView extends View {
             ArrayList<Lesson> lessons = courseIndex.getLessons();
             for (int i = 0; i < lessons.size(); i++) {
                 Lesson lesson = lessons.get(i);
-                DayOfWeek day = DayOfWeek.getDayOfWeek(lesson.getTime().getStart().getDayOfWeek());
+                DayOfWeek day = DayOfWeek.getDayOfWeek(lesson.getTime().getStart().getDayOfMonth());
                 String[] time = lesson.getTime().toString().split("[T:/]");
                 if (i == 0) {
                     System.out.println(String.format("%6s ║ %-50.50s ║ %2s ║ %5s ║ %6s ║ %4s ║ %3s ║ %2s:%2s - %2s:%2s ║ %-10.10s ║ %-26s", course.getCourseCode(), course.getCourseName(), course.getCourseAU().value, courseIndex.getCourseIndex(), course.getStatus().label, lesson.getType().label, day.label, time[1], time[2], time[6], time[7], lesson.getLocation(), lesson.getRemarks()));
