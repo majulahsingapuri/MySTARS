@@ -1,7 +1,7 @@
 package MySTARS;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -161,19 +161,28 @@ public final class CourseManager {
      */
     public static void printStudentListByIndex(CourseIndex courseIndex, boolean sorted) {
 
-        Student[] studentsArray = courseIndex.getStudents();
+        ArrayList<Student> studentsArray = courseIndex.getStudents();
 
         if (sorted) {
-            Arrays.sort(studentsArray);
+            Collections.sort(studentsArray);
         }
 
         System.out.println("Index Number: " + courseIndex.getCourseIndex());
         printLine();
-        System.out.println("Matric No. ║ " + String.format("%-80.80s ║ %6.6s", "Name", "Gender"));
+        System.out.println(String.format("Matric No. ║ %-70.70s ║ %-6.6s ║ %-10.10s", "Name", "Gender", "Status"));
         printLine();
 
         for (Student student : studentsArray) {
-            System.out.println(String.format("%10.10s ║ %-80.80s ║ %-6.6s", student.getMatricNumber(), student.getFirstName() + " " + student.getLastName(), student.getGender().label));
+            System.out.println(String.format("%-10.10s ║ %-70.70s ║ %-6.6s ║ %-10.10s", student.getMatricNumber(), student.getFirstName() + " " + student.getLastName(), student.getGender().label, CourseStatus.REGISTERED.label));
+            printLine();
+        }
+
+        ArrayList<Student> waitlistArray = courseIndex.getWaitlistStudents();
+        if (sorted) {
+            Collections.sort(waitlistArray);
+        }
+        for (Student student : waitlistArray) {
+            System.out.println(String.format("%-10.10s ║ %-70.70s ║ %-6.6s ║ %-10.10s", student.getMatricNumber(), student.getFirstName() + " " + student.getLastName(), student.getGender().label, CourseStatus.WAITLIST.label));
             printLine();
         }
     }

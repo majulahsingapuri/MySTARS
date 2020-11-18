@@ -26,11 +26,25 @@ public class SwapIndexView extends View {
                     //User has entered "Q"
                     break;
                 } else {
-                    CourseIndex currentUserIndex = currentUser.getCourse(courseCode).getIndices()[0];
-                    CourseIndex secondUserIndex = secondUser.getCourse(courseCode).getIndices()[0];
-                    if (!currentUser.clashes(courseCode, secondUserIndex.getCourseIndex()) && !secondUser.clashes(courseCode, currentUserIndex.getCourseIndex())) {
-                        currentUser.swapIndex(courseCode, secondUserIndex);
-                        secondUser.swapIndex(courseCode, currentUserIndex);
+                    String currentUserIndexString = currentUser.getCourse(courseCode).getIndicesString()[0];
+                    String secondUserIndexString = secondUser.getCourse(courseCode).getIndicesString()[0];
+                    if (!currentUser.clashes(courseCode, secondUserIndexString) && !secondUser.clashes(courseCode, currentUserIndexString)) {
+                        
+                        CourseIndex tempIndex = currentUser.removeIndex(courseCode, currentUserIndexString);
+                        secondUser.setIndex(courseCode, tempIndex);
+                        tempIndex = secondUser.removeIndex(courseCode, secondUserIndexString);
+                        currentUser.setIndex(courseCode, tempIndex);
+
+                        Course course = Database.COURSES.get(courseCode);
+                        CourseIndex currentUserIndex = course.getIndex(currentUserIndexString);
+                        CourseIndex secondUserIndex = course.getIndex(secondUserIndexString);
+
+                        Student tempStudent = currentUserIndex.removeStudent(currentUser.getUsername());
+                        secondUserIndex.addStudent(tempStudent);
+                        tempStudent = secondUserIndex.removeStudent(secondUser.getUsername());
+                        currentUserIndex.addStudent(tempStudent);
+
+
                         Database.serialise(FileType.COURSES);
                         Database.serialise(FileType.USERS);
                         System.out.println("Swapped successfully.");

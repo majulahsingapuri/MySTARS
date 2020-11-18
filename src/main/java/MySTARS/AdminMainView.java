@@ -122,6 +122,7 @@ public final class AdminMainView extends View {
                 LoginView.setLoginTime(startTime, endTime);
                 System.out.println("Entry time updated succesfully.");
                 Helper.pause();
+                break;
             } catch (Exception e) {
                 System.out.println(e.getLocalizedMessage());
                 Helper.pause();

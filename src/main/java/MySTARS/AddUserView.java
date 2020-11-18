@@ -16,12 +16,12 @@ public final class AddUserView extends View {
         clearScreen("AdminMain > Add User");
 
         while (true) {
-            System.out.print("Enter username or Q to quit: ");
+            System.out.print(String.format("%-50s: ", "Enter new username or Q to quit"));
             String username = Helper.readLine();
             if (username.equals("Q")) {
                 break;
             }
-            if (!Database.USERS.containsKey(username) && username.matches("(^\\p{Alnum}+$)")) {
+            if (!Database.USERS.containsKey(username) && username.matches("(^\\p{Alpha}+\\p{Digit}{3}$)")) {
                 String accessLevel;
                 System.out.println("Enter user domain");
                 System.out.println("1. Admin");
@@ -33,7 +33,7 @@ public final class AddUserView extends View {
                     if (accessLevel.equals("1") || accessLevel.equals("2")) {
                         break;
                     } else {
-                        System.out.println("Invalid input");
+                        System.out.println("Please enter a username followed by 3 digits");
                     }
                 }
 
@@ -117,7 +117,7 @@ public final class AddUserView extends View {
                     }
                 }
             } else {
-                System.out.println("User has already been added!");
+                System.out.println("Please enter a valid username!");
             }
         }
     }

@@ -44,20 +44,12 @@ public class VacanciesView extends View {
                         Student currentUser = (Student) Database.CURRENT_USER;
                         Course studentCourse = currentUser.getCourse(courseCode);
                         if (studentCourse == null) {
-                            System.out.print(String.format("%-50s: ", "Add these lesson timings to your timetable? y/n"));
+                            System.out.print(String.format("%-50s: ", "Add these lesson timings to your plan? y/n"));
                             String answer = Helper.readLine();
 
                             if (answer.equals("Y")) {
-                                try {
-                                    currentUser.addCourse(courseCode,courseIndex);
-                                    Database.serialise(FileType.USERS);
-                                    Database.serialise(FileType.COURSES);
-                                    System.out.println(courseCode + " has been added successfully.");
-                                    Helper.pause();
-                                    break;
-                                } catch (Exception e) {
-                                    System.out.println(e.getLocalizedMessage());
-                                }
+                                currentUser.planCourse(course, index);
+                                System.out.println("Course added to your plan!");
                             }
                         }
                     }

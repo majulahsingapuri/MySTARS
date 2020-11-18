@@ -25,6 +25,7 @@ public final class PrintTimeTableView extends View {
 
         printInformation(CourseStatus.REGISTERED, currentUser);
         printInformation(CourseStatus.WAITLIST, currentUser);
+        printInformation(CourseStatus.NOT_REGISTERED, currentUser);
 
         System.out.println("Student Information:");
         System.out.println(String.format("%-30s : %s\n%-30s : %s\n%-30s : %s\n%-30s : %s\n%-30s : %s\n%-30s : %s\n",

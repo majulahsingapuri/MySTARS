@@ -290,6 +290,17 @@ public final class Student extends User implements Comparable<Student> {
     }
 
     /**
+     * Adds {@link Course}s to the Student's plan.
+     * @param course The course to be added.
+     * @param courseIndex The index to be added.
+     * @return {@link CourseStatus#NOT_REGISTERED}
+     */
+    public CourseStatus planCourse(Course course, CourseIndex courseIndex) {
+        this.courses.put(course.getCourseCode(), course.simpleCopy(CourseStatus.NOT_REGISTERED, courseIndex.simpleCopy()));
+        return CourseStatus.NOT_REGISTERED;
+    }
+
+    /**
      * Adds a course to the {@link Student}'s timetable. If there is no timetable clash, will try to register the course.
      * If the course has no vacancies, the student will be put on the waitlist.
      * @param courseCode the {@link Course} code of the desired course to be added, the student cannot be registered in the course nor on its waitlist.
@@ -299,7 +310,6 @@ public final class Student extends User implements Comparable<Student> {
     */
     public CourseStatus addCourse(String courseCode, String courseIndex) throws Exception {
         
-        Database.deserialise(FileType.COURSES);
         if (!Database.COURSES.containsKey(courseCode)) {
             throw new Exception("Course " + courseCode + " does not exist!");
         } else if (clashes(courseCode, courseIndex)) {
@@ -324,7 +334,7 @@ public final class Student extends User implements Comparable<Student> {
         } else {
 
             this.courses.put(courseCode, course.simpleCopy(CourseStatus.WAITLIST, courseInd.simpleCopy()));
-            courseInd.addToWaitlist(this.getUsername());
+            courseInd.addToWaitlist(this.simpleCopy());
             Database.serialise(FileType.USERS);
             Database.serialise(FileType.COURSES);
             return CourseStatus.WAITLIST;
@@ -338,8 +348,6 @@ public final class Student extends User implements Comparable<Student> {
     */
     public void dropCourse(String courseCode) throws Exception {
 
-        Database.deserialise(FileType.COURSES);
-
         if (!Database.COURSES.containsKey(courseCode)) {
             throw new Exception("Course " + courseCode + " does not exist!");
         } else if (!this.courses.containsKey(courseCode)) {
@@ -350,20 +358,26 @@ public final class Student extends User implements Comparable<Student> {
         CourseIndex courseInd = course.getIndex(this.courses.get(courseCode).getIndices()[0].getCourseIndex());
         CourseStatus courseStatus = this.courses.get(courseCode).getStatus();
         
-        if (courseStatus == CourseStatus.REGISTERED) {
-            courseInd.unenrollStudent(this);
-            removeAU(course.getCourseAU());
-            this.courses.remove(courseCode);
-            Database.serialise(FileType.COURSES);
-            Database.serialise(FileType.USERS);
-        } else if (courseStatus == CourseStatus.WAITLIST) {
-            courseInd.removeFromWaitlist(this.getUsername());
-            this.courses.remove(courseCode);
-            Database.serialise(FileType.COURSES);
-            Database.serialise(FileType.USERS);
-        } else {
-            //ensure logic is not broken
-            throw new Exception("Invalid course courseStatus!");
+        switch (courseStatus) {
+            case REGISTERED:
+                courseInd.unenrollStudent(this);
+                removeAU(course.getCourseAU());
+                this.courses.remove(courseCode);
+                Database.serialise(FileType.COURSES);
+                Database.serialise(FileType.USERS);
+                break;
+            case WAITLIST:
+                courseInd.removeFromWaitlist(this.getUsername());
+                this.courses.remove(courseCode);
+                Database.serialise(FileType.COURSES);
+                Database.serialise(FileType.USERS);
+                break;
+            case NOT_REGISTERED:
+                this.courses.remove(courseCode);
+                System.out.println("Course Removed from Plan");
+                break;
+            case NONE:
+                throw new Exception("Invalid course courseStatus!");
         }
     }
 
@@ -377,8 +391,6 @@ public final class Student extends User implements Comparable<Student> {
      * @exception Exception if the new index clashes with the student's timetable or the new index has no vancancies
     */
     public void changeIndex(String code, String currentInd, String newInd) throws Exception {
-
-        Database.deserialise(FileType.COURSES);
 
         if (!Database.COURSES.containsKey(code)) {
             throw new Exception("Course " + code + " does not exist!");
@@ -465,25 +477,17 @@ public final class Student extends User implements Comparable<Student> {
         }
     }
 
-    /**
-     * Used to swap indices with another student.
-     * Different from changeIndex(...) as vacancies should not be checked.
-     * Timetable clashes will have already been checked before this method is called.
-     * @param courseCode the course code of the course to be updated
-     * @param newIndex the course index to be swapped to
-    */
-	public void swapIndex(String courseCode, CourseIndex newIndex) {
-
-        Course course = Database.COURSES.get(courseCode);
-
-        CourseIndex currentIndex = course.getIndex(this.courses.get(courseCode).getIndicesString()[0]);
-        currentIndex.removeStudent(this.getUsername());
+    public void setIndex(String courseCode, CourseIndex courseIndex) {
         
-        newIndex.addStudent(this);
-        this.courses.put(courseCode, course.simpleCopy(CourseStatus.REGISTERED, newIndex));
-
+        courses.get(courseCode).addIndex(courseIndex);
         Database.serialise(FileType.USERS);
-        Database.serialise(FileType.COURSES);
+    }
+
+    public CourseIndex removeIndex(String courseCode, String courseIndex) {
+
+        CourseIndex removedIndex = courses.get(courseCode).removeIndex(courseIndex);
+        Database.serialise(FileType.USERS);
+        return removedIndex;
     }
     
     /**

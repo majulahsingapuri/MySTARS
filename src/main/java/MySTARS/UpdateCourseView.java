@@ -214,10 +214,10 @@ public class UpdateCourseView extends View {
                             System.out.print(String.format("%-50s: ", "Enter new Class Size"));
                             int newClassSize = Integer.parseInt(Helper.readLine());
 
-                            if (newClassSize >= courseIndex.getStudents().length) {
+                            if (newClassSize >= courseIndex.getStudents().size()) {
                                 
                                 System.out.println("The Class Size for the Index " + courseIndex.getCourseIndex() + " will be changed from " + courseIndex.getClassSize() + " to " + newClassSize);
-                                System.out.println(String.format("%-50s: ", "Confirm? y/n"));
+                                System.out.print(String.format("%-50s: ", "Confirm? y/n"));
                                 String confirm = Helper.readLine();
                                 if (confirm.equals("Y")) {
                                 

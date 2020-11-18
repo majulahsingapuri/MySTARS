@@ -13,8 +13,8 @@ import org.joda.time.DateTime;
 public final class Database {
     
     //TODO Change directory before submission
-    // private static String filePath = "src/main/java/Files/";
-    private static String filePath = "";
+    private static String filePath = "src/main/java/Files/";
+    // private static String filePath = "";
 
     /**
      * A {@code Hashmap<String, Course>} that stores all {@link Course}s and its contained information.
@@ -140,11 +140,6 @@ public final class Database {
      */
     private void resetUsers() {
         USERS.put("ADMIN", new Admin("ADMIN", "AdminPassword"));
-        USERS.put("BHARGAV", new Admin("BHARGAV", "OODPisgood"));
-        USERS.put("TIMOTHY", new Admin("TIMOTHY", "IloveOODP"));
-        USERS.put("ESTHER", new Admin("ESTHER", "JavaForLife"));
-        USERS.put("NICOLETTE", new Admin("NICOLETTE", "this.isBest"));
-        USERS.put("JIAHUI", new Admin("JIAHUI", "return"));
     }
 
     /**

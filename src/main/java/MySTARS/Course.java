@@ -246,7 +246,7 @@ public final class Course implements Serializable {
                 if (courseIndex.length() == 5 && courseIndex.matches("(^\\d{5}$)") && !this.containsIndex(courseIndex)) {
                     break;
                 } else {
-                    System.out.println("Enter a valid index number.");
+                    System.out.println("Enter a valid 5 digit index number.");
                 }
             }
 
@@ -379,6 +379,18 @@ public final class Course implements Serializable {
             System.out.println(courseIndex + " added to courseIndices!");
             Helper.printMediumSpace();
         }
+    }
+
+    /**
+     * Directly removes a particular CourseIndex to the current Course.
+     * @param courseIndex The index to be removed to the Course.
+     * @return The removed CourseIndex
+     */
+    public CourseIndex removeIndex(String courseIndex) {
+
+        CourseIndex removedIndex = courseIndices.remove(courseIndex);
+        Database.serialise(FileType.COURSES);
+        return removedIndex;
     }
 
     /**

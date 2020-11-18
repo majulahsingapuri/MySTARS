@@ -47,6 +47,12 @@ public final class CourseIndex implements Serializable {
     private LinkedList<String> waitlist = new LinkedList<String>();
 
     /**
+     * Hashmap of currently waitlisted students.
+     * Matriculation numbers used as keys to access the respective Student objects
+     */
+    private HashMap<String, Student> waitlistedStudents = new HashMap<String, Student>();
+
+    /**
      * Hashmap of currently enrolled students.
      * Matriculation numbers used as keys to access the respective Student objects
      */
@@ -180,13 +186,24 @@ public final class CourseIndex implements Serializable {
     }
 
     /**
-     * Add student's username to the index waitlist.
-     * @param username student's username.
+     * Return an array of {@link Student}s that are on Waitlist.
+     * @return A Student array.
      */
-    public void addToWaitlist(String username) {
+    public ArrayList<Student> getWaitlistStudents() {
 
-        waitlist.add(username);
-        System.out.println(username + " added to waitlist");
+        Collection<Student> values = this.waitlistedStudents.values();
+        return new ArrayList<Student>(values);
+    }
+
+    /**
+     * Add student to the index waitlist.
+     * @param student The Student to be added.
+     */
+    public void addToWaitlist(Student student) {
+
+        waitlist.add(student.getUsername());
+        waitlistedStudents.put(student.getUsername(), student);
+        System.out.println(student.getUsername() + " added to waitlist");
     }
 
     /**
@@ -195,8 +212,8 @@ public final class CourseIndex implements Serializable {
      */
     public void removeFromWaitlist(String username) {
 
-        //TODO have a better implementation for this. Leave this first for testing purposes but change in final version.
         if(waitlist.remove(username)) {
+            waitlistedStudents.remove(username);
             System.out.println("Successfully removed student");
         } else {
             System.out.println("Name not found");
@@ -207,9 +224,10 @@ public final class CourseIndex implements Serializable {
      * Returns an array of students currently enrolled in the index.
      * @return array of students currently enrolled in the index.
      */
-    public Student[] getStudents() {
+    public ArrayList<Student> getStudents() {
         
-        return this.enrolledStudents.values().toArray(new Student[enrolledStudents.size()]);
+        Collection<Student> values = this.enrolledStudents.values();
+        return new ArrayList<Student>(values);
     }
 
     /**
@@ -228,7 +246,7 @@ public final class CourseIndex implements Serializable {
             System.out.print("Error: no more vacancies! do you want to be added to waitlist? y/n: ");
             answer = Helper.readLine();
             if (answer.equals("Y")) {
-                addToWaitlist(username);
+                addToWaitlist(student);
                 Database.serialise(FileType.COURSES);
                 Database.serialise(FileType.USERS);
             }
@@ -265,13 +283,13 @@ public final class CourseIndex implements Serializable {
 
         if(this.vacancies > 0 && waitlist.size() > 0) {
             String username = waitlist.removeFirst();
+            Student student = waitlistedStudents.remove(username);
             System.out.println("removed first student in waitlist");
             
-            Student student = (Student) Database.USERS.get(username);
             if (student != null) {
                 try {
                     if (student.addCourseFromWaitlist(this)){
-                        enrolledStudents.put(username, student.simpleCopy());
+                        enrolledStudents.put(student.getUsername(), student);
                         this.vacancies -= 1;
                         Database.serialise(FileType.COURSES);
                         Database.serialise(FileType.USERS);
