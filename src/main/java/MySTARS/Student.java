@@ -107,6 +107,7 @@ public final class Student extends User implements Comparable<Student> {
         if(matricNo.matches("\\p{Upper}\\d{7}\\p{Upper}")) {
             return true;
         } else {
+            System.out.println("Invalid format. Matric number must be two letters separated by 7 digits.");
             return false;
         }
     }
@@ -126,6 +127,7 @@ public final class Student extends User implements Comparable<Student> {
             if (u.getAccessLevel() == AccessLevel.STUDENT) {
                 Student s = (Student) u;
                 if (s.getMatricNumber().equals(matricNo)) {
+                    System.out.println("Matric number already taken.");
                     return false;
                 }
             }
