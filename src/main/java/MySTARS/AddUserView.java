@@ -87,15 +87,23 @@ public final class AddUserView extends View {
                     
                     String matricNumber;
                     while (true) {
-                        System.out.print(String.format("%-50s: ", "Enter the Student's Matric number"));
+                        System.out.print(String.format("%-50s: ", "Enter the Student's matric number"));
                         matricNumber = Helper.readLine();
-                        if (Student.isValidNewMatricNo(matricNumber)) {
-                            break;
+                        if (Student.isValidMatricNo(matricNumber)) {
+                            if(Student.isValidNewMatricNo(matricNumber)) {
+                                break;
+                            }
+                            System.out.println("Matric number already taken");
                         } else {
-                            System.out.println("Invalid Matric Number!");
+                            System.out.println("Invalid matric number");
                         }
                     }
 
+                        // if (Student.isValidNewMatricNo(matricNumber)) {
+                        //     break;
+                        // } else {
+                        //     System.out.println("Invalid Matric Number!");
+                        // }
                     Helper.printLine(74);
 
                     System.out.println("\n\nNew Student Details:");
@@ -118,7 +126,11 @@ public final class AddUserView extends View {
                     }
                 }
             } else {
-                System.out.println("Please enter a valid username (must be a letter followed by three digits)");
+                if(Database.USERS.containsKey(username)) {
+                    System.out.println("Username already taken");
+                } else {
+                    System.out.println("Invalid username format (must be letters followed by three digits)");
+                }
             }
         }
     }
