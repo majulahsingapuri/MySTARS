@@ -16,7 +16,7 @@ import java.util.Collection;
 public final class CourseIndex implements Serializable {
     
     /**
-     * The number of vacancies for this index (initially set to the maximum class size)
+     * The number of vacancies for this index (initially set to the maximum class size).
      */
     private int vacancies = 0;
 
@@ -107,6 +107,10 @@ public final class CourseIndex implements Serializable {
         this.vacancies = classSize - this.enrolledStudents.size();
     }
 
+    /**
+     * Returns the class size for the index.
+     * @return class size of the index.
+     */
     public int getClassSize() {
 
         return this.classSize;
@@ -171,6 +175,11 @@ public final class CourseIndex implements Serializable {
         return new ArrayList<Lesson>(values);
     }
 
+    /**
+     * Returns the {@link Lesson} object based on the key value lessonID
+     * @param lessonID the Integer identifier for a particular lesson.
+     * @return corresponding Lesson object.
+     */
     public Lesson getLesson(Integer lessonID) {
         
         return this.lessons.get(lessonID);

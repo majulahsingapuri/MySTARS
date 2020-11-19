@@ -1,8 +1,17 @@
 package MySTARS;
 
+/** 
+ * Class to handle the admin function of printing the list of students.
+ * @author Bhargav
+ * @version 1.0
+ * @since 2020-11-1
+ */
 public class PrintStudentListView extends View {
-    
 
+    /**
+     * Displays the a list of {@link Student}s.
+     * Gives admin user the option of sorting the list by {@link Course} or {@link CourseIndex}.
+     */
     public void print() {
 
         while (true) {

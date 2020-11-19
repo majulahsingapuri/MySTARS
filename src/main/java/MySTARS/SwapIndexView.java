@@ -2,6 +2,9 @@ package MySTARS;
 
 /**
  * Verifies a second {@link User} from {@link Database}.USERS and swaps the indices for both the Users.
+ * @author Bhargav
+ * @version 1.0
+ * @since 2020-11-1
  */
 public class SwapIndexView extends View {
     

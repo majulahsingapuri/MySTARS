@@ -2,6 +2,9 @@ package MySTARS;
 
  /**
  * Changes the index of the {@link Course} selected by {@link User}. 
+ * @author Bhargav
+ * @version 1.0
+ * @since 2020-11-1
  */
 public class ChangeIndexView extends View {
 

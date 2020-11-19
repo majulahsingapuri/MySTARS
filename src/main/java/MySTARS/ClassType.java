@@ -46,6 +46,11 @@ public enum ClassType {
         this.label = label;
     }
 
+    /**
+     * Takes in a string indicating the class type, and returns the corresponding {@link ClassType} enum.
+     * @param type string indicating the class type (corresponds to a {@link ClassType} label).
+     * @return corresponding {@link ClassType}.
+     */
     public static ClassType getClassType(String type) {
 
         for (ClassType classType : ClassType.values()) {
@@ -53,7 +58,6 @@ public enum ClassType {
                 return classType;
             }
         }
-
         return ClassType.TUTORIAL;
     }
 }
