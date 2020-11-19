@@ -36,6 +36,11 @@ public final class Course implements Serializable {
     private AU acadUnits = AU.ONE;
 
     /**
+     * The school that offers this course.
+     */
+    private String school = "";
+
+    /**
      * Hashmap of all available indices in the course.
      */
     private HashMap<String, CourseIndex> courseIndices = new HashMap<>();
@@ -51,7 +56,7 @@ public final class Course implements Serializable {
     private static final long serialVersionUID = 10L;
 
     /**
-     * Constructor for course object, to be created without a description and course status.
+     * Constructor for course object, to be created without a description, school and course status.
      * @param courseCode Course code (eg. cz2002).
      * @param courseName Course name (eg. object oriented design programming).
      * @param acadUnits Number of AUs credited upon completion of course.
@@ -64,52 +69,58 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Constructor for course object, to be created with a description but without course status.
+     * Constructor for course object, to be created with a description and school, but without course status.
      * @param courseCode Course code (eg. cz2002).
      * @param courseName Course name (eg. object oriented design programming).
      * @param acadUnits Number of AUs credited upon completion of course.
      * @param description Course description.
+     * @param school School that offers this course
      */
-    public Course(String courseCode, String courseName, AU acadUnits, String description) {
+    public Course(String courseCode, String courseName, AU acadUnits, String description, String school) {
 
         this.courseCode = courseCode;
         this.courseName = courseName;
         this.acadUnits = acadUnits;
         this.description = description;
+        this.school = school;
     }
 
     /**
-     * Constructor for course object, to be created with a description and with course status.
+     * Constructor for course object, to be created with a description, school and course status.
      * @param courseCode Course code (eg. cz2002).
      * @param courseName Course name (eg. object oriented design programming).
      * @param acadUnits Number of AUs credited upon completion of course.
      * @param description Course description.
+     * @param school School that offers this course
      * @param courseStatus Enrollment status of a particular Student.
      */
-    public Course(String courseCode, String courseName, AU acadUnits, String description, CourseStatus courseStatus) {
+    public Course(String courseCode, String courseName, AU acadUnits, String description, String school, CourseStatus courseStatus) {
 
         this.courseCode = courseCode;
         this.courseName = courseName;
         this.acadUnits = acadUnits;
         this.description = description;
+        this.school = school;
         this.courseStatus = courseStatus;
     }
 
     /**
-     * Constructor for course object, creates course with description, course status, and an initial course index.
+     * Constructor for course object, creates course with description, school, course status, and an initial course index.
      * @param courseCode Course code (eg. cz2002).
      * @param courseName Course name (eg. object oriented design programming).
      * @param acadUnits Number of AUs credited upon completion of course.
      * @param description Course description.
+     * @param school School that offers this course
      * @param courseStatus Enrollment status of a particular student.
      * @param courseIndex Course index to initialize with this course.
      */
-    public Course(String courseCode, String courseName, AU acadUnits, String description, CourseStatus courseStatus, CourseIndex courseIndex) {
+    public Course(String courseCode, String courseName, AU acadUnits, String description, String school, CourseStatus courseStatus, CourseIndex courseIndex) {
 
         this.courseCode = courseCode;
         this.courseName = courseName;
         this.acadUnits = acadUnits;
         this.description = description;
+        this.school = school;
         this.courseStatus = courseStatus;
         this.courseIndices.put(courseIndex.getCourseIndex(), courseIndex);
     }
@@ -184,6 +195,24 @@ public final class Course implements Serializable {
     public AU getCourseAU() {
 
         return this.acadUnits;
+    }
+
+    /**
+     * Sets school.
+     * @param school The school that offers this course as a String.
+     */
+    public void setSchool(String school) {
+
+        this.school = school;
+    }
+
+    /**
+     * Return the school offering this course.
+     * @return The school that offers this course.
+     */
+    public String getSchool() {
+
+        return this.school;
     }
 
     /**
@@ -438,6 +467,6 @@ public final class Course implements Serializable {
      * @return A Course object with all the basic information with the current CourseStatus and CourseIndex. 
      */
     public Course simpleCopy(CourseStatus status, CourseIndex courseIndex){
-        return new Course(this.courseCode, this.courseName, this.acadUnits, this.description, status, courseIndex);
+        return new Course(this.courseCode, this.courseName, this.acadUnits, this.description, this.school, status, courseIndex);
     }
 }

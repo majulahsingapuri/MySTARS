@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 /**
  * Create new {@link Course} object and fills in necessary information.
- * @author Bhargav
+ * 
+ * @author Bhargav, Jia Hui
  * @version 1.0
  * @since 2020-11-1
  */
@@ -22,7 +23,7 @@ public final class AddCourseView extends View {
                 break;
         
             case STUDENT:
-                clearScreen("Student Main > Add Course");
+                clearScreen("Student Main > Add Course From Plan");
                 studentAddCourse();
                 break;
             
@@ -39,6 +40,9 @@ public final class AddCourseView extends View {
     public void adminAddCourse() {
 
         while (true) {
+
+            CourseManager.printCourseList(CourseStatus.NONE);
+
             System.out.print(String.format("%-50s: ", "Enter new course code or Q to quit"));
             String courseCode = Helper.readLine();
             if (courseCode.equals("Q")) {
@@ -77,8 +81,11 @@ public final class AddCourseView extends View {
     
                         System.out.print(String.format("%-50s: ", "Enter course description"));
                         String description = Helper.readLine();
+
+                        System.out.print(String.format("%-50s: ", "Enter course school"));
+                        String school = Helper.readLine();
     
-                        Course course = new Course(courseCode, courseName, acadUnits, description);
+                        Course course = new Course(courseCode, courseName, acadUnits, description, school);
     
                         int numIndices;
                         while (true) {
@@ -100,14 +107,22 @@ public final class AddCourseView extends View {
                         
                         Database.COURSES.put(courseCode, course);
                         Database.serialise(FileType.COURSES);
+                        Helper.pause();
+                        Helper.printSmallSpace();
                     } catch (Exception e) {
                         System.out.println(e.getLocalizedMessage());
+                        Helper.pause();
+                        Helper.printSmallSpace();
                     }
                 } else {
                     System.out.println("Course already exists!");
+                    Helper.pause();
+                    Helper.printSmallSpace();
                 }
             } else {
                 System.out.println("Invalid course code format");
+                Helper.pause();
+                Helper.printSmallSpace();
             }
         }
     }
@@ -136,7 +151,7 @@ public final class AddCourseView extends View {
                 }
 
                 Course course = currentUser.getCourse(courseCode);
-                if (course.getStatus() == CourseStatus.NOT_REGISTERED) {
+                if (course != null && course.getStatus() == CourseStatus.NOT_REGISTERED) {
 
                     CourseIndex courseIndex = course.getIndices()[0];
                     Helper.printSmallSpace();

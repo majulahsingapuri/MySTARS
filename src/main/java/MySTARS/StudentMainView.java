@@ -23,7 +23,7 @@ public final class StudentMainView extends View {
             clearScreen("Student Main");
             System.out.println("What would you like to do? Choose one of the options below: ");
             System.out.println("1. Check Vacancies");
-            System.out.println("2. Add Course");
+            System.out.println("2. Add Course From Plan");
             System.out.println("3. Drop a course");
             System.out.println("4. Change index of one of your current courses");
             System.out.println("5. Swap index of one of your current courses with a peer");

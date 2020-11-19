@@ -23,10 +23,11 @@ public class UpdateCourseView extends View {
 
             System.out.println("1: Change course code.");
             System.out.println("2: Change course description.");
-            System.out.println("3: Change course vacancies.");
-            System.out.println("4: Add indices to Course.");
-            System.out.println("5: Change Class location.");
-            System.out.println("6: Return to AdminMain");
+            System.out.println("3: Change course school.");
+            System.out.println("4: Change course vacancies.");
+            System.out.println("5: Add indices to Course.");
+            System.out.println("6: Change Class location.");
+            System.out.println("7: Return to AdminMain");
             
             try{
                 choice = Integer.parseInt(Helper.readLine());
@@ -44,20 +45,24 @@ public class UpdateCourseView extends View {
                 case 2:
                     changeCourseDescription();
                     break;
-
+                
                 case 3:
-                    changeClassSize();
+                    changeCourseSchool();
                     break;
 
                 case 4:
+                    changeClassSize();
+                    break;
+
+                case 5:
                     addIndices();
                     break;
                 
-                case 5:
+                case 6:
                     changeClassLocation();
                     break;
 
-                case 6:
+                case 7:
                     return;
                 
                 default:
@@ -162,6 +167,57 @@ public class UpdateCourseView extends View {
                     Database.serialise(FileType.USERS);
 
                     System.out.println("Course Description changed Successfully!");
+                } else {
+                    System.out.println("Aborting");
+                    Helper.pause();
+                }
+            } else {
+                System.out.println("Course does not yet exist!");
+                Helper.pause();
+            }
+        }
+    }
+
+    /**
+     * Changes the Course school for {@link Course}s in the {@link Database} and {@link Student} objects.
+     */
+    private void changeCourseSchool() {
+
+        clearScreen("Admin Main > Update Course > Change Course School");
+
+        while (true) {
+
+            CourseManager.printCourseList(CourseStatus.NONE);
+
+            System.out.print("Enter the Course Code or Q to Quit: ");
+            String courseCode = Helper.readLine();
+            if (courseCode.equals("Q")) {
+                break;
+            }
+
+            Course course = Database.COURSES.get(courseCode);
+            if (course != null) {
+                
+                System.out.print("Enter new Course School: ");
+                String newSchool = Helper.readLine();
+
+                System.out.print("The School of Course " + course.getCourseCode() + " will be changed to: " + newSchool + "\n\nConfirm? y/n:");
+                String confirm = Helper.readLine();
+                if (confirm.equals("Y")) {
+                
+                    course.setSchool(newSchool);
+
+                    for (CourseIndex courseIndex : course.getIndices()) {
+                        for (Student student : courseIndex.getStudents()) {
+                            Student databaseStudent = (Student) Database.USERS.get(student.getUsername());
+                            databaseStudent.getCourse(courseCode).setSchool(newSchool);
+                        }
+                    }
+
+                    Database.serialise(FileType.COURSES);
+                    Database.serialise(FileType.USERS);
+
+                    System.out.println("Course School changed Successfully!");
                 } else {
                     System.out.println("Aborting");
                     Helper.pause();
