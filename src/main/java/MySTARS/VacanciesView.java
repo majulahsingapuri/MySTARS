@@ -12,7 +12,7 @@ public class VacanciesView extends View {
     
     /**
      * Displays the number of vacancies in a particular {@link Course} or {@link CourseIndex} to the user.
-     * {@link User} is prompted to choose a {@link Course} and {@link CourseIndex}, and can choose to add it to their timetable.
+     * {@link User} is prompted to choose a {@link Course} and {@link CourseIndex}, and can choose to add it to their timetable. Required method from {@link View}.
      */
     public void print() {
 

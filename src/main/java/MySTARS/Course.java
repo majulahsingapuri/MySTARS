@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
-
 import java.io.*;
 
 /**
@@ -368,7 +367,6 @@ public final class Course implements Serializable {
                             }
                         }
 
-                        //TODO: check if this expression evaluates correctly
                         if (endLocalTime.isAfter(startLocalTime) && !startLocalTime.isEqual(endLocalTime)) {
                             break;
                         } else {
@@ -410,7 +408,7 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Directly removes a particular CourseIndex to the current Course.
+     * Directly removes a particular {@link CourseIndex} to the current Course.
      * @param courseIndex The index to be removed to the Course.
      * @return The removed CourseIndex
      */
@@ -422,7 +420,7 @@ public final class Course implements Serializable {
     }
 
     /**
-     * Directly adds a particular CourseIndex to the current Course.
+     * Directly adds a particular {@link CourseIndex} to the current Course.
      * @param courseIndex The index to be added to the Course.
      */
     public void addIndex(CourseIndex courseIndex) {

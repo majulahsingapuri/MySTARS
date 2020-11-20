@@ -1,7 +1,7 @@
 package MySTARS;
 
 /**
- * The User class that defines the actions of a System Administator. Extends {@link User} with the {@link AccessLevel} of Admin.
+ * The User class that defines the actions of a System Administator. Extends {@link User} with Access Level {@link AccessLevel#ADMIN}.
  * @author Jia Hui
  * @version 1.0
  * @since 2020-11-1

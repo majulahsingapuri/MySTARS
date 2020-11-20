@@ -5,7 +5,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 /**
- * The main menu for the Student side of the Application. Extends View.
+ * The main menu for the Student side of the Application.
  * @author Bhargav
  * @version 1.0
  * @since 2020-11-1
@@ -14,12 +14,7 @@ public final class AdminMainView extends View {
 
 
     /**
-     * Constructor method
-     */
-    public AdminMainView() {}
-
-    /**
-     * Prints menu options for the User to select from. Required method from View.
+     * Prints menu options for the User to select from. Required method from {@link View}.
      */
     public void print() {
         
@@ -83,7 +78,7 @@ public final class AdminMainView extends View {
     }
 
     /**
-     * Changes MySTARS access start and end dates and times
+     * Changes MySTARS access start and end dates and times.
      */
     private void changeEntryTiming() {
         
@@ -131,7 +126,7 @@ public final class AdminMainView extends View {
     }
 
     /**
-     * Changes the Password for the {@link Database}.CURRENT_USER.
+     * Changes the Password for the {@link Database#CURRENT_USER}.
      */
     private void changePassword() {
 

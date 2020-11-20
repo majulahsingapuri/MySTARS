@@ -10,7 +10,7 @@ public class PrintStudentListView extends View {
 
     /**
      * Displays the a list of {@link Student}s.
-     * Gives admin user the option of sorting the list by {@link Course} or {@link CourseIndex}.
+     * Gives admin user the option of sorting the list by {@link Course} or {@link CourseIndex}. Required method from {@link View}
      */
     public void print() {
 

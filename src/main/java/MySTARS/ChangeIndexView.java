@@ -9,7 +9,7 @@ package MySTARS;
 public class ChangeIndexView extends View {
 
     /**
-     * Required method from {@link View}. Prints Prompts to 
+     * Required method from {@link View}. Prints Prompts to help the user to change their current index.
      */
     public void print() {
 

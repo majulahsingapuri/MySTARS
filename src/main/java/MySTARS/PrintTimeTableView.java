@@ -39,7 +39,6 @@ public final class PrintTimeTableView extends View {
         return;
     }
 
-    //FIXME: the same exact method in AddCourseView. Remove one of these, or put the method in a more general class
     /**
      * Displays all the relevant information for courses that are of a particular {@link courseStatus} for a {@link Student}.
      * @param courseStatus status of the course with respect to the student.

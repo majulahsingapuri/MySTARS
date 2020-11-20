@@ -46,7 +46,7 @@ public final class LoginView extends View {
     }
 
     /**
-     * Displays Login view for {@link User}, checks the credentials and then logs in the User if the credentials are valid.
+     * Displays Login view for {@link User}, checks the credentials and then logs in the User if the credentials are valid. Required method from {@link View}.
      */
     public void print() {
 
@@ -114,14 +114,14 @@ public final class LoginView extends View {
                         AdminMainView adminView = new AdminMainView();
                         adminView.print();
                     } else {
-                        System.out.println("Invalid domain. Please enter domain again.");
+                        System.out.println("Invalid domain. Please enter domain again.\n");
                     }
                 } else {
-                    System.out.println("Invalid Password");
+                    System.out.println("Invalid Password\n");
                 }
                 
             } else {
-                System.out.println("Invalid Username");
+                System.out.println("Invalid Username\n");
             }        
         }
     }
