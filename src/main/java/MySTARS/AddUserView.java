@@ -108,20 +108,21 @@ public final class AddUserView extends View {
                         System.out.println(String.format("%-50s: ", "Gender") + gender.label);
                         System.out.println(String.format("%-50s: ", "Nationality") + nationality);
 
-                    System.out.print(String.format("\n%-50s: ", "Confirm? y/n"));
-                    String confirm = Helper.readLine();
-                    if (confirm.equals("Y")) {
-                        Student student = new Student(username, matricNumber, firstName, lastName, gender, nationality);
-                        Database.USERS.put(username, student);
-                        Database.serialise(FileType.USERS);
-                        System.out.println("New student added successfully.");
-                        Helper.pause();
+                        System.out.print(String.format("\n%-50s: ", "Confirm? y/n"));
+                        String confirm = Helper.readLine();
+                        if (confirm.equals("Y")) {
+                            Student student = new Student(username, matricNumber, firstName, lastName, gender, nationality);
+                            Database.USERS.put(username, student);
+                            Database.serialise(FileType.USERS);
+                            System.out.println("New student added successfully.");
+                            Helper.pause();
 
-                        Helper.printSmallSpace();
-                        printAllStudents();
-                        Helper.pause();
-                    } else {
-                        System.out.println("Aborting");
+                            Helper.printSmallSpace();
+                            printAllStudents();
+                            Helper.pause();
+                        } else {
+                            System.out.println("Aborting");
+                        }
                     }
                 } else {
                     System.out.println("Invalid username format (must be letters followed by three digits)");

@@ -485,7 +485,7 @@ public final class Student extends User implements Comparable<Student> {
      * Directly removes a {@link CourseIndex} from a {@link Course} in the courses Hashmap.
      * @param courseCode the String value of the course to be removed from.
      * @param courseIndex the String value of the index to be removed.
-     * @return
+     * @return the Courseindex that was removed
      */
     public CourseIndex removeIndex(String courseCode, String courseIndex) {
 

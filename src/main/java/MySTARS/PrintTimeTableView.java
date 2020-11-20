@@ -40,7 +40,7 @@ public final class PrintTimeTableView extends View {
     }
 
     /**
-     * Displays all the relevant information for courses that are of a particular {@link courseStatus} for a {@link Student}.
+     * Displays all the relevant information for courses that are of a particular {@link CourseStatus} for a {@link Student}.
      * @param courseStatus status of the course with respect to the student.
      * @param currentUser the current user (is a {@link Student}).
      */
