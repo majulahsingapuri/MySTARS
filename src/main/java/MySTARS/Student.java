@@ -120,20 +120,23 @@ public final class Student extends User implements Comparable<Student> {
     */
     public static boolean isValidNewMatricNo(String matricNo) {
 
-        if (!Student.isValidMatricNo(matricNo)) {return false;}
+        if (Student.isValidMatricNo(matricNo)) {
 
-        //check that the matric number hasn't been used yet.
-        for (User u : Database.USERS.values()) {
-            if (u.getAccessLevel() == AccessLevel.STUDENT) {
-                Student s = (Student) u;
-                if (s.getMatricNumber().equals(matricNo)) {
-                    System.out.println("Matric number already taken.");
-                    return false;
+            //check that the matric number hasn't been used yet.
+            for (User u : Database.USERS.values()) {
+                if (u.getAccessLevel() == AccessLevel.STUDENT) {
+                    Student s = (Student) u;
+                    if (s.getMatricNumber().equals(matricNo)) {
+                        System.out.println("Matric number already taken.");
+                        return false;
+                    }
                 }
             }
+            //all conditions have been passed
+            return true;
+        } else {
+            return false;
         }
-        //all conditions have been passed
-        return true;
     }
 
     /**
@@ -467,12 +470,23 @@ public final class Student extends User implements Comparable<Student> {
         }
     }
 
+    /**
+     * Directly Adds a {@link CourseIndex} to a {@link Course} in the courses Hashmap.
+     * @param courseCode The String value of the course code.
+     * @param courseIndex the Index to be added.
+     */
     public void setIndex(String courseCode, CourseIndex courseIndex) {
         
         courses.get(courseCode).addIndex(courseIndex);
         Database.serialise(FileType.USERS);
     }
 
+    /**
+     * Directly removes a {@link CourseIndex} from a {@link Course} in the courses Hashmap.
+     * @param courseCode the String value of the course to be removed from.
+     * @param courseIndex the String value of the index to be removed.
+     * @return
+     */
     public CourseIndex removeIndex(String courseCode, String courseIndex) {
 
         CourseIndex removedIndex = courses.get(courseCode).removeIndex(courseIndex);

@@ -46,7 +46,7 @@ public final class LoginView extends View {
     }
 
     /**
-     * Displays Login view for {@link User}, checks the credentials and then logs in the User if the credentials are valid.
+     * Displays Login view for {@link User}, checks the credentials and then logs in the User if the credentials are valid. Required method from {@link View}.
      */
     public void print() {
 

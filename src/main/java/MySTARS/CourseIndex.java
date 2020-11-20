@@ -31,7 +31,7 @@ public final class CourseIndex implements Serializable {
     private String courseCode;
 
     /**
-     * The index number used to refer to this index by (eg. 100081)
+     * The index number used to refer to this index by (eg. 10081)
      */
     private String indexNumber;
 
@@ -135,7 +135,7 @@ public final class CourseIndex implements Serializable {
     }
 
     /**
-     * Return the index number of the course index as a string (eg. 100081).
+     * Return the index number of the course index as a string (eg. 10081).
      * @return index number of the course index.
      */
     public String getCourseIndex() {

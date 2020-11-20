@@ -1,7 +1,7 @@
 package MySTARS;
 
 /**
- * Adds a new {@link Student} or {@link Admin} to the {@link Database}.
+ * Adds a new {@link Student} or {@link Admin} to the {@link Database#USERS}.
  * @author Bhargav
  * @version 1.0
  * @since 2020-11-1
@@ -9,7 +9,7 @@ package MySTARS;
 public final class AddUserView extends View {
 
     /**
-     * Required method from View. 
+     * Required method from {@link View}. 
      * Prints prompts for the user to input so that all key information to create {@link Student} or {@link Admin} is present.
      */
     public void print() {
@@ -90,11 +90,10 @@ public final class AddUserView extends View {
                         while (true) {
                             System.out.print(String.format("%-50s: ", "Enter the Student's matric number"));
                             matricNumber = Helper.readLine();
-                            if (Student.isValidMatricNo(matricNumber)) {
-                                if(Student.isValidNewMatricNo(matricNumber)) {
-                                    break;
-                                }
+                            if(Student.isValidNewMatricNo(matricNumber)) {
+                                break;
                             }
+                            
                         }
 
                         Helper.printLine(74);

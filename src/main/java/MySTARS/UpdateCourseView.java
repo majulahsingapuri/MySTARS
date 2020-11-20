@@ -14,7 +14,7 @@ public class UpdateCourseView extends View {
     private int choice;
 
     /**
-     * Prints prompts for the User to key in so that the relevant information to update a {@link Course} is keyed in. Required method from View.
+     * Prints prompts for the User to key in so that the relevant information to update a {@link Course} is keyed in. Required method from {@link View}.
      */
     public void print() {
 

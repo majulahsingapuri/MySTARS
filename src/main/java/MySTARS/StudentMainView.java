@@ -9,12 +9,7 @@ package MySTARS;
 public final class StudentMainView extends View {
 
     /**
-     * Constructor methodf for object.
-     */
-    public StudentMainView() {}
-
-    /**
-     * Prints menu options for the User to select from. Required method from View.
+     * Prints menu options for the User to select from. Required method from {@link View}.
      */
     public void print() {
 

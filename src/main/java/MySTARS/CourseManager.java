@@ -80,7 +80,7 @@ public final class CourseManager {
     }
 
     /**
-     * Prints a list of indices for a particular {@link Course} with the option to print the number of vacanices.
+     * Prints a list of {@link CourseIndex} for a particular {@link Course} with the option to print the number of vacanices.
      * @param course The desired Course to print the values from.
      * @param printVacancies Indication to print the number of vacancies.
      */
@@ -108,7 +108,7 @@ public final class CourseManager {
     }
 
     /**
-     * Prints a list of lessons for a given {@link CourseIndex}.
+     * Prints a list of {@link Lesson} for a given {@link CourseIndex}.
      * @param index The CourseIndex whose Lessons need printing.
      */
     public static void printLesson(CourseIndex index) {

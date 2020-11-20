@@ -47,9 +47,9 @@ public enum ClassType {
     }
 
     /**
-     * Takes in a string indicating the class type, and returns the corresponding {@link ClassType} enum.
-     * @param type string indicating the class type (corresponds to a {@link ClassType} label).
-     * @return corresponding {@link ClassType}.
+     * Takes in a string indicating the class type, and returns the corresponding ClassType enum.
+     * @param type string indicating the class type (corresponds to a ClassType label).
+     * @return corresponding ClassType.
      */
     public static ClassType getClassType(String type) {
 

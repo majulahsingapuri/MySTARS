@@ -1,7 +1,5 @@
 package MySTARS;
 
-import java.util.ArrayList;
-
 /**
  * Create new {@link Course} object and fills in necessary information.
  * @author Bhargav
@@ -11,7 +9,7 @@ import java.util.ArrayList;
 public final class AddCourseView extends View {
 
     /**
-     * Required method from View.
+     * Required method from {@link View}.
      */
     public void print() {
         

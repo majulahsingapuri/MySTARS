@@ -16,8 +16,7 @@ public final class Database {
     /**
      * The path to the directory where the data files are stored. 
      */
-    private static String filePath = "src/main/java/Files/";
-    // private static String filePath = "";
+    private static String filePath = "";
 
     /**
      * A {@code Hashmap<String, Course>} that stores all {@link Course}s and its contained information.
