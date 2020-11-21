@@ -292,13 +292,15 @@ public final class CourseIndex implements Serializable {
 
         if(this.vacancies > 0 && waitlist.size() > 0) {
             String username = waitlist.removeFirst();
-            Student student = waitlistedStudents.remove(username);
+            Student waitlistStudent = waitlistedStudents.remove(username);
             System.out.println("removed first student in waitlist");
+
+            Student databaseStudent = (Student) Database.USERS.get(username);
             
-            if (student != null) {
+            if (waitlistStudent != null && databaseStudent != null) {
                 try {
-                    if (student.addCourseFromWaitlist(this)){
-                        enrolledStudents.put(student.getUsername(), student);
+                    if (databaseStudent.addCourseFromWaitlist(this)){
+                        enrolledStudents.put(waitlistStudent.getUsername(), waitlistStudent);
                         this.vacancies -= 1;
                         Database.serialise(FileType.COURSES);
                         Database.serialise(FileType.USERS);

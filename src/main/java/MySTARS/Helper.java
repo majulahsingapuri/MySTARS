@@ -30,7 +30,7 @@ public final class Helper {
 	 */
     public static void load() {
 
-        System.out.printf(ConsoleColours.RED_BRIGHT + "║║║║║║║║║║║║");
+        System.out.printf(ConsoleColours.GREEN_BRIGHT + "║║║║║║║║║║║║" + ConsoleColours.RESET);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -63,8 +63,9 @@ public final class Helper {
 	 * A method that sends an email from the Administrative Gmail Account to the user if their course has been registered.
 	 * @param receipient The network username of the student.
 	 * @param course The String value of the course that they have been successfully registered for.
+	 * @throws Exception Throws Exception when unable to send mail successfully.
 	 */
-    public static void sendMailNotification(Student receipient, String course) {
+    public static void sendMailNotification(Student receipient, String course) throws Exception {
         String username = "MySTARSApp1";
         String password = "Il0veOOODP";
 

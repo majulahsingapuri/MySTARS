@@ -461,7 +461,12 @@ public final class Student extends User implements Comparable<Student> {
     
         if (!clashes(courseCode, myIndex.getCourseIndex()) && myCourse.getCourseAU().value + this.registeredAUs <= Student.maxAUs) {
             myCourse.setStatus(CourseStatus.REGISTERED);
-            Helper.sendMailNotification(this, courseCode);
+            try {
+                Helper.sendMailNotification(this, courseCode);
+            } catch (Exception e) {
+                System.out.println("Unable to send email. Please check that you are connected to the internet.");
+            }
+            System.out.println("Successfully enrolled waitlist student");
             Database.serialise(FileType.COURSES);
             Database.serialise(FileType.USERS);
             return true;

@@ -24,7 +24,7 @@ public abstract class View {
 
         System.out.println(ConsoleColours.GREEN_BRIGHT + "╔════════════════════════════════════════════════════════════════════════╗");
         System.out.println("║                                                                        ║");
-        System.out.println("║" + ConsoleColours.RESET + "                              Welcome to                                " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.WHITE + "                              Welcome to                                " + ConsoleColours.GREEN_BRIGHT + "║");
         System.out.println("║                                                                        ║");
         System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ███╗   ███╗██╗   ██╗███████╗████████╗ █████╗ ██████╗ ███████╗     " + ConsoleColours.GREEN_BRIGHT + "║");
         System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ████╗ ████║╚██╗ ██╔╝██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██╔════╝     " + ConsoleColours.GREEN_BRIGHT + "║");
@@ -33,13 +33,13 @@ public abstract class View {
         System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ██║ ╚═╝ ██║   ██║   ███████║   ██║   ██║  ██║██║  ██║███████║     " + ConsoleColours.GREEN_BRIGHT + "║");
         System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ╚═╝     ╚═╝   ╚═╝   ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝     " + ConsoleColours.GREEN_BRIGHT + "║");
         System.out.println("║                                                                        ║");
-        System.out.println("║" + ConsoleColours.RESET + "                    Nanyang Technological University                    " + ConsoleColours.GREEN_BRIGHT + "║");            
+        System.out.println("║" + ConsoleColours.WHITE + "                    Nanyang Technological University                    " + ConsoleColours.GREEN_BRIGHT + "║");            
         System.out.println("║                                                                        ║");
         System.out.println("╚════════════════════════════════════════════════════════════════════════╝");
         
         System.out.println("╔════════════════════════════════════════════════════════════════════════╗");
         System.out.println("║" + ConsoleColours.WHITE_BOLD + " " + directory + spaces + "" + ConsoleColours.GREEN_BRIGHT + "║");
-        System.out.println("╚════════════════════════════════════════════════════════════════════════╝" + ConsoleColours.RESET);
+        System.out.println("╚════════════════════════════════════════════════════════════════════════╝" + ConsoleColours.WHITE);
         System.out.println();
     }
 }
