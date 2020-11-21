@@ -6,7 +6,7 @@ package MySTARS;
  * @version 1.0
  * @since 2020-11-1
  */
-public class SwapIndexView extends View {
+public final class SwapIndexView extends View {
     
     /**
      * Required method from View. Prints prompts necessary to swap the indices of 2 Students.

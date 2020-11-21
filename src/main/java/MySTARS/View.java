@@ -22,24 +22,24 @@ public abstract class View {
                
         String spaces = String.format("%" + (71 - directory.length()) + "s", "");
 
-        System.out.println("╔════════════════════════════════════════════════════════════════════════╗");
+        System.out.println(ConsoleColours.GREEN_BRIGHT + "╔════════════════════════════════════════════════════════════════════════╗");
         System.out.println("║                                                                        ║");
-        System.out.println("║                              Welcome to                                ║");
+        System.out.println("║" + ConsoleColours.RESET + "                              Welcome to                                " + ConsoleColours.GREEN_BRIGHT + "║");
         System.out.println("║                                                                        ║");
-        System.out.println("║      ███╗   ███╗██╗   ██╗███████╗████████╗ █████╗ ██████╗ ███████╗     ║");
-        System.out.println("║      ████╗ ████║╚██╗ ██╔╝██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██╔════╝     ║");
-        System.out.println("║      ██╔████╔██║ ╚████╔╝ ███████╗   ██║   ███████║██████╔╝███████╗     ║");
-        System.out.println("║      ██║╚██╔╝██║  ╚██╔╝  ╚════██║   ██║   ██╔══██║██╔══██╗╚════██║     ║");
-        System.out.println("║      ██║ ╚═╝ ██║   ██║   ███████║   ██║   ██║  ██║██║  ██║███████║     ║");
-        System.out.println("║      ╚═╝     ╚═╝   ╚═╝   ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝     ║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ███╗   ███╗██╗   ██╗███████╗████████╗ █████╗ ██████╗ ███████╗     " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ████╗ ████║╚██╗ ██╔╝██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██╔════╝     " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ██╔████╔██║ ╚████╔╝ ███████╗   ██║   ███████║██████╔╝███████╗     " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ██║╚██╔╝██║  ╚██╔╝  ╚════██║   ██║   ██╔══██║██╔══██╗╚════██║     " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ██║ ╚═╝ ██║   ██║   ███████║   ██║   ██║  ██║██║  ██║███████║     " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ╚═╝     ╚═╝   ╚═╝   ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝     " + ConsoleColours.GREEN_BRIGHT + "║");
         System.out.println("║                                                                        ║");
-        System.out.println("║                    Nanyang Technological University                    ║");            
+        System.out.println("║" + ConsoleColours.RESET + "                    Nanyang Technological University                    " + ConsoleColours.GREEN_BRIGHT + "║");            
         System.out.println("║                                                                        ║");
         System.out.println("╚════════════════════════════════════════════════════════════════════════╝");
         
         System.out.println("╔════════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║ " + directory + spaces + "║");
-        System.out.println("╚════════════════════════════════════════════════════════════════════════╝");
+        System.out.println("║" + ConsoleColours.WHITE_BOLD + " " + directory + spaces + "" + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("╚════════════════════════════════════════════════════════════════════════╝" + ConsoleColours.RESET);
         System.out.println();
     }
 }

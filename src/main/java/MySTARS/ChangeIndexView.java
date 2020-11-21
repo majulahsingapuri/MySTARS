@@ -6,7 +6,7 @@ package MySTARS;
  * @version 1.0
  * @since 2020-11-1
  */
-public class ChangeIndexView extends View {
+public final class ChangeIndexView extends View {
 
     /**
      * Required method from {@link View}. Prints Prompts to help the user to change their current index.

@@ -12,7 +12,6 @@ import org.joda.time.DateTime;
  */
 public final class Database {
     
-    //TODO Change directory before submission
     /**
      * The path to the directory where the data files are stored. 
      */

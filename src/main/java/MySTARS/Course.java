@@ -338,7 +338,7 @@ public final class Course implements Serializable {
                         while (true) {
                             try {
                                 System.out.print(String.format("%-50s: ", "Enter start time in 24h format (eg 1430)"));
-                                String stime = Helper.readLine();
+                                String stime = Helper.readTime();
                                 startLocalTime = LocalTime.parse(stime, DateTimeFormat.forPattern("HHmm"));
                                 if (startLocalTime != null) {
                                     startTime = Integer.parseInt(stime);
@@ -347,14 +347,14 @@ public final class Course implements Serializable {
                                     throw new Exception();
                                 }
                             } catch (Exception e) {
-                                System.out.println("Please enter a valid time");
+                                System.out.println("Invalid input. Time must be in 24h format (4 digits)");
                             }
                         }
 
                         while (true) {
                             try {
                                 System.out.print(String.format("%-50s: ", "Enter end time in 24h format (eg 1530)"));
-                                String etime = Helper.readLine();
+                                String etime = Helper.readTime();
                                 endLocalTime = LocalTime.parse(etime, DateTimeFormat.forPattern("HHmm"));
                                 if (endLocalTime != null) {
                                     endTime = Integer.parseInt(etime);
@@ -363,7 +363,7 @@ public final class Course implements Serializable {
                                     throw new Exception();
                                 }
                             } catch (Exception e) {
-                                System.out.println("Please enter a valid time");
+                                System.out.println("Invalid input. Time must be in 24h format (4 digits)");
                             }
                         }
 

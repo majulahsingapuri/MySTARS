@@ -30,7 +30,7 @@ public final class Helper {
 	 */
     public static void load() {
 
-        System.out.printf("║║║║║║║║║║║║");
+        System.out.printf(ConsoleColours.RED_BRIGHT + "║║║║║║║║║║║║");
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -121,6 +121,21 @@ public final class Helper {
 	public static String readLine() {
 
 		return sc.nextLine().toUpperCase();
+	}
+
+	/**
+	 * Reads time input using Scanner.
+	 * Prints error message if invalid format.
+	 * @return 24 hour time.
+	 * @throws Exception if the time does not meet the specified format.
+	 */
+	public static String readTime() throws Exception{
+		String time = sc.nextLine();
+
+		if(!time.matches("\\p{Digit}{4}$")) {
+			throw new Exception();
+		}
+		return time;
 	}
 
 	/**

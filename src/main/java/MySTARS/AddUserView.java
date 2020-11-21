@@ -38,7 +38,7 @@ public final class AddUserView extends View {
                         if (accessLevel.equals("1") || accessLevel.equals("2")) {
                             break;
                         } else {
-                            System.out.println("Please enter a username followed by 3 digits");
+                            System.out.println("Please enter a correct choice.");
                         }
                     }
 

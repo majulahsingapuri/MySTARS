@@ -9,11 +9,6 @@ package MySTARS;
 public final class LogoutView extends View {
 
     /**
-     * Constructor method
-     */
-    public LogoutView() {}
-
-    /**
      * Required method from View. Logs out the {@link Database}.CURRENT_USER and redirects user back to the log in page.
      */
     public void print() {

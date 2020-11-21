@@ -3,7 +3,7 @@ package MySTARS;
 /**
  * Unit test for simple App.
  */
-public class MySTARSAppTest {
+public final class MySTARSAppTest {
     /**
      * Rigorous Test :-)
      */

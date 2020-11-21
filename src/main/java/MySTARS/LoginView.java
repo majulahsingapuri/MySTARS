@@ -52,16 +52,16 @@ public final class LoginView extends View {
 
         clearScreen("Login");
 
-        DateTime now = DateTime.now();
         DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
         String password, username, domain;
 
-        System.out.println("Current Time: " + formatter.print(now));
-        System.out.println("Student's login period is: " + formatter.print(LoginView.loginStart) + " - " + formatter.print(LoginView.loginEnd));
-        System.out.println("");
-
         while (true) {
 
+            DateTime now = DateTime.now();
+            System.out.println("Current Time: " + formatter.print(now));
+            System.out.println("Student's login period is: " + formatter.print(LoginView.loginStart) + " - " + formatter.print(LoginView.loginEnd));
+            System.out.println("");
+            
             System.out.println("Enter user domain");
             System.out.println("1. Admin");
             System.out.println("2. Student");

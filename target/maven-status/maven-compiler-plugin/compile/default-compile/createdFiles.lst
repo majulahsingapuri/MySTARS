@@ -4,6 +4,7 @@ MySTARS/Course.class
 MySTARS/ChangeIndexView.class
 MySTARS/AddUserView.class
 MySTARS/AccessLevel.class
+MySTARS/ConsoleColours.class
 MySTARS/Admin.class
 MySTARS/Lesson.class
 MySTARS/PrintTimeTableView.class

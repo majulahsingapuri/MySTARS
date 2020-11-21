@@ -6,17 +6,14 @@ package MySTARS;
  * @version 1.0
  * @since 2020-11-1
  */
-public class UpdateCourseView extends View {
-
-    /**
-     * Integer that keeps track of the choice that the User made.
-     */
-    private int choice;
+public final class UpdateCourseView extends View {
 
     /**
      * Prints prompts for the User to key in so that the relevant information to update a {@link Course} is keyed in. Required method from {@link View}.
      */
     public void print() {
+
+        int choice;
 
         do {
             clearScreen("Admin Main > Update Course");
@@ -292,7 +289,7 @@ public class UpdateCourseView extends View {
                                 Helper.pause();
                             }
                         } catch (Exception e) {
-                            System.out.println(e.getLocalizedMessage());
+                            System.out.println("Please enter a valid numerical class size.");
                         }
                     } else {
                         System.out.println("Course Index does not yet exist!");

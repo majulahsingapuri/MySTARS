@@ -97,20 +97,24 @@ public final class Lesson implements Serializable {
         int classTypeChoice; 
 
         do{
-            classTypeChoice = Integer.parseInt(Helper.readLine());
-            switch (classTypeChoice) {
-                case 1: 
-                    return ClassType.LECTURE;
-                case 2:
-                    return ClassType.LAB;
-                case 3:
-                    return ClassType.TUTORIAL;
-                case 4:
-                    return ClassType.SEMINAR;
-                case 5:
-                    return ClassType.ONLINE;
-                default:
-                    System.out.println("Error, invalid input");
+            try {
+                classTypeChoice = Integer.parseInt(Helper.readLine());
+                switch (classTypeChoice) {
+                    case 1: 
+                        return ClassType.LECTURE;
+                    case 2:
+                        return ClassType.LAB;
+                    case 3:
+                        return ClassType.TUTORIAL;
+                    case 4:
+                        return ClassType.SEMINAR;
+                    case 5:
+                        return ClassType.ONLINE;
+                    default:
+                        System.out.println("Please enter a number between 1 and 5.");
+                }
+            } catch (Exception e) {
+                System.out.println("Plese enter a valid number");
             }
         } while(true);
     }

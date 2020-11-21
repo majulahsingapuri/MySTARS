@@ -6,7 +6,7 @@ package MySTARS;
  * @version 1.0
  * @since 2020-11-1
  */
-public class PrintStudentListView extends View {
+public final class PrintStudentListView extends View {
 
     /**
      * Displays the a list of {@link Student}s.

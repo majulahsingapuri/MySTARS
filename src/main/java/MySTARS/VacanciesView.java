@@ -7,7 +7,7 @@ package MySTARS;
  * @version 1.0
  * @since 2020-11-1
  */
-public class VacanciesView extends View {
+public final class VacanciesView extends View {
     
     
     /**
