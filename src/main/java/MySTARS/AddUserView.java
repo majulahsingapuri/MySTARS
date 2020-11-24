@@ -26,7 +26,7 @@ public final class AddUserView extends View {
                 break;
             }
             if (!Database.USERS.containsKey(username)) {
-                if (username.matches("(^\\p{Alpha}+\\p{Digit}{3}$)")) {
+                if (username.matches("(^\\p{Alpha}+\\p{Digit}{3,4}$)")) {
                     String accessLevel;
                     System.out.println("Enter user domain");
                     System.out.println("1. Admin");
@@ -125,7 +125,7 @@ public final class AddUserView extends View {
                         }
                     }
                 } else {
-                    System.out.println("Invalid username format (must be letters followed by three digits)");
+                    System.out.println("Invalid username format (must be letters followed by three or four digits)");
                 }
             } else {
                 System.out.println("Username already taken");

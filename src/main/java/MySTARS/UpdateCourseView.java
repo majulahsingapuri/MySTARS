@@ -25,6 +25,7 @@ public final class UpdateCourseView extends View {
             System.out.println("5: Add indices to Course.");
             System.out.println("6: Change Class location.");
             System.out.println("7: Return to AdminMain");
+            System.out.print(String.format("%-50s: ", "Choice"));
             
             try{
                 choice = Integer.parseInt(Helper.readLine());
