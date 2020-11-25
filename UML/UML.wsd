@@ -1,0 +1,338 @@
+@startuml MySTARS
+actor User
+boundary PrintStudentListView
+control Helper
+control CourseManager
+entity Database
+entity Course
+entity CourseIndex
+entity Student
+boundary PrintStream
+
+activate User
+User -> PrintStudentListView : PrintStudentListView.print()
+activate PrintStudentListView
+
+loop 
+    PrintStudentListView -> PrintStudentListView : clearScreen()
+    activate PrintStudentListView
+    PrintStudentListView --> PrintStudentListView
+    deactivate PrintStudentListView
+
+    PrintStudentListView -> Helper : printSmallSpace()
+    activate Helper
+    activate PrintStream
+    ref over PrintStudentListView, PrintStream : printSmallSpace()
+    Helper --> PrintStudentListView
+
+    PrintStudentListView -> CourseManager : printCourseList(CourseStatus.NONE)
+    activate CourseManager
+
+    ref over CourseManager : printLine()
+    CourseManager -> PrintStream : println()
+    PrintStream --> CourseManager
+    ref over CourseManager : printLine()
+
+    loop for (courseEntry : Database.Courses.entrySet())
+        CourseManager -> Database : Database.Courses.entrySet().getValue()
+        activate Database
+        Database --> CourseManager : Course course
+        deactivate Database
+        CourseManager -> Course : course.getStatus()
+        activate Course
+        Course --> CourseManager : course.courseStatus
+        deactivate Course
+        alt course.getStatus() == status
+            CourseManager -> PrintStream : println()
+            PrintStream --> CourseManager
+            ref over CourseManager : printLine()
+        end
+    end
+
+    CourseManager --> PrintStudentListView
+
+    PrintStudentListView -> PrintStream : println()
+    PrintStream --> PrintStudentListView
+
+    PrintStudentListView -> Helper : readLine()
+    Helper --> PrintStudentListView : String courseCode
+
+    alt courseCode == "Q"
+        PrintStudentListView --> User : break
+    end
+
+    alt Database.COURSES.containsKey(courseCode)
+        PrintStudentListView -> Database : COURSES.get(courseCode)
+        activate Database
+        Database --> PrintStudentListView : Course course
+        deactivate Database
+
+        PrintStudentListView -> PrintStream : println()
+        PrintStream --> PrintStudentListView
+
+        loop true
+            alt try 
+                activate PrintStudentListView
+                PrintStudentListView -> PrintStream : print()
+                PrintStream --> PrintStudentListView
+                
+                PrintStudentListView -> Helper : readLine()
+                Helper --> PrintStudentListView : String choice
+                ref over PrintStudentListView : choice = Integer.parseInt()
+
+                alt choice == 1 || choice == 2
+                    PrintStudentListView -> PrintStudentListView : break
+                    deactivate PrintStudentListView
+                end
+            else catch Exception e 
+                PrintStudentListView -> PrintStream : println()
+                activate PrintStudentListView
+                PrintStream --> PrintStudentListView
+                deactivate PrintStudentListView
+            end
+        end
+
+        alt choice == 1
+            ref over PrintStudentListView, PrintStream : printSmallSpace()
+
+            PrintStudentListView -> CourseManager : printSudentListByCourse(course, true)
+
+            loop for courseIndex : course.getIndices()
+                CourseManager -> Course : getIndices()
+                activate Course
+                Course --> CourseManager : CourseIndex[]
+                deactivate Course
+
+                CourseManager -> CourseManager : printStudentListByIndex(courseIndex, sorted)
+                activate CourseManager
+
+                CourseManager -> CourseIndex : getStudents
+                activate CourseIndex
+                CourseIndex --> CourseManager : studentsArray = ArrayList<Student>
+                deactivate CourseIndex
+
+                alt sorted 
+                    ref over CourseManager : Collections.sort(studentsArray)
+                end
+
+                CourseManager -> CourseIndex : getCourseIndex()
+                activate CourseIndex
+                CourseIndex --> CourseManager : indexNumber
+                deactivate CourseIndex
+                
+                CourseManager -> PrintStream : println()
+                PrintStream --> CourseManager
+                ref over CourseManager : printLine()
+                CourseManager -> PrintStream : println()
+                PrintStream --> CourseManager
+                ref over CourseManager : printLine()
+
+                loop for student : studentsArray
+                    CourseManager -> Student : getMatricNumber()
+                    activate Student
+                    Student --> CourseManager : matricNumber
+                    CourseManager -> Student : getFirstName()
+                    Student --> CourseManager : firstName
+                    CourseManager -> Student : getLasttName()
+                    Student --> CourseManager : lastName
+                    CourseManager -> Student : getGender()
+                    Student --> CourseManager : gender
+                    deactivate Student
+
+                    CourseManager -> PrintStream : println()
+                    PrintStream --> CourseManager
+                    ref over CourseManager : printLine()
+                end
+
+                CourseManager -> CourseIndex : getWaitlistStudents()
+                activate CourseIndex
+                CourseIndex --> CourseManager : waitlistArray = ArrayList<Student>
+                deactivate CourseIndex
+
+                alt sorted 
+                    ref over CourseManager : Collections.sort(waitlistArray)
+                end
+
+                loop for student : waitlistArray
+                    CourseManager -> Student : getMatricNumber()
+                    activate Student
+                    Student --> CourseManager : matricNumber
+                    CourseManager -> Student : getFirstName()
+                    Student --> CourseManager : firstName
+                    CourseManager -> Student : getLasttName()
+                    Student --> CourseManager : lastName
+                    CourseManager -> Student : getGender()
+                    Student --> CourseManager : gender
+                    deactivate Student
+
+                    CourseManager -> PrintStream : println()
+                    PrintStream --> CourseManager
+                    ref over CourseManager : printLine()
+                end
+                CourseManager --> CourseManager
+                deactivate CourseManager
+
+                CourseManager -> PrintStream : println()
+                PrintStream --> CourseManager
+            end
+            CourseManager --> PrintStudentListView
+            PrintStudentListView -> Helper : pause()
+            Helper --> PrintStudentListView
+        else
+            
+            PrintStudentListView -> CourseManager : printIndexList(course, false)
+            activate CourseManager
+
+            ref over CourseManager : printLine()
+            CourseManager -> PrintStream : print()
+            PrintStream --> CourseManager
+
+            alt printVacancies
+                CourseManager -> PrintStream : print()
+                PrintStream --> CourseManager
+            end
+
+            CourseManager -> PrintStream : print()
+            PrintStream --> CourseManager
+            ref over CourseManager : printLine()
+
+            loop for courseIndex : course.getIndices()
+                CourseManager -> Course : getIndices()
+                activate Course
+                Course --> CourseManager : CourseIndex[]
+                deactivate Course
+
+                CourseManager -> CourseIndex : getCourseIndex()
+                activate CourseIndex
+                CourseIndex --> CourseManager : indexNumber
+
+                CourseManager -> PrintStream : print()
+                PrintStream --> CourseManager
+
+                alt printVacancies
+                CourseManager -> CourseIndex : getVacancies()
+                CourseIndex --> CourseManager : vacancies
+                CourseManager -> CourseIndex : getClassSize()
+                CourseIndex --> CourseManager : classSize
+                deactivate CourseIndex
+                CourseManager -> PrintStream : print()
+                PrintStream --> CourseManager
+                end
+
+                CourseManager -> PrintStream : print()
+                PrintStream --> CourseManager
+                ref over CourseManager : printLine()
+            end
+
+            CourseManager --> PrintStudentListView
+            deactivate CourseManager
+
+            loop true
+                alt try
+                    PrintStudentListView -> PrintStream : print()
+                    activate PrintStudentListView
+                    PrintStream --> PrintStudentListView
+                    PrintStudentListView -> Helper : readLine()
+                    Helper --> PrintStudentListView
+
+                    alt course.containsIndex(courseIndex)
+                        PrintStudentListView -> Course : containsIndex(courseIndex)
+                        activate Course
+                        Course --> PrintStudentListView : true
+                        deactivate Course
+                        ref over PrintStudentListView, PrintStream : printSmallSpace()
+
+                        PrintStudentListView -> Course : course.getIndex(courseIndex)
+                        activate Course
+                        Course --> PrintStudentListView : CourseIndex
+                        deactivate Course
+
+                        PrintStudentListView -> CourseManager : printStudentListByIndex(courseIndex, false)
+                        activate CourseManager
+
+                        CourseManager -> CourseIndex : getStudents
+                        activate CourseIndex
+                        CourseIndex --> CourseManager : studentsArray = ArrayList<Student>
+                        deactivate CourseIndex
+
+                        alt sorted 
+                            ref over CourseManager : Collections.sort(studentsArray)
+                        end
+
+                        CourseManager -> CourseIndex : getCourseIndex()
+                        activate CourseIndex
+                        CourseIndex --> CourseManager : indexNumber
+                        deactivate CourseIndex
+                        
+                        CourseManager -> PrintStream : println()
+                        PrintStream --> CourseManager
+                        ref over CourseManager : printLine()
+                        CourseManager -> PrintStream : println()
+                        PrintStream --> CourseManager
+                        ref over CourseManager : printLine()
+
+                        loop for student : studentsArray
+                            CourseManager -> Student : getMatricNumber()
+                            activate Student
+                            Student --> CourseManager : matricNumber
+                            CourseManager -> Student : getFirstName()
+                            Student --> CourseManager : firstName
+                            CourseManager -> Student : getLasttName()
+                            Student --> CourseManager : lastName
+                            CourseManager -> Student : getGender()
+                            Student --> CourseManager : gender
+                            deactivate Student
+
+                            CourseManager -> PrintStream : println()
+                            PrintStream --> CourseManager
+                            ref over CourseManager : printLine()
+                        end
+
+                        CourseManager -> CourseIndex : getWaitlistStudents()
+                        activate CourseIndex
+                        CourseIndex --> CourseManager : waitlistArray = ArrayList<Student>
+                        deactivate CourseIndex
+
+                        alt sorted 
+                            ref over CourseManager : Collections.sort(waitlistArray)
+                        end
+
+                        loop for student : waitlistArray
+                            CourseManager -> Student : getMatricNumber()
+                            activate Student
+                            Student --> CourseManager : matricNumber
+                            CourseManager -> Student : getFirstName()
+                            Student --> CourseManager : firstName
+                            CourseManager -> Student : getLasttName()
+                            Student --> CourseManager : lastName
+                            CourseManager -> Student : getGender()
+                            Student --> CourseManager : gender
+                            deactivate Student
+
+                            CourseManager -> PrintStream : println()
+                            PrintStream --> CourseManager
+                            ref over CourseManager : printLine()
+                        end
+                        CourseManager --> PrintStudentListView
+                        deactivate CourseManager
+
+                        PrintStudentListView -> Helper : pause()
+                        Helper --> PrintStudentListView
+                        PrintStudentListView -> PrintStudentListView : break
+                        deactivate PrintStudentListView
+                    end
+                else catch Exception e
+                    PrintStudentListView -> PrintStream : println()
+                    PrintStream --> PrintStudentListView
+                end
+            end
+        end
+    else 
+        ref over PrintStudentListView, PrintStream : printSmallSpace()
+        PrintStudentListView -> PrintStream : print()
+        PrintStream --> PrintStudentListView
+        PrintStudentListView -> Helper : pause()
+        Helper --> PrintStudentListView
+    end
+end 
+@enduml
