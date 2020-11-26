@@ -23,7 +23,7 @@ java -jar MySTARS-1.0-jar-with-dependencies.jar
 
 ## Javadocs
 ---
-The start point for the code Documentation can be found in `/target/site/apidocs/index.html` and other project information regarding dependencies is in `/target/site/index.html`.
+The start point for the code Documentation can be found in `/docs/index.html` and other project information regarding dependencies is in `/target/site/index.html`.
 
 ## Miscellaneous
 ---
