@@ -1,7 +1,7 @@
 package MySTARS;
 
 /**
- * ConsoleColours which are to be used in the MOBLIMA App.
+ * ConsoleColours which are to be used in the MySTARS App.
  * Adapted from https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println.
  * @author Bhargav
  * @version 1.0
